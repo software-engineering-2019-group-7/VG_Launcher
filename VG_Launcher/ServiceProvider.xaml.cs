@@ -11,7 +11,7 @@ namespace VG_Launcher
         public ServiceProvider()
         {
             InitializeComponent();
-        }
+        } 
 
         private void DoneButton_Click(object sender, RoutedEventArgs e)
         {
