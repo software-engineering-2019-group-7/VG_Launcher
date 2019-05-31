@@ -22,21 +22,29 @@ namespace VG_Launcher
             for (int i = 0; i < 5; i++)
             {
                 Button btn = new Button();
-                btn.Content = "Cool new game";
-                btn.Width = 350;
+
+
+
+                ///this commented out chunk would let us set the buttons to whatever we wanted them to look like.
+                ///Picture backgrounds included, but they need to be downloaded as of right now. Will look into this.
+
+                btn.Name = "button" + i.ToString();
+                btn.Content = "Path of Exile"; //replace this with the name of the game recieved
+                btn.Width = 360;
                 btn.Height = 160;
                 btn.Margin = new Thickness(10);
-
-                ///this commented out chunk would let us set the pictures of the background
-                ///of the buttons. Just setting them to red for now
-
-                //Uri resourceUri = new Uri("Resources/header.jpg", UriKind.Relative); 
-                //StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
-                //BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-                //var brush = new ImageBrush();
-                //brush.ImageSource = temp;
-                //btn.Background = brush;
-                btn.Background = Brushes.Red;
+                btn.HorizontalContentAlignment = HorizontalAlignment.Center;
+                btn.VerticalContentAlignment = VerticalAlignment.Bottom;
+                btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CFFFFFF"));
+                btn.FontSize = 48;
+                btn.FontWeight = FontWeights.SemiBold;
+                Uri resourceUri = new Uri("Resources/header.jpg", UriKind.Relative);
+                StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+                BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+                var brush = new ImageBrush();
+                brush.ImageSource = temp;
+                btn.Background = brush;
+                btn.Click += Button_Click;
                 gameWrapPanel.Children.Add(btn);
             }
         }
@@ -50,7 +58,12 @@ namespace VG_Launcher
         private void Addbtns_Click(object sender, RoutedEventArgs e)
         {
             CreateButtons();
-            gameWrapPanel.Height = gameWrapPanel.Height + 180;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            btn.Content = "Clicked";
         }
     }
 }

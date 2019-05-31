@@ -17,9 +17,9 @@ namespace VG_Launcher
         public void DoneButton_Click(object sender, RoutedEventArgs e)
         {
             List<string> serviceList = new List<string>();
-            foreach (Control c in services.Children)
+            foreach (CheckBox c in services.Children)
             {
-                if (((CheckBox)c).IsChecked == true)
+                if (c.IsChecked == true)
                 {
                     serviceList.Add(c.Name);
                 }
