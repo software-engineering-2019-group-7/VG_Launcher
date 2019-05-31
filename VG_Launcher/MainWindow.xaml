@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="1348.5">
     <Grid Background="#FF242B3C">
-        <Button x:Name="serviceLoader" Content="Click me" HorizontalAlignment="Left" Margin="681,374,0,0" VerticalAlignment="Top" Width="75" Click="ServiceLoader_Click"/>
+        <Button x:Name="serviceLoader" Content="Click me" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top" Width="75" Click="ServiceLoader_Click" Height="58"/>
+        <ScrollViewer x:Name="gameSroller" Margin="106,10,10,10">
+            <WrapPanel x:Name="gameWrapPanel" Height="900" Width="{Binding Path=ActualWidth,
+                   RelativeSource={RelativeSource  AncestorType=Window}}" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
+                <Button x:Name="button" Content="A Game" Width="350" Height="160" Padding="10,10,10,10" Margin="10" Background="Black"/>
+            </WrapPanel>
+        </ScrollViewer>
+        <Button x:Name="addbtns" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Margin="10,376,0,0" Click="Addbtns_Click"/>
     </Grid>
 </Window>
