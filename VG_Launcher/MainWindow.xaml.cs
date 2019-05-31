@@ -22,7 +22,7 @@ namespace VG_Launcher
             for (int i = 0; i < 5; i++)
             {
                 Button btn = new Button();
-                btn.Content = "String";
+                btn.Content = "Cool new game";
                 btn.Width = 350;
                 btn.Height = 160;
                 btn.Margin = new Thickness(10);
