@@ -12,11 +12,6 @@ namespace VG_Launcher
             InitializeComponent();
         }
 
-        private void SteamBox_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ServiceLoader_Click(object sender, RoutedEventArgs e)
         {
             ServiceProvider sp = new ServiceProvider();
