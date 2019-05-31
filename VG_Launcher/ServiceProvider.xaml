@@ -8,13 +8,13 @@
     <Grid>
 
         <Canvas x:Name="services" Margin="88,64,68,50" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <CheckBox x:Name="steamBox" Content="Steam" Background="White" Foreground="White" FontSize="24" Height="36" Canvas.Top="10" Canvas.Left="10" Width="88" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <CheckBox x:Name="originBox" Content="Origin" Background="White" Foreground="White" Canvas.Top="51" FontSize="24" Height="36" Canvas.Left="10" Width="88" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <CheckBox x:Name="uplayBox" Content="Uplay" Background="White" Foreground="White" Canvas.Top="89" FontSize="24" Height="36" Canvas.Left="10" Width="82" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <CheckBox x:Name="gogBox" Content="GOG" Background="White" Foreground="White" Canvas.Top="133" FontSize="24" Height="35" Canvas.Left="10" Width="73" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <CheckBox x:Name="bethesdaBox" Content="Bethesda" Background="White" Foreground="White" Canvas.Top="176" FontSize="24" Height="36" Canvas.Left="10" Width="120" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <CheckBox x:Name="epicBox" Content="Epic Games" Background="White" Foreground="White" Canvas.Top="218" FontSize="24" Height="36" Canvas.Left="10" Width="146" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <CheckBox x:Name="blizzardBox" Content="Blizzard" Background="White" Foreground="White" Canvas.Top="258" FontSize="24" Height="36" Canvas.Left="10" Width="105" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Steam" Content="Steam" Background="White" Foreground="White" FontSize="24" Height="36" Canvas.Top="10" Canvas.Left="10" Width="88" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Origin" Content="Origin" Background="White" Foreground="White" Canvas.Top="51" FontSize="24" Height="36" Canvas.Left="10" Width="88" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Uplay" Content="Uplay" Background="White" Foreground="White" Canvas.Top="89" FontSize="24" Height="36" Canvas.Left="10" Width="82" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="GOG" Content="GOG" Background="White" Foreground="White" Canvas.Top="133" FontSize="24" Height="35" Canvas.Left="10" Width="73" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Bethesda" Content="Bethesda" Background="White" Foreground="White" Canvas.Top="176" FontSize="24" Height="36" Canvas.Left="10" Width="120" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Epic" Content="Epic Games" Background="White" Foreground="White" Canvas.Top="218" FontSize="24" Height="36" Canvas.Left="10" Width="146" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Blizzard" Content="Blizzard" Background="White" Foreground="White" Canvas.Top="258" FontSize="24" Height="36" Canvas.Left="10" Width="105" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         </Canvas>
 
