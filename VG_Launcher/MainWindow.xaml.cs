@@ -74,11 +74,10 @@ namespace VG_Launcher
             GameScreen gs = new GameScreen();
             gs.Title = btn.Content.ToString();
             gs.Name = "gs";
+            Point currentPoint = btn.TransformToAncestor(gameWrapPanel).Transform(new Point(0, 0));
+            gs.Left = currentPoint.X+120;
+            gs.Top = currentPoint.Y+225;
 
-            //I really wanted to not have this as a dialog, but I was having trouble 
-            //with dynamically closing and reopening windows as I was clicking on the game buttons
-            //I had it working, but if I clicked the same game button as the one I had just previously 
-            //clicked the program would crash.
             gs.Show();
             clickReciever.Visibility = Visibility.Visible;
         }
