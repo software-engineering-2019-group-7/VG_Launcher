@@ -1,0 +1,25 @@
+﻿<Window x:Class="VG_Launcher.ServiceProvider"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VG_Launcher"
+        mc:Ignorable="d" Height="450" Width="322.308" Background="#FF133343" ResizeMode="NoResize">
+    <Grid>
+
+        <Canvas x:Name="services" Margin="88,64,68,50" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <CheckBox x:Name="Steam" Content="Steam" Background="White" Foreground="White" FontSize="24" Height="36" Canvas.Top="10" Canvas.Left="10" Width="88" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Origin" Content="Origin" Background="White" Foreground="White" Canvas.Top="51" FontSize="24" Height="36" Canvas.Left="10" Width="88" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Uplay" Content="Uplay" Background="White" Foreground="White" Canvas.Top="89" FontSize="24" Height="36" Canvas.Left="10" Width="82" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="GOG" Content="GOG" Background="White" Foreground="White" Canvas.Top="133" FontSize="24" Height="35" Canvas.Left="10" Width="73" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Bethesda" Content="Bethesda" Background="White" Foreground="White" Canvas.Top="176" FontSize="24" Height="36" Canvas.Left="10" Width="120" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Epic" Content="Epic Games" Background="White" Foreground="White" Canvas.Top="218" FontSize="24" Height="36" Canvas.Left="10" Width="146" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox x:Name="Blizzard" Content="Blizzard" Background="White" Foreground="White" Canvas.Top="258" FontSize="24" Height="36" Canvas.Left="10" Width="105" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        </Canvas>
+
+        <Button x:Name="doneButton" Content="Continue" HorizontalAlignment="Left" Margin="111,369,0,0" VerticalAlignment="Top" Width="75" Click="DoneButton_Click"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="64,14,0,0" TextWrapping="Wrap" Text="Please select the game services you use." VerticalAlignment="Top" Foreground="White" FontSize="20" TextAlignment="Center"/>
+
+    </Grid>
+</Window>
