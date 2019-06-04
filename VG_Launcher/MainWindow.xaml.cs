@@ -65,6 +65,7 @@ namespace VG_Launcher
         private void Addbtns_Click(object sender, RoutedEventArgs e)
         {
             CreateButtons();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -72,17 +73,30 @@ namespace VG_Launcher
             Button btn = sender as Button; //lets us edit the button that sent the function call
             GameScreen gs = new GameScreen();
             gs.Title = btn.Content.ToString();
-            this.Effect = new BlurEffect();
-            gs.WindowStartupLocation = WindowStartupLocation.Manual;
-            gs.Left = PointToScreen(Mouse.GetPosition(null)).X-270;  //this tells the game screen where to open. Maybe with some slick math we can set it to open directly under the 
-            gs.Top = PointToScreen(Mouse.GetPosition(null)).Y+35;   //button pressed. This is close enough as of right now.
+            gs.Name = "gs";
 
             //I really wanted to not have this as a dialog, but I was having trouble 
             //with dynamically closing and reopening windows as I was clicking on the game buttons
             //I had it working, but if I clicked the same game button as the one I had just previously 
             //clicked the program would crash.
-            gs.ShowDialog(); 
-            this.Effect = null;
+            gs.Show();
+            clickReciever.Visibility = Visibility.Visible;
+        }
+
+        private void ClickReciever_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            foreach (Window w in App.Current.Windows)
+            {
+                if (w.Name.Equals("gs")){
+                    w.Close();
+                }
+            }
+            clickReciever.Visibility = Visibility.Hidden;
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

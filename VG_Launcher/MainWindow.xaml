@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
-        mc:Ignorable="d" Height="800" Width="1348.5">
+        mc:Ignorable="d" Height="800" Width="1348.5" WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing">
     <Grid Background="#FF242B3C" >
         <Button x:Name="serviceLoader" Content="Services" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top" Width="75" Click="ServiceLoader_Click" Height="58"/>
         <ScrollViewer x:Name="gameSroller" Margin="106,0,0,0" VerticalScrollBarVisibility="Auto" >
@@ -15,5 +15,6 @@
             </WrapPanel>
         </ScrollViewer>
         <Button x:Name="addbtns" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="63" Margin="22,690,0,0" Click="Addbtns_Click" Height="47"/>
+        <Rectangle x:Name="clickReciever" Fill="#4C000000" Stroke="Black" Margin="0,0,0.4,0.4" Visibility="Hidden" MouseDown="ClickReciever_MouseDown"/>
     </Grid>
 </Window>
