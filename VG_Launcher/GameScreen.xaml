@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
-        mc:Ignorable="d" Height="280" Width="540" ShowInTaskbar="False" WindowStartupLocation="Manual" ResizeMode="NoResize" Topmost="True" WindowStyle="ToolWindow" >
+        mc:Ignorable="d" Height="280" Width="540" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Topmost="True" WindowStyle="None" MouseDown="Window_MouseDown" >
     <Grid Background="#FF0B2068">
         <Image x:Name="image" Width="540" Margin="-4,0,-4,-5"/>
 
