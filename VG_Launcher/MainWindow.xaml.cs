@@ -27,8 +27,10 @@ namespace VG_Launcher
 
             ///this chunk will let us set the buttons to whatever we wanted them to look like.
             ///Picture backgrounds included, but they need to be downloaded as of right now. Will look into this.
-            btn.Name = "button" + gameWrapPanel.Children.Count;
+            ///
+            btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with the name of the game or an identitier
             btn.Content = "Path of Exile"; //replace this with the name of the game recieved
+
             btn.Width = 360;
             btn.Height = 160;
             btn.Margin = new Thickness(10);
@@ -37,11 +39,11 @@ namespace VG_Launcher
             btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CFFFFFF"));
             btn.FontSize = 48;
             btn.FontWeight = FontWeights.SemiBold;
-
+            btn.Style = Resources["noHighlightButton"] as Style;
             ///This section deals with the background picture. We will have to change this for sure if we are getting them from the internet. 
             ///I suppose we will have to download the images regardless, so maybe we will have the actual images at this point? 
             ///Steam and others load a default background and replace it when they have the actual image (maybe do this on a different thread?)
-            Uri resourceUri = new Uri("Resources/header.jpg", UriKind.Relative);
+            Uri resourceUri = new Uri("Resources/header.jpg", UriKind.Relative); //the jpg file location is what needs to be changed here
             StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
             BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
             var brush = new ImageBrush();
@@ -74,9 +76,22 @@ namespace VG_Launcher
             GameScreen gs = new GameScreen();
             gs.Title = btn.Content.ToString();
             gs.Name = "gs";
-            Point currentPoint = btn.TransformToAncestor(gameWrapPanel).Transform(new Point(0, 0));
-            gs.Left = currentPoint.X+120;
-            gs.Top = currentPoint.Y+225;
+            Point point = btn.PointToScreen(new Point(0, 0));
+            if ((point.X+gs.Width) > (mainWindow.Left+mainWindow.Width))
+            {
+                gs.Left = point.X - (gs.Width-btn.Width);
+                gs.Top = point.Y + btn.Height + 2;
+            }
+            else if (point.X-90 < mainWindow.Left)
+            {
+                gs.Left = point.X;
+                gs.Top = point.Y + btn.Height + 2;
+            }
+            else
+            {
+                gs.Left = point.X-90;
+                gs.Top = point.Y + btn.Height + 2;
+            }
 
             gs.Show();
             clickReciever.Visibility = Visibility.Visible;
@@ -96,6 +111,30 @@ namespace VG_Launcher
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void MainWindow_LocationChanged(object sender, EventArgs e)
+        {
+            foreach (Window w in App.Current.Windows)
+            {
+                if (w.Name.Equals("gs"))
+                {
+                    w.Close();
+                }
+            }
+            clickReciever.Visibility = Visibility.Hidden;
+        }
+
+        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            foreach (Window w in App.Current.Windows)
+            {
+                if (w.Name.Equals("gs"))
+                {
+                    w.Close();
+                }
+            }
+            clickReciever.Visibility = Visibility.Hidden;
         }
     }
 }

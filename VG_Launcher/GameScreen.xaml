@@ -8,9 +8,32 @@
     <Grid Background="#FF0B2068">
         <Image x:Name="image" Width="540" Margin="-4,0,-4,-5"/>
 
-        <Label x:Name="hoursLabel" Content="Play Time: " HorizontalAlignment="Left" Margin="33,189,0,0" VerticalAlignment="Top" Background="#00000000" Foreground="White" FontSize="20"/>
-        <Button x:Name="settingsButton" Content="Game Settings" HorizontalAlignment="Left" Margin="420,196,0,0" VerticalAlignment="Top" Width="84"/>
-        <Button x:Name="playButton" Content="Play Game" HorizontalAlignment="Left" Margin="224,91,0,0" VerticalAlignment="Top" Width="60" Height="60"/>
+        <Label x:Name="hoursLabel" Content="Play Time: " HorizontalAlignment="Left" Margin="30,206,0,0" VerticalAlignment="Top" Background="#00000000" Foreground="White" FontSize="20"/>
+        <Button x:Name="settingsButton" Content="Settings" HorizontalAlignment="Right" Margin="0,212,30,0" VerticalAlignment="Top" Width="84" Background="#19DDDDDD" Click="SettingsButton_Click" BorderBrush="#00707070" Foreground="White" FontSize="20"/>
+        <Button x:Name="playButton" Content="" Margin="240,107,0,0" VerticalAlignment="Top" Width="60" Height="60" HorizontalAlignment="Left" Click="PlayButton_Click" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/play.png"/>
+            </Button.Background>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal"/>
+                                            <VisualState x:Name="MouseOver"/>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Label x:Name="gameName" Content="Game Name" Margin="163,10,80,0" VerticalAlignment="Top" Foreground="#4CFFFFFF" FontSize="36" HorizontalAlignment="Center" Width="297"/>
 
     </Grid>
 </Window>
