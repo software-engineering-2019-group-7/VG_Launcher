@@ -17,12 +17,30 @@ namespace VG_Launcher
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+    public class Game
+    {
+        public Game(string _name, string _path, string _image)
+        {
+            name = _name;
+            path = _path;
+            image = _image;
+        }
+
+        public string name;
+        public string path;
+        public string image;
+    }
+
+
+
     public partial class MainWindow : Window
     {
 
         public MainWindow()
         {
-
+            #region DPI Scaling fix (TEMPORARY) (Makes other DPIs look like trash)
             var setDpiHwnd = typeof(HwndTarget).GetField("_setDpi", BindingFlags.Static | BindingFlags.NonPublic);
             setDpiHwnd?.SetValue(null, false);
 
@@ -40,46 +58,50 @@ namespace VG_Launcher
             var setDpiYValues = (List<double>)typeof(UIElement).GetField("DpiScaleYValues", BindingFlags.Static | BindingFlags.NonPublic)?.GetValue(null);
 
             setDpiYValues?.Insert(0, 1);
-
+            #endregion 
 
             InitializeComponent();
         }
 
-        void CreateButtons()
+        void CreateButtons(List<Game> list)
         {
-            Button btn = new Button();
 
-            ///this chunk will let us set the buttons to whatever we wanted them to look like.
-            ///Picture backgrounds included, but they need to be downloaded as of right now. Will look into this.
-            ///
-            btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with the name of the game or an identitier
-            btn.Content = "Path of Exile"; //replace this with the name of the game recieved
+            foreach (Game game in list)
+            {
 
-            btn.Width = 360;
-            btn.Height = 160;
-            btn.Margin = new Thickness(10);
-            btn.HorizontalContentAlignment = HorizontalAlignment.Center;
-            btn.VerticalContentAlignment = VerticalAlignment.Bottom;
-            btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CFFFFFF"));
-            btn.FontSize = 48;
-            btn.FontWeight = FontWeights.SemiBold;
-            btn.Style = Resources["noHighlightButton"] as Style;
-            ///This section deals with the background picture. We will have to change this for sure if we are getting them from the internet. 
-            ///I suppose we will have to download the images regardless, so maybe we will have the actual images at this point? 
-            ///Steam and others load a default background and replace it when they have the actual image (maybe do this on a different thread?)
-            Uri resourceUri = new Uri("Resources/header.jpg", UriKind.Relative); //the jpg file location is what needs to be changed here
-            StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
-            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-            var brush = new ImageBrush();
-            brush.ImageSource = temp;
-            btn.Background = brush;
+                Button btn = new Button();
+                btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with an identitier ie: game.id
+                btn.Content = game.name;
+                btn.Tag = game;
+                ///This section deals with the background picture. We will have to change this for sure if we are getting them from the internet. 
+                ///I suppose we will have to download the images regardless, so maybe we will have the actual images at this point? 
+                ///Steam and others load a default background and replace it when they have the actual image (maybe do this on a different thread?)
+                Uri resourceUri = new Uri("Resources/" + game.image , UriKind.Relative);
+                StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+                BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+                var brush = new ImageBrush();
+                brush.ImageSource = temp;
+                btn.Background = brush;
 
-            //This lets us click the button. All of the buttons will share a function called Button_Click so we will have to be creative.
-            //Theres no way we can create a method for each new button, at least not that I know of. 
-            btn.Click += Button_Click;
 
-            gameWrapPanel.Children.Add(btn);
+                //Static values. All buttons should have the same values for these.
+                btn.Width = 360;
+                btn.Height = 160;
+                btn.Margin = new Thickness(10);
+                btn.HorizontalContentAlignment = HorizontalAlignment.Center;
+                btn.VerticalContentAlignment = VerticalAlignment.Bottom;
+                btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CFFFFFF"));
+                btn.FontSize = 48;
+                btn.FontWeight = FontWeights.SemiBold;
+                btn.Style = Resources["noHighlightButton"] as Style;
 
+                //This lets us click the button. All of the buttons will share a function called Button_Click so we will have to be creative.
+                //Theres no way we can create a method for each new button, at least not that I know of. 
+                btn.Click += Button_Click;
+
+                gameWrapPanel.Children.Add(btn);
+
+            }
         }
 
         private void ServiceLoader_Click(object sender, RoutedEventArgs e)
@@ -90,16 +112,29 @@ namespace VG_Launcher
 
         private void Addbtns_Click(object sender, RoutedEventArgs e)
         {
-            CreateButtons();
+            List<Game> games = new List<Game>();
+            games.Add(new Game("Path of Exile", "pathofexile.exe", "pathofexile.png"));
+            games.Add(new Game("Grand Theft Auto V", "GTAV.exe", "gtav.png"));
+            games.Add(new Game("Terraria", "terraria.exe", "terraria.png"));
+            games.Add(new Game("Risk of Rain", "riskofrain.exe", "riskofrain.png"));
+            CreateButtons(games);
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button; //lets us edit the button that sent the function call
+
+
             GameScreen gs = new GameScreen();
-            gs.Title = btn.Content.ToString();
+            Game game = (Game) btn.Tag;
             gs.Name = "gs";
+            gs.gameName.Content = btn.Content;
+            gs.image.Source = new BitmapImage(new Uri("Resources/"+game.image, UriKind.Relative));
+            //this is where we would link the game the button is related to to the gameScreen
+
+
+            //location of gamescreen
             Point point = btn.PointToScreen(new Point(0, 0));
             if ((point.X + gs.Width) > (mainWindow.Left + mainWindow.Width))
             {
