@@ -27,9 +27,8 @@ public class Library
     public Boolean isLocked(Game game); //check and return if game has parental lock on
     public void addGame();/*manually add a game, take in as many parameters as given, leave the rest blank. Append new game to file
         probably will call from a pop-up, path & title will be necessary at minimum*/
-
-
 }
+
 public void Library.startUp(Game game)
 {
     gamePath = game.Path; //Get path for game to launch
@@ -41,7 +40,7 @@ public void Library.startUp(Game game)
             myProcess.StartInfo.UseShellExecute = false;
             
             myProcess.StartInfo.FileName = gamePath;
-            myProcess.Start();
+            myProcess.Start(launchOptions);
             
         }
     }
