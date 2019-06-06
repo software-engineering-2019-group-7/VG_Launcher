@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:VG_Launcher"
         mc:Ignorable="d" Height="800" Width="1550" WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing" LocationChanged="MainWindow_LocationChanged" SizeChanged="MainWindow_SizeChanged">
     <Window.Resources>
         <Style x:Key="noHighlightButton" TargetType="Button">
@@ -23,7 +22,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Background="#FF242B3C" >
+    <Grid Background="#FF242B3C">
         <Button x:Name="serviceLoader" Content="Services" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="50" Click="ServiceLoader_Click" Height="40"/>
         <ScrollViewer x:Name="gameSroller" Margin="10,58,0,0" VerticalScrollBarVisibility="Auto" >
             <WrapPanel x:Name="gameWrapPanel" Width="{Binding Path=ActualWidth}" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" MinWidth="100" MinHeight="100" >

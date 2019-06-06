@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
@@ -16,8 +19,29 @@ namespace VG_Launcher
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
+
+            var setDpiHwnd = typeof(HwndTarget).GetField("_setDpi", BindingFlags.Static | BindingFlags.NonPublic);
+            setDpiHwnd?.SetValue(null, false);
+
+            var setProcessDpiAwareness = typeof(HwndTarget).GetProperty("ProcessDpiAwareness", BindingFlags.Static | BindingFlags.NonPublic);
+            setProcessDpiAwareness?.SetValue(null, 1, null);
+
+            var setDpi = typeof(UIElement).GetField("_setDpi", BindingFlags.Static | BindingFlags.NonPublic);
+
+            setDpi?.SetValue(null, false);
+
+            var setDpiXValues = (List<double>)typeof(UIElement).GetField("DpiScaleXValues", BindingFlags.Static | BindingFlags.NonPublic)?.GetValue(null);
+
+            setDpiXValues?.Insert(0, 1);
+
+            var setDpiYValues = (List<double>)typeof(UIElement).GetField("DpiScaleYValues", BindingFlags.Static | BindingFlags.NonPublic)?.GetValue(null);
+
+            setDpiYValues?.Insert(0, 1);
+
+
             InitializeComponent();
         }
 
@@ -77,19 +101,19 @@ namespace VG_Launcher
             gs.Title = btn.Content.ToString();
             gs.Name = "gs";
             Point point = btn.PointToScreen(new Point(0, 0));
-            if ((point.X+gs.Width) > (mainWindow.Left+mainWindow.Width))
+            if ((point.X + gs.Width) > (mainWindow.Left + mainWindow.Width))
             {
-                gs.Left = point.X - (gs.Width-btn.Width);
+                gs.Left = point.X - (gs.Width - btn.Width);
                 gs.Top = point.Y + btn.Height + 2;
             }
-            else if (point.X-90 < mainWindow.Left)
+            else if (point.X - 90 < mainWindow.Left)
             {
                 gs.Left = point.X;
                 gs.Top = point.Y + btn.Height + 2;
             }
             else
             {
-                gs.Left = point.X-90;
+                gs.Left = point.X - 90;
                 gs.Top = point.Y + btn.Height + 2;
             }
 
@@ -101,7 +125,8 @@ namespace VG_Launcher
         {
             foreach (Window w in App.Current.Windows)
             {
-                if (w.Name.Equals("gs")){
+                if (w.Name.Equals("gs"))
+                {
                     w.Close();
                 }
             }
