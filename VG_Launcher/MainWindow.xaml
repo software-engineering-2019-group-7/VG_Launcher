@@ -3,18 +3,35 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:VG_Launcher"
-        mc:Ignorable="d" Height="800" Width="1348.5" WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing">
-    <Grid Background="#FF242B3C" >
-        <Button x:Name="serviceLoader" Content="Services" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top" Width="75" Click="ServiceLoader_Click" Height="58"/>
-        <ScrollViewer x:Name="gameSroller" Margin="106,0,0,0" VerticalScrollBarVisibility="Auto" >
+        mc:Ignorable="d" Height="800" Width="1550" WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing" LocationChanged="MainWindow_LocationChanged" SizeChanged="MainWindow_SizeChanged">
+    <Window.Resources>
+        <Style x:Key="noHighlightButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FF242B3C">
+        <Button x:Name="serviceLoader" Content="Services" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="50" Click="ServiceLoader_Click" Height="40"/>
+        <ScrollViewer x:Name="gameSroller" Margin="10,58,0,0" VerticalScrollBarVisibility="Auto" >
             <WrapPanel x:Name="gameWrapPanel" Width="{Binding Path=ActualWidth}" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" MinWidth="100" MinHeight="100" >
                 <WrapPanel.Effect>
                     <DropShadowEffect ShadowDepth="9" BlurRadius="9"/>
                 </WrapPanel.Effect>
             </WrapPanel>
         </ScrollViewer>
-        <Button x:Name="addbtns" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="63" Margin="22,690,0,0" Click="Addbtns_Click" Height="47"/>
-        <Rectangle x:Name="clickReciever" Fill="#4C000000" Stroke="Black" Margin="0,0,0.4,0.4" Visibility="Hidden" MouseDown="ClickReciever_MouseDown"/>
+        <Button x:Name="addbtns" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="72,10,0,0" Click="Addbtns_Click" Height="40"/>
+        <Rectangle x:Name="clickReciever" Fill="#7F000000" Stroke="Black" Margin="0,0,0.4,0.4" Visibility="Hidden" MouseDown="ClickReciever_MouseDown"/>
     </Grid>
 </Window>
