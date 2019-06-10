@@ -19,24 +19,9 @@ namespace VG_Launcher
     /// </summary>
     /// 
 
-    public class Game
-    {
-        public Game(string _name, string _path, string _image)
-        {
-            name = _name;
-            path = _path;
-            image = _image;
-        }
-
-        public string name;
-        public string path;
-        public string image;
-    }
-
-
-
     public partial class MainWindow : Window
     {
+        public Library Curlibrary { get; private set; }
 
         public MainWindow()
         {
@@ -65,8 +50,9 @@ namespace VG_Launcher
 
         void CreateButtons(List<Game> list)
         {
-
-            foreach (Game game in list)
+            Curlibrary = new Library();
+            Curlibrary.InitLib();
+            foreach (Game game in Curlibrary.gameList)
             {
 
                 Button btn = new Button();
@@ -113,10 +99,10 @@ namespace VG_Launcher
         private void Addbtns_Click(object sender, RoutedEventArgs e)
         {
             List<Game> games = new List<Game>();
-            games.Add(new Game("Path of Exile", "pathofexile.exe", "pathofexile.png"));
-            games.Add(new Game("Grand Theft Auto V", "GTAV.exe", "gtav.png"));
-            games.Add(new Game("Terraria", "terraria.exe", "terraria.png"));
-            games.Add(new Game("Risk of Rain", "riskofrain.exe", "riskofrain.png"));
+            //games.Add(new Game("Path of Exile", "pathofexile.exe", "pathofexile.png"));
+            //games.Add(new Game("Grand Theft Auto V", "GTAV.exe", "gtav.png"));
+            //games.Add(new Game("Terraria", "terraria.exe", "terraria.png"));
+            //games.Add(new Game("Risk of Rain", "riskofrain.exe", "riskofrain.png"));
             CreateButtons(games);
 
         }

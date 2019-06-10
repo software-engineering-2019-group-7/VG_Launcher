@@ -1,0 +1,34 @@
+[
+	{ 
+		"name": "Path of Exile",
+		"path": "pathofexile.exe",
+		"image": "pathofexile.png",
+		"hours": "0",
+		"parentLock": "",
+		"settings": "",
+	},
+	{
+		"name": "Grand Theft Auto V",
+		"path": "GTAV.exe",
+		"image": "gtav.png",
+		"hours": "0",
+		"parentLock": "",
+		"settings": "",
+	},
+	{
+		"name": "Terraria",
+		"path": "terraria.exe",
+		"image": "terraria.png",
+		"hours": "0",
+		"parentLock": "",
+		"settings": "",
+	},
+	{
+		"name": "Risk of Rain",
+		"path": "riskofrain.exe",
+		"image": "riskofrain.png",
+		"hours": "0",
+		"parentLock": "",
+		"settings": "",
+	},
+]
