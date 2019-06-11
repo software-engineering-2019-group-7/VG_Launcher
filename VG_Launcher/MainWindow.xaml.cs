@@ -99,12 +99,7 @@ namespace VG_Launcher
         private void Addbtns_Click(object sender, RoutedEventArgs e)
         {
             List<Game> games = new List<Game>();
-            //games.Add(new Game("Path of Exile", "pathofexile.exe", "pathofexile.png"));
-            //games.Add(new Game("Grand Theft Auto V", "GTAV.exe", "gtav.png"));
-            //games.Add(new Game("Terraria", "terraria.exe", "terraria.png"));
-            //games.Add(new Game("Risk of Rain", "riskofrain.exe", "riskofrain.png"));
             CreateButtons(games);
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
