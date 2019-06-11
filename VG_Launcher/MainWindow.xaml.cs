@@ -184,3 +184,24 @@ namespace VG_Launcher
         }
     }
 }
+
+
+
+//Game image api
+
+//https://www.steamgriddb.com/api/v2/search/autocomplete/{term}
+//Where term is game name
+// returns an array
+// array[0].id is game id we want
+
+
+//https://www.steamgriddb.com/api/v2/grids/game/{gameId}
+//Where gameId is array[0].id
+//returns an array of images
+//  - we want an image with the "blurred" style tag. 
+//  - so if image[i].sytle == "blurred"
+//  - use this image, it is stored at url image[i].url
+
+
+
+

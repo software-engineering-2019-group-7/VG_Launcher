@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -29,6 +30,18 @@ namespace VG_Launcher
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                using (Process myProcess = new Process())
+                {
+                    myProcess.StartInfo.UseShellExecute = true;
+                    myProcess.StartInfo.FileName = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe";
+                    myProcess.Start();
+                }
+            }catch(Exception exe)
+            {
+                Console.WriteLine(exe.Message);
+            }
             Trace.WriteLine("Launched");//launch the exe
             this.Close();
         }
