@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -83,15 +84,22 @@ namespace VG_Launcher
 
                 //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
                 //But I am storing it just in case we can figure out how to use it
-                wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
-
+                if (!File.Exists("../../Resources/" + CleanName(game.name).ToLower() + ".png"))
+                {
+                    Console.WriteLine("Pulled image " + game.name);
+                    wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
+                }
 
 
 
                 ImageBrush myBrush = new ImageBrush();
 
                 //This is able to pull the image straight from the url, but it would be great to use the downloaded image.
-                myBrush.ImageSource = new BitmapImage(new Uri(imageUrl, UriKind.Absolute));
+                //myBrush.ImageSource = new BitmapImage(new Uri(imageUrl, UriKind.Absolute));
+
+                //This is the broken uri resource
+                myBrush.ImageSource = new BitmapImage(new Uri("../../Resources/" + CleanName(game.name).ToLower() + ".png", UriKind.Relative));
+
                 btn.Background = myBrush;
 
 
@@ -145,11 +153,18 @@ namespace VG_Launcher
             Game game = (Game)btn.Tag;
             gs.Name = "gs";
             gs.gameName.Content = btn.Content;
-            gs.image.Source = new BitmapImage(new Uri(game.image, UriKind.Absolute));
-            //this is where we would link the game the button is related to to the gameScreen
+
+            //Setting up the background image
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri("../../Resources/" + CleanName(game.name).ToLower() + ".png", UriKind.Relative);
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            gs.image.Source = bitmapImage;
 
 
             //location of gamescreen
+            //TODO: MAKE SURE THE POPUP DOESNT MOVE PAST THE BOTTOM OF THE WINDOW
             Point point = btn.PointToScreen(new Point(0, 0));
             if ((point.X + gs.Width) > (mainWindow.Left + mainWindow.Width))
             {
