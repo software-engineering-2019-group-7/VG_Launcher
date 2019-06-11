@@ -118,16 +118,5 @@
   <ItemGroup>
     <Resource Include="Resources\play.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\gtav.png" />
-    <Resource Include="Resources\riskofrain.png" />
-    <Resource Include="Resources\terraria.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\pathofexile.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\test.gif" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

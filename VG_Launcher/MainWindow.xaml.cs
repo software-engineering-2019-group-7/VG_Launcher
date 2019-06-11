@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -59,15 +61,40 @@ namespace VG_Launcher
                 btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with an identitier ie: game.id
                 btn.Content = game.name;
                 btn.Tag = game;
-                ///This section deals with the background picture. We will have to change this for sure if we are getting them from the internet. 
-                ///I suppose we will have to download the images regardless, so maybe we will have the actual images at this point? 
-                ///Steam and others load a default background and replace it when they have the actual image (maybe do this on a different thread?)
-                Uri resourceUri = new Uri("Resources/" + game.image , UriKind.Relative);
-                StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
-                BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-                var brush = new ImageBrush();
-                brush.ImageSource = temp;
-                btn.Background = brush;
+
+                WebClient wc = new WebClient();
+                var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name);
+
+                //Choose the first game in the list. The first one most closely matches the name
+                dynamic idJson = JsonConvert.DeserializeObject(json);
+                dynamic firstGameInArray = idJson["data"][0];
+                string gameId = firstGameInArray.id;
+
+                json = wc.DownloadString("https://www.steamgriddb.com/api/v2/grids/game/" + gameId);
+                dynamic imageJson = JsonConvert.DeserializeObject(json);
+
+                //Choose the first image in the list. We can obviously choose an image based on its properties.
+                //For instance, we could check::::  imageJson["data"][0]["style"] == "blurred"
+                //and if thats not true we could go down the image list
+                string imageUrl = imageJson["data"][0]["url"];
+                game.image = imageUrl;
+
+
+
+                //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
+                //But I am storing it just in case we can figure out how to use it
+                wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
+
+
+
+
+                ImageBrush myBrush = new ImageBrush();
+
+                //This is able to pull the image straight from the url, but it would be great to use the downloaded image.
+                myBrush.ImageSource = new BitmapImage(new Uri(imageUrl, UriKind.Absolute));
+                btn.Background = myBrush;
+
+
 
 
                 //Static values. All buttons should have the same values for these.
@@ -90,11 +117,18 @@ namespace VG_Launcher
             }
         }
 
+        private string CleanName(string str)
+        {
+            str = str.Replace(" ", "_");
+            return str;
+        }
+
         private void ServiceLoader_Click(object sender, RoutedEventArgs e)
         {
             ServiceProvider sp = new ServiceProvider();
             sp.ShowDialog();
         }
+
 
         private void Addbtns_Click(object sender, RoutedEventArgs e)
         {
@@ -108,10 +142,10 @@ namespace VG_Launcher
 
 
             GameScreen gs = new GameScreen();
-            Game game = (Game) btn.Tag;
+            Game game = (Game)btn.Tag;
             gs.Name = "gs";
             gs.gameName.Content = btn.Content;
-            gs.image.Source = new BitmapImage(new Uri("Resources/"+game.image, UriKind.Relative));
+            gs.image.Source = new BitmapImage(new Uri(game.image, UriKind.Absolute));
             //this is where we would link the game the button is related to to the gameScreen
 
 
