@@ -69,6 +69,7 @@ namespace VG_Launcher
         {
             /*manually add a game, take in as many parameters as given, leave the rest blank. Append new game to file
                 probably will call from a pop-up, path & title will be necessary at minimum*/
+            //Add the new game object to list, re-serialize the list of games into new json file
         }
         public void InitLib()
         {
