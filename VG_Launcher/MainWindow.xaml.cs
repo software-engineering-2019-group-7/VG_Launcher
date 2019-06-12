@@ -63,52 +63,42 @@ namespace VG_Launcher
                 btn.Content = game.name;
                 btn.Tag = game;
 
-                WebClient wc = new WebClient();
-                var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name);
-
-                //Choose the first game in the list. The first one most closely matches the name
-                dynamic idJson = JsonConvert.DeserializeObject(json);
-                dynamic firstGameInArray = idJson["data"][0];
-                string gameId = firstGameInArray.id;
-
-                json = wc.DownloadString("https://www.steamgriddb.com/api/v2/grids/game/" + gameId);
-                dynamic imageJson = JsonConvert.DeserializeObject(json);
-
-                //Choose the first image in the list. We can obviously choose an image based on its properties.
-                //For instance, we could check::::  imageJson["data"][0]["style"] == "blurred"
-                //and if thats not true we could go down the image list
-                string imageUrl = imageJson["data"][0]["url"];
-                game.image = imageUrl;
-
-
-
-                //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
-                //But I am storing it just in case we can figure out how to use it
                 if (!File.Exists("../../Resources/" + CleanName(game.name).ToLower() + ".png"))
                 {
+                    WebClient wc = new WebClient();
+                    var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name);
+
+                    //Choose the first game in the list. The first one most closely matches the name
+                    dynamic idJson = JsonConvert.DeserializeObject(json);
+                    dynamic firstGameInArray = idJson["data"][0];
+                    string gameId = firstGameInArray.id;
+
+                    json = wc.DownloadString("https://www.steamgriddb.com/api/v2/grids/game/" + gameId);
+                    dynamic imageJson = JsonConvert.DeserializeObject(json);
+
+                    //Choose the first image in the list. We can obviously choose an image based on its properties.
+                    //For instance, we could check::::  imageJson["data"][0]["style"] == "blurred"
+                    //and if thats not true we could go down the image list
+                    string imageUrl = imageJson["data"][0]["url"];
+                    game.image = imageUrl;
+
+
+
+                    //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
+                    //But I am storing it just in case we can figure out how to use it
+
                     Console.WriteLine("Pulled image " + game.name);
                     wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
                 }
 
-
-
                 ImageBrush myBrush = new ImageBrush();
-
-                //This is able to pull the image straight from the url, but it would be great to use the downloaded image.
-                //myBrush.ImageSource = new BitmapImage(new Uri(imageUrl, UriKind.Absolute));
-
-                //This is the broken uri resource
                 myBrush.ImageSource = new BitmapImage(new Uri("../../Resources/" + CleanName(game.name).ToLower() + ".png", UriKind.Relative));
-
                 btn.Background = myBrush;
-
-
-
 
                 //Static values. All buttons should have the same values for these.
                 btn.Width = 360;
                 btn.Height = 160;
-                btn.Margin = new Thickness(10);
+                btn.Margin = new Thickness(8);
                 btn.HorizontalContentAlignment = HorizontalAlignment.Center;
                 btn.VerticalContentAlignment = VerticalAlignment.Bottom;
                 btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CFFFFFF"));
@@ -121,7 +111,6 @@ namespace VG_Launcher
                 btn.Click += Button_Click;
 
                 gameWrapPanel.Children.Add(btn);
-
             }
         }
 
@@ -181,7 +170,10 @@ namespace VG_Launcher
                 gs.Left = point.X - 90;
                 gs.Top = point.Y + btn.Height + 2;
             }
-
+            if ((point.Y + gs.Height + btn.Height) > (mainWindow.Top + mainWindow.Height))
+            {
+                gs.Top = point.Y - gs.Height - 2;
+            }
             gs.Show();
             clickReciever.Visibility = Visibility.Visible;
         }
