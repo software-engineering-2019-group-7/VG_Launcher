@@ -56,65 +56,70 @@ namespace VG_Launcher
             Curlibrary = new Library();
             Curlibrary.InitLib();
             foreach (Game game in Curlibrary.gameList)
+            //foreach (Game game in list)
             {
-
-                Button btn = new Button();
-                btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with an identitier ie: game.id
-                btn.Content = game.name;
-                btn.Tag = game;
-
-                if (!File.Exists("../../Resources/" + CleanName(game.name).ToLower() + ".png"))
+                if (game.name != "Steamworks Common Redistributables") //Will have to put in much safer safegaurds than this.
                 {
-                    WebClient wc = new WebClient();
-                    var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name);
 
-                    //Choose the first game in the list. The first one most closely matches the name
-                    dynamic idJson = JsonConvert.DeserializeObject(json);
-                    dynamic firstGameInArray = idJson["data"][0];
-                    string gameId = firstGameInArray.id;
+                    Button btn = new Button();
+                    btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with an identitier ie: game.id
+                    btn.Tag = game;
+                    if (!File.Exists("../../Resources/" + CleanName(game.name).ToLower() + ".png"))
+                    {
+                        Console.WriteLine(game.name);
+                        WebClient wc = new WebClient();
+                        var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name);
 
-                    json = wc.DownloadString("https://www.steamgriddb.com/api/v2/grids/game/" + gameId);
-                    dynamic imageJson = JsonConvert.DeserializeObject(json);
+                        //Choose the first game in the list. The first one most closely matches the name
+                        dynamic idJson = JsonConvert.DeserializeObject(json);
+                        dynamic firstGameInArray = idJson["data"][0];
+                        string gameId = firstGameInArray.id;
 
-                    //Choose the first image in the list. We can obviously choose an image based on its properties.
-                    //For instance, we could check::::  imageJson["data"][0]["style"] == "blurred"
-                    //and if thats not true we could go down the image list
-                    string imageUrl = imageJson["data"][0]["url"];
-                    game.image = imageUrl;
+                        json = wc.DownloadString("https://www.steamgriddb.com/api/v2/grids/game/" + gameId);
+                        dynamic imageJson = JsonConvert.DeserializeObject(json);
+
+                        //Choose the first image in the list. We can obviously choose an image based on its properties.
+                        //For instance, we could check::::  imageJson["data"][0]["style"] == "blurred"
+                        //and if thats not true we could go down the image list
+                        string imageUrl = imageJson["data"][0]["url"];
+                        game.image = imageUrl;
 
 
 
-                    //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
-                    //But I am storing it just in case we can figure out how to use it
+                        //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
+                        //But I am storing it just in case we can figure out how to use it
 
-                    Console.WriteLine("Pulled image " + game.name);
-                    wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
+                        Console.WriteLine("Pulled image " + game.name);
+                        wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
+                    }
+                    if (File.Exists("../../Resources/" + CleanName(game.name).ToLower() + ".png"))
+                    {
+
+                        ImageBrush myBrush = new ImageBrush();
+                        myBrush.ImageSource = new BitmapImage(new Uri("../../Resources/" + CleanName(game.name).ToLower() + ".png", UriKind.Relative));
+                        btn.Background = myBrush;
+                    }
+                    //Static values. All buttons should have the same values for these.
+                    btn.Width = 360;
+                    btn.Height = 160;
+                    btn.Margin = new Thickness(8);
+                    btn.HorizontalContentAlignment = HorizontalAlignment.Center;
+                    btn.VerticalContentAlignment = VerticalAlignment.Bottom;
+                    btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CFFFFFF"));
+                    btn.FontSize = 48;
+                    btn.FontWeight = FontWeights.SemiBold;
+                    btn.Style = Resources["noHighlightButton"] as Style;
+
+                    //This lets us click the button. All of the buttons will share a function called Button_Click so we will have to be creative.
+                    //Theres no way we can create a method for each new button, at least not that I know of. 
+                    btn.Click += Button_Click;
+
+                    gameWrapPanel.Children.Add(btn);
                 }
-
-                ImageBrush myBrush = new ImageBrush();
-                myBrush.ImageSource = new BitmapImage(new Uri("../../Resources/" + CleanName(game.name).ToLower() + ".png", UriKind.Relative));
-                btn.Background = myBrush;
-
-                //Static values. All buttons should have the same values for these.
-                btn.Width = 360;
-                btn.Height = 160;
-                btn.Margin = new Thickness(8);
-                btn.HorizontalContentAlignment = HorizontalAlignment.Center;
-                btn.VerticalContentAlignment = VerticalAlignment.Bottom;
-                btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CFFFFFF"));
-                btn.FontSize = 48;
-                btn.FontWeight = FontWeights.SemiBold;
-                btn.Style = Resources["noHighlightButton"] as Style;
-
-                //This lets us click the button. All of the buttons will share a function called Button_Click so we will have to be creative.
-                //Theres no way we can create a method for each new button, at least not that I know of. 
-                btn.Click += Button_Click;
-
-                gameWrapPanel.Children.Add(btn);
             }
         }
 
-        private string CleanName(string str)
+        public string CleanName(string str)
         {
             str = str.Replace(" ", "_");
             return str;
@@ -127,13 +132,13 @@ namespace VG_Launcher
         }
 
 
-        private void Addbtns_Click(object sender, RoutedEventArgs e)
+        public void Addbtns_Click(object sender, RoutedEventArgs e)
         {
             List<Game> games = new List<Game>();
             CreateButtons(games);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void Button_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button; //lets us edit the button that sent the function call
 
@@ -170,7 +175,8 @@ namespace VG_Launcher
                 gs.Left = point.X - 90;
                 gs.Top = point.Y + btn.Height + 2;
             }
-            if ((point.Y + gs.Height + btn.Height) > (mainWindow.Top + mainWindow.Height))
+            //this will keep the gamescreens from going off the bottom of the window
+            if ((point.Y + gs.Height + btn.Height ) > (mainWindow.Top + mainWindow.Height))
             {
                 gs.Top = point.Y - gs.Height - 2;
             }
@@ -218,26 +224,22 @@ namespace VG_Launcher
             }
             clickReciever.Visibility = Visibility.Hidden;
         }
+
+        private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void GameScroller_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        }
     }
 }
-
-
-
-//Game image api
-
-//https://www.steamgriddb.com/api/v2/search/autocomplete/{term}
-//Where term is game name
-// returns an array
-// array[0].id is game id we want
-
-
-//https://www.steamgriddb.com/api/v2/grids/game/{gameId}
-//Where gameId is array[0].id
-//returns an array of images
-//  - we want an image with the "blurred" style tag. 
-//  - so if image[i].sytle == "blurred"
-//  - use this image, it is stored at url image[i].url
-
-
-
-

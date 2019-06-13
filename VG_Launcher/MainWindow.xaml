@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" Height="800" Width="1570" WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing" LocationChanged="MainWindow_LocationChanged" SizeChanged="MainWindow_SizeChanged" WindowStyle="ThreeDBorderWindow">
+        mc:Ignorable="d" Height="800" Width="1570" WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing" LocationChanged="MainWindow_LocationChanged" SizeChanged="MainWindow_SizeChanged" WindowStyle="ToolWindow" MouseDown="MainWindow_MouseDown">
     <Window.Resources>
         <Style x:Key="noHighlightButton" TargetType="Button">
             <Setter Property="Template">
@@ -22,9 +22,9 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Background="#FF242B3C">
+    <Grid Background="#FF242B3C" MouseDown="Grid_MouseDown">
         <Button x:Name="serviceLoader" Content="Services" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="50" Click="ServiceLoader_Click" Height="40"/>
-        <ScrollViewer x:Name="gameSroller" Margin="0,58,0,0" VerticalScrollBarVisibility="Auto" >
+        <ScrollViewer x:Name="gameScroller" Margin="0,58,0,0" VerticalScrollBarVisibility="Auto" MouseDown="GameScroller_MouseDown" >
             <WrapPanel x:Name="gameWrapPanel" Width="{Binding Path=ActualWidth}" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" MinWidth="100" MinHeight="100" >
                 <WrapPanel.Effect>
                     <DropShadowEffect ShadowDepth="9" BlurRadius="9"/>
@@ -33,5 +33,6 @@
         </ScrollViewer>
         <Button x:Name="addbtns" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="72,10,0,0" Click="Addbtns_Click" Height="40"/>
         <Rectangle x:Name="clickReciever" Fill="#7F000000" Stroke="Black" Margin="0,0,0.4,0.4" Visibility="Hidden" MouseDown="ClickReciever_MouseDown"/>
+        <Button x:Name="close" Content="X" HorizontalAlignment="Left" Margin="1522,10,0,0" VerticalAlignment="Top" Width="30" Height="30" FontWeight="Bold" Click="Close_Click" Visibility="Hidden"/>
     </Grid>
 </Window>

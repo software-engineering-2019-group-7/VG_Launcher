@@ -24,14 +24,6 @@
     "settings": ""
   },
   {
-    "name": "Risk of Rain",
-    "path": "riskofrain.exe",
-    "image": "riskofrain.png",
-    "hours": "0",
-    "parentLock": "",
-    "settings": ""
-  },
-  {
     "name": "Fortnite",
     "path": "fortnite.exe",
     "image": "fortnite.png",

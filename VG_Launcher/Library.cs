@@ -21,6 +21,7 @@ namespace VG_Launcher
             parentLock = _lock;
             settings = _settings;
         }
+        public Game() { }
         public string name;
         public string path;
         public string image;
