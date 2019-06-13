@@ -28,9 +28,14 @@ namespace VG_Launcher
                 }
             }
             //SomeFunctionThatWillTakeInTheList();
+            foreach (string s in GetSteamGameList())
+                Console.WriteLine(s);
+            foreach (string s in GetSteamInstallDirectoryList())
+                Console.WriteLine(s);
             this.Close();
         }
-        private string[] GetSteamGameDirectoryList()
+
+        private string GetSteamDirectory()
         {
             string steamInstallPath = "";
             RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
@@ -46,12 +51,68 @@ namespace VG_Launcher
                 steamInstallPath = (string)registryEntry;
             localMachineRegistry.Close();
             steamRegistryKey.Close();
-            string steamLibraryPath = Path.Combine(steamInstallPath, @"steamapps");
+            return Path.Combine(steamInstallPath, @"steamapps");
+        }
+        private string[] GetSteamGameDirectoryList()
+        {
             // For the sake of simplicity (since it can only be done manually these days), we will assume that the user only has one Steam library folder, and that it is not external. This means no reading from libraryfolders.vdf
-            steamLibraryPath = Path.Combine(steamLibraryPath, @"common");
+            string steamLibraryPath = Path.Combine(GetSteamDirectory(), @"common");
             if (Directory.Exists(steamLibraryPath))
                 return Directory.GetDirectories(steamLibraryPath);
             return null;
+        }
+
+        private string[] GetSteamGameList()
+        {
+            string steamAppPath = GetSteamDirectory();
+            List<string> gameList = new List<string>();
+            foreach(string manifest in Directory.EnumerateFiles(steamAppPath, "*.acf"))
+            {
+                foreach(string line in File.ReadLines(manifest))
+                {
+                    if(line.Contains("name"))
+                    {
+                        int quoteCount = 0;
+                        int i = 0;
+                        for(i = 0; i < line.Length; ++i)
+                        {
+                            if(line[i] == '\"')
+                                quoteCount++;
+                            if (quoteCount > 2)
+                                break;
+                        }
+                        if(i < line.Length)
+                            gameList.Add(line.Substring(i + 1, line.Length - i - 2)); // we chop off the ends to avoid the quotes
+                    }
+                }
+            }
+            return gameList.ToArray();
+        }
+        private string[] GetSteamInstallDirectoryList()
+        {
+            string steamAppPath = GetSteamDirectory();
+            List<string> gameList = new List<string>();
+            foreach (string manifest in Directory.EnumerateFiles(steamAppPath, "*.acf"))
+            {
+                foreach (string line in File.ReadLines(manifest))
+                {
+                    if (line.Contains("installdir"))
+                    {
+                        int quoteCount = 0;
+                        int i;
+                        for (i = 0; i < line.Length; ++i)
+                        {
+                            if (line[i] == '\"')
+                                quoteCount++;
+                            if (quoteCount > 2)
+                                break;
+                        }
+                        if (i < line.Length)
+                            gameList.Add(line.Substring(i + 1, line.Length - i - 2)); // we chop off the ends to avoid the quotes
+                    }
+                }
+            }
+            return gameList.ToArray();
         }
     }
 }
