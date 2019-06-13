@@ -51,6 +51,17 @@ namespace VG_Launcher
             InitializeComponent();
         }
 
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            // Begin dragging the window
+            this.DragMove();
+        }
+
+
+
         public void CreateButtons(List<Game> list)
         {
             Curlibrary = new Library();
