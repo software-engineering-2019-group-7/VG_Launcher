@@ -62,5 +62,21 @@
     "hours": "0",
     "parentLock": "",
     "settings": ""
-  }
+  },
+  {
+    "name": "World of Warcraft",
+    "path": "wow.exe",
+    "image": "wow.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+    {
+    "name": "Overwatch",
+    "path": "overwatch.exe",
+    "image": "overwatch.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
 ]

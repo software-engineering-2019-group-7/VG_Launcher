@@ -51,7 +51,7 @@ namespace VG_Launcher
             InitializeComponent();
         }
 
-        void CreateButtons(List<Game> list)
+        public void CreateButtons(List<Game> list)
         {
             Curlibrary = new Library();
             Curlibrary.InitLib();
