@@ -49,6 +49,8 @@ namespace VG_Launcher
             #endregion 
 
             InitializeComponent();
+            Curlibrary = new Library();
+            Curlibrary.InitLib();
         }
 
 
@@ -62,10 +64,8 @@ namespace VG_Launcher
 
 
 
-        public void CreateButtons(List<Game> list)
+        public void CreateButtons()
         {
-            Curlibrary = new Library();
-            Curlibrary.InitLib();
             foreach (Game game in Curlibrary.gameList)
             //foreach (Game game in list)
             {
@@ -85,7 +85,6 @@ namespace VG_Launcher
                         dynamic idJson = JsonConvert.DeserializeObject(json);
                         dynamic firstGameInArray = idJson["data"][0];
                         string gameId = firstGameInArray.id;
-
                         json = wc.DownloadString("https://www.steamgriddb.com/api/v2/grids/game/" + gameId);
                         dynamic imageJson = JsonConvert.DeserializeObject(json);
 
@@ -138,15 +137,16 @@ namespace VG_Launcher
 
         private void ServiceLoader_Click(object sender, RoutedEventArgs e)
         {
-            ServiceProvider sp = new ServiceProvider();
+            ServiceProvider sp = new ServiceProvider(Curlibrary);
             sp.ShowDialog();
+            //Curlibrary = sp.library;
         }
 
 
         public void Addbtns_Click(object sender, RoutedEventArgs e)
         {
             List<Game> games = new List<Game>();
-            CreateButtons(games);
+            CreateButtons();
         }
 
         public void Button_Click(object sender, RoutedEventArgs e)
@@ -169,7 +169,6 @@ namespace VG_Launcher
 
 
             //location of gamescreen
-            //TODO: MAKE SURE THE POPUP DOESNT MOVE PAST THE BOTTOM OF THE WINDOW
             Point point = btn.PointToScreen(new Point(0, 0));
             if ((point.X + gs.Width) > (mainWindow.Left + mainWindow.Width))
             {
@@ -209,6 +208,7 @@ namespace VG_Launcher
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Curlibrary.SaveJson(Curlibrary);
             System.Windows.Application.Current.Shutdown();
         }
 

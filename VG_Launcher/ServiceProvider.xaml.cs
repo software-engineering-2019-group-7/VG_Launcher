@@ -16,10 +16,20 @@ namespace VG_Launcher
     /// </summary>
     public partial class ServiceProvider : Window
     {
+        public Library library = new Library();
+
         public ServiceProvider()
         {
             InitializeComponent();
-        } 
+        }
+
+
+        //Feed in the library that will be added to and set this forms temp library to it
+        public ServiceProvider(Library lib)
+        {
+            InitializeComponent();
+            library = lib;
+        }
 
         public void DoneButton_Click(object sender, RoutedEventArgs e)
         {
@@ -31,7 +41,41 @@ namespace VG_Launcher
                     serviceList.Add(c.Name);
                 }
             }
+
+            //Adding games returned from the Registry Scapers to Library
+            //This will be surrounded with logic that adds lists depending on services the user selects
+            List<Game> added = CreateGamesList(GetSteamGameList());
+
+            //Add the games that the scraper found to the library's gamelist
+            foreach (Game g in added)
+            {
+                library.gameList.Add(g);
+            }
+
+            //Call CreateButtons from here, this removes the button on the Main Window. 
+            //I am keeping the "Add" button so that we can continue to test the scrolling functionality
+            ((MainWindow)Application.Current.MainWindow).CreateButtons();
+
+           
             this.Close();
+        }
+
+        
+
+        public List<Game> CreateGamesList(string[] gameNames)
+        {
+            List<Game> games = new List<Game>();
+
+            //for each of the games the scraper found, create a new game object
+            //We will also add the exe path here when we get that figured out
+            foreach (string name in gameNames)
+            {
+                Game g = new Game();
+                g.name = name;
+                //g.path = path;
+                games.Add(g);
+            }
+            return games;
         }
 
         private string GetSteamDirectory()
@@ -111,6 +155,10 @@ namespace VG_Launcher
                 }
             }
             return gameList.ToArray();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
         }
     }
 }

@@ -77,6 +77,7 @@ namespace VG_Launcher
             //read json file
             //for each, create a new game and push it to the list
             JsonSerializer serializer = new JsonSerializer();
+            serializer.NullValueHandling = NullValueHandling.Include;
             //path for JSON file works for VS directories.. may need adjustment for final product
             using (StreamReader r = new StreamReader(@"../../Resources/lib.JSON"))
             {
@@ -90,7 +91,20 @@ namespace VG_Launcher
                 }
             }
         }
-      
+
+        public void SaveJson(Library lib)
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.NullValueHandling = NullValueHandling.Include;
+            serializer.Formatting = Formatting.Indented;
+            
+            using (StreamWriter sw = new StreamWriter(@"../../Resources/lib.JSON"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                    serializer.Serialize(writer, lib.gameList);
+            }
+        }
+
     }
 
 }

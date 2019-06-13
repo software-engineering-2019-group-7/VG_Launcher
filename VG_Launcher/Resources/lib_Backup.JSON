@@ -63,44 +63,12 @@
     "parentLock": "",
     "settings": ""
   },
-  {
+    {
     "name": "Overwatch",
     "path": "overwatch.exe",
     "image": "overwatch.png",
     "hours": "0",
     "parentLock": "",
     "settings": ""
-  },
-  {
-    "name": "Steamworks Common Redistributables",
-    "path": null,
-    "image": null,
-    "hours": null,
-    "parentLock": null,
-    "settings": null
-  },
-  {
-    "name": "Risk of Rain",
-    "path": null,
-    "image": null,
-    "hours": null,
-    "parentLock": null,
-    "settings": null
-  },
-  {
-    "name": "Crashlands",
-    "path": null,
-    "image": null,
-    "hours": null,
-    "parentLock": null,
-    "settings": null
-  },
-  {
-    "name": "LIMBO",
-    "path": null,
-    "image": null,
-    "hours": null,
-    "parentLock": null,
-    "settings": null
   }
 ]
