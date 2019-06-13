@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Path of Exile",
+    "path": "pathofexile.exe",
+    "image": "pathofexile.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Grand Theft Auto V",
+    "path": "GTAV.exe",
+    "image": "gtav.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Terraria",
+    "path": "terraria.exe",
+    "image": "terraria.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Fortnite",
+    "path": "fortnite.exe",
+    "image": "fortnite.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Battlefield 1",
+    "path": "battlefield1.exe",
+    "image": "battlefield1.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Fallout 76",
+    "path": "fallout76.exe",
+    "image": "fallout76.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Rimworld",
+    "path": "Rimworld.exe",
+    "image": "Rimworld.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "World of Warcraft",
+    "path": "wow.exe",
+    "image": "wow.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+    {
+    "name": "Overwatch",
+    "path": "overwatch.exe",
+    "image": "overwatch.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+]
