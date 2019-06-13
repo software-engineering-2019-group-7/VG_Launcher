@@ -28,10 +28,6 @@ namespace VG_Launcher
                 }
             }
             //SomeFunctionThatWillTakeInTheList();
-            foreach (string s in GetSteamGameList())
-                Console.WriteLine(s);
-            foreach (string s in GetSteamInstallDirectoryList())
-                Console.WriteLine(s);
             this.Close();
         }
 
