@@ -63,6 +63,9 @@
     <Compile Include="GameScreen.xaml.cs">
       <DependentUpon>GameScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MenuScreen.xaml.cs">
+      <DependentUpon>MenuScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ServiceProvider.xaml.cs">
       <DependentUpon>ServiceProvider.xaml</DependentUpon>
     </Compile>
@@ -85,6 +88,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MenuScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ServiceProvider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
