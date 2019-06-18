@@ -56,11 +56,11 @@ namespace VG_Launcher
             //I am keeping the "Add" button so that we can continue to test the scrolling functionality
             ((MainWindow)Application.Current.MainWindow).CreateButtons();
 
-           
+
             this.Close();
         }
 
-        
+
 
         public List<Game> CreateGamesList(string[] gameNames)
         {
@@ -68,12 +68,20 @@ namespace VG_Launcher
 
             //for each of the games the scraper found, create a new game object
             //We will also add the exe path here when we get that figured out
+
             foreach (string name in gameNames)
             {
                 Game g = new Game();
                 g.name = name;
                 //g.path = path;
-                games.Add(g);
+                bool containsGame = false;
+                foreach(Game gm in library.gameList)
+                {
+                    if (gm.name == name)
+                        containsGame = true;
+                }
+                if (!containsGame)
+                    games.Add(g);
             }
             return games;
         }

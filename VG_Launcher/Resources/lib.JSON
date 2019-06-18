@@ -2,7 +2,7 @@
   {
     "name": "Path of Exile",
     "path": "pathofexile.exe",
-    "image": "pathofexile.png",
+    "image": "../../Resources/path_of_exile.png",
     "hours": "0",
     "parentLock": "",
     "settings": ""
@@ -10,7 +10,7 @@
   {
     "name": "Grand Theft Auto V",
     "path": "GTAV.exe",
-    "image": "gtav.png",
+    "image": "../../Resources/grand_theft_auto_v.png",
     "hours": "0",
     "parentLock": "",
     "settings": ""
@@ -18,7 +18,7 @@
   {
     "name": "Terraria",
     "path": "terraria.exe",
-    "image": "terraria.png",
+    "image": "../../Resources/terraria.png",
     "hours": "0",
     "parentLock": "",
     "settings": ""
@@ -26,7 +26,7 @@
   {
     "name": "Fortnite",
     "path": "fortnite.exe",
-    "image": "fortnite.png",
+    "image": "../../Resources/fortnite.png",
     "hours": "0",
     "parentLock": "",
     "settings": ""
@@ -34,7 +34,7 @@
   {
     "name": "Battlefield 1",
     "path": "battlefield1.exe",
-    "image": "battlefield1.png",
+    "image": "../../Resources/battlefield_1.png",
     "hours": "0",
     "parentLock": "",
     "settings": ""
@@ -42,7 +42,7 @@
   {
     "name": "Fallout 76",
     "path": "fallout76.exe",
-    "image": "fallout76.png",
+    "image": "../../Resources/fallout_76.png",
     "hours": "0",
     "parentLock": "",
     "settings": ""
@@ -50,7 +50,7 @@
   {
     "name": "Rimworld",
     "path": "Rimworld.exe",
-    "image": "Rimworld.png",
+    "image": "../../Resources/rimworld.png",
     "hours": "0",
     "parentLock": "",
     "settings": ""
@@ -58,7 +58,7 @@
   {
     "name": "World of Warcraft",
     "path": "wow.exe",
-    "image": "wow.png",
+    "image": "../../Resources/world_of_warcraft.png",
     "hours": "0",
     "parentLock": "",
     "settings": ""
@@ -66,7 +66,7 @@
   {
     "name": "Overwatch",
     "path": "overwatch.exe",
-    "image": "overwatch.png",
+    "image": "../../Resources/overwatch.png",
     "hours": "0",
     "parentLock": "",
     "settings": ""
@@ -82,7 +82,7 @@
   {
     "name": "Risk of Rain",
     "path": null,
-    "image": null,
+    "image": "../../Resources/risk_of_rain.png",
     "hours": null,
     "parentLock": null,
     "settings": null
@@ -90,7 +90,7 @@
   {
     "name": "Crashlands",
     "path": null,
-    "image": null,
+    "image": "../../Resources/crashlands.png",
     "hours": null,
     "parentLock": null,
     "settings": null
@@ -98,7 +98,7 @@
   {
     "name": "LIMBO",
     "path": null,
-    "image": null,
+    "image": "../../Resources/limbo.png",
     "hours": null,
     "parentLock": null,
     "settings": null

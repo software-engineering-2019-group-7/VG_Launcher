@@ -67,7 +67,6 @@ namespace VG_Launcher
         public void CreateButtons()
         {
             foreach (Game game in Curlibrary.gameList)
-            //foreach (Game game in list)
             {
                 if (game.name != "Steamworks Common Redistributables") //Will have to put in much safer safegaurds than this.
                 {
@@ -79,6 +78,9 @@ namespace VG_Launcher
                     {
                         Console.WriteLine(game.name);
                         WebClient wc = new WebClient();
+
+                        wc.Headers.Add("Authorization", "Bearer 47af29a9fb8d5d08ba57a06f2bc15261");
+
                         var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name);
 
                         //Choose the first game in the list. The first one most closely matches the name
@@ -92,15 +94,17 @@ namespace VG_Launcher
                         //For instance, we could check::::  imageJson["data"][0]["style"] == "blurred"
                         //and if thats not true we could go down the image list
                         string imageUrl = imageJson["data"][0]["url"];
-                        game.image = imageUrl;
-
+                        game.image = "../../Resources/" + CleanName(game.name).ToLower() + ".png";
+                        Console.WriteLine(game.name);
 
 
                         //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
                         //But I am storing it just in case we can figure out how to use it
 
                         Console.WriteLine("Pulled image " + game.name);
+                        wc.Headers.Clear();
                         wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
+
                     }
                     if (File.Exists("../../Resources/" + CleanName(game.name).ToLower() + ".png"))
                     {
@@ -125,6 +129,7 @@ namespace VG_Launcher
                     btn.Click += Button_Click;
 
                     gameWrapPanel.Children.Add(btn);
+
                 }
             }
         }
@@ -251,6 +256,11 @@ namespace VG_Launcher
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
+        }
+
+        private void GameWrapPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }
