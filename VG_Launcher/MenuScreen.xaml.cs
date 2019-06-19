@@ -54,5 +54,18 @@ namespace VG_Launcher
             this.Close();
             cus.ShowDialog();
         }
+
+        private void LockButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
+            LogInService li = new LogInService();
+            ((MainWindow)Application.Current.MainWindow).logIn();
+            bool locked = Properties.Settings.Default.ParentalLockEngaged;
+            if (locked)
+                ((MainWindow)Application.Current.MainWindow).CreateButtons(true);
+            else
+                ((MainWindow)Application.Current.MainWindow).CreateButtons(false);
+            this.Close();
+        }
     }
 }
