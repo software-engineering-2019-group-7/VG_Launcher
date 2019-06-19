@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace VG_Launcher
@@ -24,13 +26,32 @@ namespace VG_Launcher
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
+            Button btn = sender as Button; //lets us edit the button that sent the function call
+            SettingsMenu set = new SettingsMenu();
+            Point point = btn.PointToScreen(new Point(0, 0));
+            set.Left = point.X;
+            set.Top = point.Y;
+            set.Show();
             //open the settings menu
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                using (Process myProcess = new Process())
+                {
+                    Button btn = sender as Button; //lets us edit the button that sent the function call
+                    Game game = (Game)btn.Tag;
+                    myProcess.StartInfo.UseShellExecute = true;
+                    myProcess.StartInfo.FileName = game.path;
+                    myProcess.Start();
+                }
+            }catch(Exception exe)
+            {
+                Console.WriteLine(exe.Message);
+            }
             Trace.WriteLine("Launched");//launch the exe
-            this.Close();
         }
     }
 }

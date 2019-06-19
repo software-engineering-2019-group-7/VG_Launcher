@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
-        mc:Ignorable="d" Height="260" Width="540" ShowInTaskbar="False" WindowStartupLocation="Manual" ResizeMode="NoResize" Topmost="True" WindowStyle="None" MouseDown="Window_MouseDown" >
-    <Grid Background="#FF0B2068">
+        mc:Ignorable="d" Height="256" Width="540" ShowInTaskbar="False" WindowStartupLocation="Manual" ResizeMode="NoResize" WindowStyle="None" MouseDown="Window_MouseDown" >
+    <Grid Background="Black">
         <Image x:Name="image" Width="540">
             <Image.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -15,7 +15,7 @@
             </Image.OpacityMask>
         </Image>
 
-        <Label x:Name="hoursLabel" Content="Play Time: " HorizontalAlignment="Left" Margin="30,206,0,0" VerticalAlignment="Top" Background="#00000000" Foreground="White" FontSize="20"/>
+        <Label x:Name="hoursLabel" Content="Play Time:  x hours" HorizontalAlignment="Left" Margin="30,206,0,0" VerticalAlignment="Top" Background="#00000000" Foreground="White" FontSize="20"/>
         <Button x:Name="settingsButton" Content="Settings" HorizontalAlignment="Right" Margin="0,212,30,0" VerticalAlignment="Top" Width="84" Background="#19DDDDDD" Click="SettingsButton_Click" BorderBrush="#00707070" Foreground="White" FontSize="20"/>
         <Button x:Name="playButton" Content="" Margin="240,107,0,0" VerticalAlignment="Top" Width="60" Height="60" HorizontalAlignment="Left" Click="PlayButton_Click" BorderBrush="{x:Null}" OpacityMask="Black">
             <Button.Background>

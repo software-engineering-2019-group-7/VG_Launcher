@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,24 +22,9 @@ namespace VG_Launcher
     /// </summary>
     /// 
 
-    public class Game
-    {
-        public Game(string _name, string _path, string _image)
-        {
-            name = _name;
-            path = _path;
-            image = _image;
-        }
-
-        public string name;
-        public string path;
-        public string image;
-    }
-
-
-
     public partial class MainWindow : Window
     {
+        public Library Curlibrary { get; private set; }
 
         public MainWindow()
         {
@@ -61,77 +49,133 @@ namespace VG_Launcher
             #endregion 
 
             InitializeComponent();
+            Curlibrary = new Library();
+            Curlibrary.InitLib();
         }
 
-        void CreateButtons(List<Game> list)
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            // Begin dragging the window
+            this.DragMove();
+        }
+
+
+
+        public void CreateButtons()
         {
 
-            foreach (Game game in list)
+            foreach (Game game in Curlibrary.gameList)
             {
+                if (game.name != "Steamworks Common Redistributables") //Will have to put in much safer safegaurds than this.
+                {
 
-                Button btn = new Button();
-                btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with an identitier ie: game.id
-                btn.Content = game.name;
-                btn.Tag = game;
-                ///This section deals with the background picture. We will have to change this for sure if we are getting them from the internet. 
-                ///I suppose we will have to download the images regardless, so maybe we will have the actual images at this point? 
-                ///Steam and others load a default background and replace it when they have the actual image (maybe do this on a different thread?)
-                Uri resourceUri = new Uri("Resources/" + game.image , UriKind.Relative);
-                StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
-                BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-                var brush = new ImageBrush();
-                brush.ImageSource = temp;
-                btn.Background = brush;
+                    Button btn = new Button();
+                    btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with an identitier ie: game.id
+                    btn.Tag = game;
+                    if (!File.Exists(game.image))
+                    {
+                        Console.WriteLine(game.name);
+                        WebClient wc = new WebClient();
+
+                        wc.Headers.Add("Authorization", "Bearer 47af29a9fb8d5d08ba57a06f2bc15261");
+
+                        var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name);
+
+                        //Choose the first game in the list. The first one most closely matches the name
+                        dynamic idJson = JsonConvert.DeserializeObject(json);
+                        dynamic firstGameInArray = idJson["data"][0];
+                        string gameId = firstGameInArray.id;
+                        json = wc.DownloadString("https://www.steamgriddb.com/api/v2/grids/game/" + gameId);
+                        dynamic imageJson = JsonConvert.DeserializeObject(json);
+
+                        //Choose the first image in the list. We can obviously choose an image based on its properties.
+                        //For instance, we could check::::  imageJson["data"][0]["style"] == "blurred"
+                        //and if thats not true we could go down the image list
+                        string imageUrl = imageJson["data"][0]["url"];
+                        game.image = "../../Resources/" + CleanName(game.name).ToLower() + ".png";
+                        Console.WriteLine(game.name);
 
 
-                //Static values. All buttons should have the same values for these.
-                btn.Width = 360;
-                btn.Height = 160;
-                btn.Margin = new Thickness(10);
-                btn.HorizontalContentAlignment = HorizontalAlignment.Center;
-                btn.VerticalContentAlignment = VerticalAlignment.Bottom;
-                btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CFFFFFF"));
-                btn.FontSize = 48;
-                btn.FontWeight = FontWeights.SemiBold;
-                btn.Style = Resources["noHighlightButton"] as Style;
+                        //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
+                        //But I am storing it just in case we can figure out how to use it
 
-                //This lets us click the button. All of the buttons will share a function called Button_Click so we will have to be creative.
-                //Theres no way we can create a method for each new button, at least not that I know of. 
-                btn.Click += Button_Click;
+                        Console.WriteLine("Pulled image " + game.name);
+                        wc.Headers.Clear();
+                        wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
 
-                gameWrapPanel.Children.Add(btn);
+                    }
+                    if (File.Exists("../../Resources/" + CleanName(game.name).ToLower() + ".png"))
+                    {
 
+                        ImageBrush myBrush = new ImageBrush();
+                        myBrush.ImageSource = new BitmapImage(new Uri("../../Resources/" + CleanName(game.name).ToLower() + ".png", UriKind.Relative));
+                        btn.Background = myBrush;
+                    }
+                    //Static values. All buttons should have the same values for these.
+                    btn.Width = 360;
+                    btn.Height = 160;
+                    btn.Margin = new Thickness(8);
+                    btn.HorizontalContentAlignment = HorizontalAlignment.Center;
+                    btn.VerticalContentAlignment = VerticalAlignment.Bottom;
+                    btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CFFFFFF"));
+                    btn.FontSize = 48;
+                    btn.FontWeight = FontWeights.SemiBold;
+                    btn.Style = Resources["noHighlightButton"] as Style;
+
+                    //This lets us click the button. All of the buttons will share a function called Button_Click so we will have to be creative.
+                    //Theres no way we can create a method for each new button, at least not that I know of. 
+                    btn.Click += Button_Click;
+
+                    gameWrapPanel.Children.Add(btn);
+
+                }
             }
+        }
+
+        public string CleanName(string str)
+        {
+            str = str.Replace(" ", "_");
+            return str;
         }
 
         private void ServiceLoader_Click(object sender, RoutedEventArgs e)
         {
-            ServiceProvider sp = new ServiceProvider();
+            ServiceProvider sp = new ServiceProvider(Curlibrary);
             sp.ShowDialog();
+            //Curlibrary = sp.library;
         }
 
-        private void Addbtns_Click(object sender, RoutedEventArgs e)
+
+        public void Addbtns_Click(object sender, RoutedEventArgs e)
         {
-            List<Game> games = new List<Game>();
-            games.Add(new Game("Path of Exile", "pathofexile.exe", "pathofexile.png"));
-            games.Add(new Game("Grand Theft Auto V", "GTAV.exe", "gtav.png"));
-            games.Add(new Game("Terraria", "terraria.exe", "terraria.png"));
-            games.Add(new Game("Risk of Rain", "riskofrain.exe", "riskofrain.png"));
-            CreateButtons(games);
-
+            CreateButtons();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void Button_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button; //lets us edit the button that sent the function call
 
 
             GameScreen gs = new GameScreen();
-            Game game = (Game) btn.Tag;
+            Game game = (Game)btn.Tag;
+            gs.Tag = game;
+            gs.playButton.Tag = game;
+
+
+
             gs.Name = "gs";
             gs.gameName.Content = btn.Content;
-            gs.image.Source = new BitmapImage(new Uri("Resources/"+game.image, UriKind.Relative));
-            //this is where we would link the game the button is related to to the gameScreen
+
+            //Setting up the background image
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri("../../Resources/" + CleanName(game.name).ToLower() + ".png", UriKind.Relative);
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            gs.image.Source = bitmapImage;
 
 
             //location of gamescreen
@@ -151,7 +195,11 @@ namespace VG_Launcher
                 gs.Left = point.X - 90;
                 gs.Top = point.Y + btn.Height + 2;
             }
-
+            //this will keep the gamescreens from going off the bottom of the window
+            if ((point.Y + gs.Height + btn.Height ) > (mainWindow.Top + mainWindow.Height))
+            {
+                gs.Top = point.Y - gs.Height - 2;
+            }
             gs.Show();
             clickReciever.Visibility = Visibility.Visible;
         }
@@ -166,10 +214,12 @@ namespace VG_Launcher
                 }
             }
             clickReciever.Visibility = Visibility.Hidden;
+            
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Curlibrary.SaveJson(Curlibrary);
             System.Windows.Application.Current.Shutdown();
         }
 
@@ -195,6 +245,35 @@ namespace VG_Launcher
                 }
             }
             clickReciever.Visibility = Visibility.Hidden;
+        }
+
+        private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void GameScroller_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void GameWrapPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            MenuScreen ms = new MenuScreen(Curlibrary);
+            ms.Show();
         }
     }
 }

@@ -1,0 +1,106 @@
+[
+  {
+    "name": "Path of Exile",
+    "path": "pathofexile.exe",
+    "image": "../../Resources/path_of_exile.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Grand Theft Auto V",
+    "path": "GTAV.exe",
+    "image": "../../Resources/grand_theft_auto_v.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Terraria",
+    "path": "terraria.exe",
+    "image": "../../Resources/terraria.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Fortnite",
+    "path": "fortnite.exe",
+    "image": "../../Resources/fortnite.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Battlefield 1",
+    "path": "battlefield1.exe",
+    "image": "../../Resources/battlefield_1.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Fallout 76",
+    "path": "fallout76.exe",
+    "image": "../../Resources/fallout_76.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Rimworld",
+    "path": "Rimworld.exe",
+    "image": "../../Resources/rimworld.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "World of Warcraft",
+    "path": "wow.exe",
+    "image": "../../Resources/world_of_warcraft.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Overwatch",
+    "path": "overwatch.exe",
+    "image": "../../Resources/overwatch.png",
+    "hours": "0",
+    "parentLock": "",
+    "settings": ""
+  },
+  {
+    "name": "Steamworks Common Redistributables",
+    "path": null,
+    "image": null,
+    "hours": null,
+    "parentLock": null,
+    "settings": null
+  },
+  {
+    "name": "Risk of Rain",
+    "path": null,
+    "image": "../../Resources/risk_of_rain.png",
+    "hours": null,
+    "parentLock": null,
+    "settings": null
+  },
+  {
+    "name": "Crashlands",
+    "path": null,
+    "image": "../../Resources/crashlands.png",
+    "hours": null,
+    "parentLock": null,
+    "settings": null
+  },
+  {
+    "name": "LIMBO",
+    "path": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Limbo\\limbo.exe",
+    "image": "C:\\Users\\thalrukt\\Documents\\GitHub\\VG_Launcher\\VG_Launcher\\Resources\\limbo.png",
+    "hours": null,
+    "parentLock": null,
+    "settings": null
+  }
+]
