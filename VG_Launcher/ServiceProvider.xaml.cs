@@ -54,7 +54,7 @@ namespace VG_Launcher
 
             //Call CreateButtons from here, this removes the button on the Main Window. 
             //I am keeping the "Add" button so that we can continue to test the scrolling functionality
-            ((MainWindow)Application.Current.MainWindow).CreateButtons();
+            ((MainWindow)Application.Current.MainWindow).CreateButtons(Properties.Settings.Default.ParentalLockEngaged);
 
 
             this.Close();

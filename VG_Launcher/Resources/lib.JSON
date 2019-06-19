@@ -4,7 +4,7 @@
     "path": "pathofexile.exe",
     "image": "../../Resources/path_of_exile.png",
     "hours": "0",
-    "parentLock": "",
+    "parentLock": "0",
     "settings": ""
   },
   {
@@ -12,7 +12,7 @@
     "path": "GTAV.exe",
     "image": "../../Resources/grand_theft_auto_v.png",
     "hours": "0",
-    "parentLock": "",
+    "parentLock": "1",
     "settings": ""
   },
   {
@@ -20,7 +20,7 @@
     "path": "terraria.exe",
     "image": "../../Resources/terraria.png",
     "hours": "0",
-    "parentLock": "",
+    "parentLock": "0",
     "settings": ""
   },
   {
@@ -28,7 +28,7 @@
     "path": "fortnite.exe",
     "image": "../../Resources/fortnite.png",
     "hours": "0",
-    "parentLock": "",
+    "parentLock": "0",
     "settings": ""
   },
   {
@@ -36,7 +36,7 @@
     "path": "battlefield1.exe",
     "image": "../../Resources/battlefield_1.png",
     "hours": "0",
-    "parentLock": "",
+    "parentLock": "0",
     "settings": ""
   },
   {
@@ -44,7 +44,7 @@
     "path": "fallout76.exe",
     "image": "../../Resources/fallout_76.png",
     "hours": "0",
-    "parentLock": "",
+    "parentLock": "0",
     "settings": ""
   },
   {
@@ -52,7 +52,7 @@
     "path": "Rimworld.exe",
     "image": "../../Resources/rimworld.png",
     "hours": "0",
-    "parentLock": "",
+    "parentLock": "0",
     "settings": ""
   },
   {
@@ -60,7 +60,7 @@
     "path": "wow.exe",
     "image": "../../Resources/world_of_warcraft.png",
     "hours": "0",
-    "parentLock": "",
+    "parentLock": "0",
     "settings": ""
   },
   {
@@ -68,23 +68,15 @@
     "path": "overwatch.exe",
     "image": "../../Resources/overwatch.png",
     "hours": "0",
-    "parentLock": "",
+    "parentLock": "0",
     "settings": ""
-  },
-  {
-    "name": "Steamworks Common Redistributables",
-    "path": null,
-    "image": null,
-    "hours": null,
-    "parentLock": null,
-    "settings": null
   },
   {
     "name": "Risk of Rain",
     "path": null,
     "image": "../../Resources/risk_of_rain.png",
     "hours": null,
-    "parentLock": null,
+    "parentLock": "0",
     "settings": null
   },
   {
@@ -92,7 +84,7 @@
     "path": null,
     "image": "../../Resources/crashlands.png",
     "hours": null,
-    "parentLock": null,
+    "parentLock": "0",
     "settings": null
   },
   {
@@ -100,7 +92,7 @@
     "path": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Limbo\\limbo.exe",
     "image": "C:\\Users\\thalrukt\\Documents\\GitHub\\VG_Launcher\\VG_Launcher\\Resources\\limbo.png",
     "hours": null,
-    "parentLock": null,
+    "parentLock": "0",
     "settings": null
   }
 ]

@@ -37,18 +37,59 @@ namespace VG_Launcher
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (nameBox.Text == "" || pathBox.Text == "" || imageBox.Text == "")
-            {
-              //probably tell them something is wrong
-            }
-            else
+            if(!(nameBox.Text == "" || pathButton.Content.Equals("Choose path") || imageButton.Content.Equals("Choose path")))
             {
                 Game g = new Game();
                 g.name = nameBox.Text;
-                g.path = pathBox.Text;
-                g.image = imageBox.Text;
+                g.path = pathButton.Content.ToString();
+                g.image = imageButton.Content.ToString();
                 Curlibrary.addGame(g);
             }
         }
+
+        private void PathButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".exe";
+            dlg.Filter = "EXE Files (*.exe)|*.exe";
+
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+
+            // Get the selected file name and display in a TextBox 
+            if (result.HasValue && result.Value)
+            {
+                string filename = dlg.FileName;
+                pathButton.Content = filename;
+            }
+        }
+
+        private void ImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".png";
+            dlg.Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpeg)|*.jpeg|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+
+            // Get the selected file name and display in a TextBox 
+            if (result.HasValue && result.Value)
+            {
+                string filename = dlg.FileName;
+                imageButton.Content = filename;
+            }
+        }
+
     }
 }
