@@ -66,8 +66,13 @@ namespace VG_Launcher
         {
             return game.parentLock; //check and return if game has parental lock on
         } 
-        public void addGame()
+        public void addGame(Game g)
         {
+            gameList.Add(g);
+            
+
+
+
             /*manually add a game, take in as many parameters as given, leave the rest blank. Append new game to file
                 probably will call from a pop-up, path & title will be necessary at minimum*/
             //Add the new game object to list, re-serialize the list of games into new json file

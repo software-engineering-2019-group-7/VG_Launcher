@@ -97,8 +97,8 @@
   },
   {
     "name": "LIMBO",
-    "path": null,
-    "image": "../../Resources/limbo.png",
+    "path": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Limbo\\limbo.exe",
+    "image": "C:\\Users\\thalrukt\\Documents\\GitHub\\VG_Launcher\\VG_Launcher\\Resources\\limbo.png",
     "hours": null,
     "parentLock": null,
     "settings": null

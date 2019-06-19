@@ -15,32 +15,19 @@ using System.Windows.Shapes;
 namespace VG_Launcher
 {
     /// <summary>
-    /// Interaction logic for MenuScreen.xaml
+    /// Interaction logic for customExe.xaml
     /// </summary>
-    public partial class MenuScreen : Window
+    public partial class customExe : Window
     {
         Library Curlibrary;
-        public MenuScreen()
+        public customExe()
         {
             InitializeComponent();
         }
-
-        public MenuScreen(Library lib)
+        public customExe(Library lib)
         {
             InitializeComponent();
             Curlibrary = lib;
-        }
-
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
-        }
-
-        private void ServiceLoader_Click(object sender, RoutedEventArgs e)
-        {
-            ServiceProvider sp = new ServiceProvider(Curlibrary);
-            this.Close();
-            sp.ShowDialog();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -48,11 +35,20 @@ namespace VG_Launcher
             this.Close();
         }
 
-        private void AddGameButton_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            customExe cus = new customExe(Curlibrary);
-            this.Close();
-            cus.ShowDialog();
+            if (nameBox.Text == "" || pathBox.Text == "" || imageBox.Text == "")
+            {
+              //probably tell them something is wrong
+            }
+            else
+            {
+                Game g = new Game();
+                g.name = nameBox.Text;
+                g.path = pathBox.Text;
+                g.image = imageBox.Text;
+                Curlibrary.addGame(g);
+            }
         }
     }
 }

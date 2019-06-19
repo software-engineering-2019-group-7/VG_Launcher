@@ -66,6 +66,7 @@ namespace VG_Launcher
 
         public void CreateButtons()
         {
+
             foreach (Game game in Curlibrary.gameList)
             {
                 if (game.name != "Steamworks Common Redistributables") //Will have to put in much safer safegaurds than this.
@@ -74,7 +75,7 @@ namespace VG_Launcher
                     Button btn = new Button();
                     btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with an identitier ie: game.id
                     btn.Tag = game;
-                    if (!File.Exists("../../Resources/" + CleanName(game.name).ToLower() + ".png"))
+                    if (!File.Exists(game.image))
                     {
                         Console.WriteLine(game.name);
                         WebClient wc = new WebClient();
@@ -150,7 +151,6 @@ namespace VG_Launcher
 
         public void Addbtns_Click(object sender, RoutedEventArgs e)
         {
-            List<Game> games = new List<Game>();
             CreateButtons();
         }
 
@@ -161,6 +161,11 @@ namespace VG_Launcher
 
             GameScreen gs = new GameScreen();
             Game game = (Game)btn.Tag;
+            gs.Tag = game;
+            gs.playButton.Tag = game;
+
+
+
             gs.Name = "gs";
             gs.gameName.Content = btn.Content;
 
@@ -209,6 +214,7 @@ namespace VG_Launcher
                 }
             }
             clickReciever.Visibility = Visibility.Hidden;
+            
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -261,6 +267,13 @@ namespace VG_Launcher
         private void GameWrapPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            MenuScreen ms = new MenuScreen(Curlibrary);
+            ms.Show();
         }
     }
 }
