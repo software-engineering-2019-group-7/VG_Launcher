@@ -45,6 +45,7 @@ namespace VG_Launcher
             InitializeComponent();
             Curlibrary = new Library();
             Curlibrary.InitLib();
+
             logIn();
             locked = Properties.Settings.Default.ParentalLockEngaged;
             if (locked)
@@ -132,6 +133,7 @@ namespace VG_Launcher
                     }
                     catch (Exception e)
                     {
+                        //Let the user choose their own image here
                         Console.WriteLine(e);
                     }
                 }
