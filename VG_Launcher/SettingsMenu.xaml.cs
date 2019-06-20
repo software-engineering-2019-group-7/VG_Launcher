@@ -33,5 +33,12 @@ namespace VG_Launcher
         {
             this.DragMove();
         }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            String settings = launchText.Text;
+
+            //
+        }
     }
 }
