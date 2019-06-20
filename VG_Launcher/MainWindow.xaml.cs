@@ -102,20 +102,18 @@ namespace VG_Launcher
                             wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
 
                         }
-                        if (File.Exists("../../Resources/" + CleanName(game.name).ToLower() + ".png"))
-                        {
-                            ImageBrush myBrush = new ImageBrush();
-                            myBrush.ImageSource = new BitmapImage(new Uri("../../Resources/" + CleanName(game.name).ToLower() + ".png", UriKind.Relative));
-                            btn.Background = myBrush;
-                        }
                         else if (File.Exists(game.image))
                         {
                             ImageBrush myBrush = new ImageBrush();
-                            myBrush.ImageSource = new BitmapImage(new Uri(game.image));
+                            myBrush.ImageSource = new BitmapImage(new Uri(game.image, UriKind.Relative));
                             btn.Background = myBrush;
                         }
                         else
+                        {
+                            //Image wasn't found locally or in GridDB.. ask user to select a new image
+                            //Right now this case is never reached.. it will probably have to be a catch to the Grid search
                             Console.WriteLine(game.name);
+                        }
                         //Static values. All buttons should have the same values for these.
                         btn.Width = 360;
                         btn.Height = 160;
@@ -163,6 +161,7 @@ namespace VG_Launcher
             Game game = (Game)btn.Tag;
             gs.Tag = game;
             gs.playButton.Tag = game;
+            gs.settingsButton.Tag = game;
 
 
 
