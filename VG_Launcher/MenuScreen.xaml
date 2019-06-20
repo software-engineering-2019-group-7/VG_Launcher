@@ -1,0 +1,14 @@
+﻿<Window x:Name="Menu" x:Class="VG_Launcher.MenuScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VG_Launcher"
+        mc:Ignorable="d" Height="355.917" Width="390.828" Background="#FF2B2B2B" WindowStyle="None">
+    <Grid MouseDown="Grid_MouseDown">
+        <Button x:Name="close" Content="X" HorizontalAlignment="Left" Margin="343,10,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFA0A0A0" Click="Close_Click"/>
+        <Button x:Name="serviceLoader" Content="Add Services" HorizontalAlignment="Left" Margin="93,65,0,0" VerticalAlignment="Top" Width="205" Click="ServiceLoader_Click" Height="63"/>
+        <Button x:Name="addGameButton" Content="Add Custom Game" HorizontalAlignment="Left" Margin="93,154,0,0" VerticalAlignment="Top" Width="205" Height="63" Click="AddGameButton_Click"/>
+        <Button x:Name="lockButton" Content="Log Out" HorizontalAlignment="Left" Margin="93,242,0,0" VerticalAlignment="Top" Width="205" Height="63" Click="LockButton_Click"/>
+    </Grid>
+</Window>

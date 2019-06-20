@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
-        mc:Ignorable="d" Height="450" Width="322.308" Background="#FF0E2246" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+        mc:Ignorable="d" Height="450" Width="322.308" Background="#FF0E2246" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" Closing="Window_Closing">
 
     <Window.Resources>
         <Style x:Key="noHighlightButton" TargetType="Button">

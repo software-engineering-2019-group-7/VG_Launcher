@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
         mc:Ignorable="d"
-        Title="SettingsMenu" Height="256" Width="540" WindowStyle="None" Topmost ="true" MouseDown="Window_MouseDown">
+        Title="SettingsMenu" Height="256" Width="540" WindowStyle="None" Topmost ="true" MouseDown="Window_MouseDown" WindowStartupLocation="CenterScreen">
     <Grid Background="Black">
         <TextBox x:Name="launchText" HorizontalAlignment="Left" Height="31" Margin="63,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="405" FontSize="20"/>
         <Label x:Name="launchLabel" Content="Launch Options" HorizontalAlignment="Left" Margin="63,12,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" Height="39"/>
         <Label x:Name="warningLabel" Content="Only enter text into this box if you know what you are doing." HorizontalAlignment="Left" Margin="65,42,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Button x:Name="uninstallButton" Content="Uninstall" HorizontalAlignment="Left" Margin="65,149,0,0" VerticalAlignment="Top" Width="87" Height="37"/>
-        <Button x:Name="changeImage" Content="Change Image" HorizontalAlignment="Left" Margin="224,149,0,0" VerticalAlignment="Top" Width="87" Height="37"/>
-        <Button x:Name="changeDetails" Content="Change Details" HorizontalAlignment="Left" Margin="381,149,0,0" VerticalAlignment="Top" Width="87" Height="37"/>
+        <Button x:Name="changeDetails" Content="Change Details" HorizontalAlignment="Left" Margin="381,149,0,0" VerticalAlignment="Top" Width="87" Height="37" Click="ChangeDetails_Click"/>
         <Button x:Name="closeButton" Content="X" HorizontalAlignment="Left" Margin="492,10,0,0" VerticalAlignment="Top" Width="30" Height="30" Click="CloseButton_Click"/>
+        <Button x:Name="saveButton" Content="Save Launch Options" HorizontalAlignment="Left" Height="26" Margin="342,104,0,0" VerticalAlignment="Top" Width="126" Click="SaveButton_Click"/>
 
     </Grid>
 </Window>

@@ -28,6 +28,11 @@ namespace VG_Launcher
         public string hours;
         public string parentLock;
         public string settings;
+
+        public void setSettings(string newSet)
+        {
+            settings = newSet;
+        }
     }
     public class Library
     {
@@ -66,17 +71,20 @@ namespace VG_Launcher
         {
             return game.parentLock; //check and return if game has parental lock on
         } 
-        public void addGame()
+        public void addGame(Game g)
         {
-            /*manually add a game, take in as many parameters as given, leave the rest blank. Append new game to file
-                probably will call from a pop-up, path & title will be necessary at minimum*/
+            /*manually add a game, take in as many parameters as given, leave the rest blank. Path & title
+             * will be necessary at minimum, maybe include a default picture for if the user doesn't specify?*/
+
             //Add the new game object to list, re-serialize the list of games into new json file
+            gameList.Add(g);
         }
         public void InitLib()
         {
             //read json file
             //for each, create a new game and push it to the list
             JsonSerializer serializer = new JsonSerializer();
+            serializer.NullValueHandling = NullValueHandling.Include;
             //path for JSON file works for VS directories.. may need adjustment for final product
             using (StreamReader r = new StreamReader(@"../../Resources/lib.JSON"))
             {
@@ -90,7 +98,30 @@ namespace VG_Launcher
                 }
             }
         }
-      
+
+        public void SaveJson(Library lib)
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.NullValueHandling = NullValueHandling.Include;
+            serializer.Formatting = Formatting.Indented;
+            
+            using (StreamWriter sw = new StreamWriter(@"../../Resources/lib.JSON"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                    serializer.Serialize(writer, lib.gameList);
+            }
+        }
+
+        public void updateSettings(Game game, string newSet)
+        {
+            foreach (Game g in gameList)
+            {
+                if (game == g)
+                {
+                    g.setSettings(newSet);
+                }
+            }
+        }
     }
 
 }

@@ -26,8 +26,12 @@ namespace VG_Launcher
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button; //lets us edit the button that sent the function call
-            SettingsMenu set = new SettingsMenu();
+            Button btn = sender as Button; //lets us edit the button that sent the function call 
+            Game game = (Game)btn.Tag;
+
+            SettingsMenu set = new SettingsMenu(game);
+            set.Tag = game;
+            set.saveButton.Tag = game;
             Point point = btn.PointToScreen(new Point(0, 0));
             set.Left = point.X;
             set.Top = point.Y;
@@ -41,8 +45,10 @@ namespace VG_Launcher
             {
                 using (Process myProcess = new Process())
                 {
+                    Button btn = sender as Button; //lets us edit the button that sent the function call
+                    Game game = (Game)btn.Tag;
                     myProcess.StartInfo.UseShellExecute = true;
-                    myProcess.StartInfo.FileName = "C:/Program Files (x86)/Steam/steamapps/common/Risk of Rain/Risk of Rain.exe";
+                    myProcess.StartInfo.FileName = game.path;
                     myProcess.Start();
                 }
             }catch(Exception exe)

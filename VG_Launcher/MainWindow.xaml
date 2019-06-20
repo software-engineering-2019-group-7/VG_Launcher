@@ -23,16 +23,15 @@
         </Style>
     </Window.Resources>
     <Grid Background="#FF242B3C" MouseDown="Grid_MouseDown">
-        <Button x:Name="serviceLoader" Content="Services" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="50" Click="ServiceLoader_Click" Height="40"/>
         <ScrollViewer x:Name="gameScroller" Margin="0,58,0,0" VerticalScrollBarVisibility="Auto" MouseDown="GameScroller_MouseDown" >
-            <WrapPanel x:Name="gameWrapPanel" Width="{Binding Path=ActualWidth}" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" MinWidth="100" MinHeight="100" >
+            <WrapPanel x:Name="gameWrapPanel" Width="{Binding Path=ActualWidth}" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" MinWidth="100" MinHeight="100" MouseDown="GameWrapPanel_MouseDown" >
                 <WrapPanel.Effect>
                     <DropShadowEffect ShadowDepth="9" BlurRadius="9"/>
                 </WrapPanel.Effect>
             </WrapPanel>
         </ScrollViewer>
-        <Button x:Name="addbtns" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="72,10,0,0" Click="Addbtns_Click" Height="40"/>
         <Rectangle x:Name="clickReciever" Fill="#7F000000" Stroke="Black" Margin="0,0,0.4,0.4" Visibility="Hidden" MouseDown="ClickReciever_MouseDown"/>
         <Button x:Name="close" Content="X" HorizontalAlignment="Left" Margin="1522,10,0,0" VerticalAlignment="Top" Width="30" Height="30" FontWeight="Bold" Click="Close_Click" Visibility="Hidden"/>
+        <Button x:Name="menuButton" Content="Menu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="82" Height="30" Click="MenuButton_Click"/>
     </Grid>
 </Window>
