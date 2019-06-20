@@ -41,8 +41,10 @@ namespace VG_Launcher
             {
                 using (Process myProcess = new Process())
                 {
+                    Button btn = sender as Button; //lets us edit the button that sent the function call
+                    Game game = (Game)btn.Tag;
                     myProcess.StartInfo.UseShellExecute = true;
-                    myProcess.StartInfo.FileName = "C:/Program Files (x86)/Steam/steamapps/common/Risk of Rain/Risk of Rain.exe";
+                    myProcess.StartInfo.FileName = game.path;
                     myProcess.Start();
                 }
             }catch(Exception exe)

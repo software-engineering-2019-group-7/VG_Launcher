@@ -1,0 +1,16 @@
+﻿<Window x:Class="VG_Launcher.LogInService"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VG_Launcher"
+        mc:Ignorable="d"
+        Title="LogInService" Height="450" Width="800" Background="#FF1B1B1B" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Grid>
+        <Button x:Name="parentButton" Content="PARENT" HorizontalAlignment="Left" Margin="191,30,0,0" VerticalAlignment="Top" Width="414" Height="105" FontSize="36" Click="ParentButton_Click"/>
+        <Button x:Name="childButton" Content="CHILD" HorizontalAlignment="Left" Margin="191,284,0,0" Width="414" FontSize="36" Height="105" VerticalAlignment="Top" Click="ChildButton_Click"/>
+        <TextBox x:Name="codeBox" Height="23" Margin="388,143,284,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label x:Name="label" Content="Unlock Code:" HorizontalAlignment="Left" Margin="311,140,0,0" VerticalAlignment="Top" Foreground="WhiteSmoke"/>
+
+    </Grid>
+</Window>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
         mc:Ignorable="d"
-        Title="SettingsMenu" Height="256" Width="540" WindowStyle="None" Topmost ="true" MouseDown="Window_MouseDown">
+        Title="SettingsMenu" Height="256" Width="540" WindowStyle="None" Topmost ="true" MouseDown="Window_MouseDown" WindowStartupLocation="CenterScreen">
     <Grid Background="Black">
         <TextBox x:Name="launchText" HorizontalAlignment="Left" Height="31" Margin="63,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="405" FontSize="20"/>
         <Label x:Name="launchLabel" Content="Launch Options" HorizontalAlignment="Left" Margin="63,12,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" Height="39"/>

@@ -60,9 +60,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="customExe.xaml.cs">
+      <DependentUpon>customExe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Library.cs" />
     <Compile Include="GameScreen.xaml.cs">
       <DependentUpon>GameScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LogInService.xaml.cs">
+      <DependentUpon>LogInService.xaml</DependentUpon>
     </Compile>
     <Compile Include="MenuScreen.xaml.cs">
       <DependentUpon>MenuScreen.xaml</DependentUpon>
@@ -70,10 +76,19 @@
     <Compile Include="ServiceProvider.xaml.cs">
       <DependentUpon>ServiceProvider.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="SettingsMenu.xaml.cs">
       <DependentUpon>SettingsMenu.xaml</DependentUpon>
     </Compile>
+    <Page Include="customExe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GameScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LogInService.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

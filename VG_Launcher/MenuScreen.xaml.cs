@@ -19,9 +19,53 @@ namespace VG_Launcher
     /// </summary>
     public partial class MenuScreen : Window
     {
+        Library Curlibrary;
         public MenuScreen()
         {
             InitializeComponent();
+        }
+
+        public MenuScreen(Library lib)
+        {
+            InitializeComponent();
+            Curlibrary = lib;
+        }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void ServiceLoader_Click(object sender, RoutedEventArgs e)
+        {
+            ServiceProvider sp = new ServiceProvider(Curlibrary);
+            this.Close();
+            sp.ShowDialog();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void AddGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            customExe cus = new customExe(Curlibrary);
+            this.Close();
+            cus.ShowDialog();
+        }
+
+        private void LockButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
+            LogInService li = new LogInService();
+            ((MainWindow)Application.Current.MainWindow).logIn();
+            bool locked = Properties.Settings.Default.ParentalLockEngaged;
+            if (locked)
+                ((MainWindow)Application.Current.MainWindow).CreateButtons(true);
+            else
+                ((MainWindow)Application.Current.MainWindow).CreateButtons(false);
+            this.Close();
         }
     }
 }
