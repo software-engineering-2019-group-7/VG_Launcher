@@ -110,5 +110,31 @@ namespace VG_Launcher
             }
             return gameList.ToArray();
         }
+        private string[] GetSteamAppIDList()
+        {
+            string steamAppPath = GetSteamDirectory();
+            List<string> gameList = new List<string>();
+            foreach (string manifest in Directory.EnumerateFiles(steamAppPath, "*.acf"))
+            {
+                foreach (string line in File.ReadLines(manifest))
+                {
+                    if (line.Contains("appid"))
+                    {
+                        int quoteCount = 0;
+                        int i;
+                        for (i = 0; i < line.Length; ++i)
+                        {
+                            if (line[i] == '\"')
+                                quoteCount++;
+                            if (quoteCount > 2)
+                                break;
+                        }
+                        if (i < line.Length)
+                            gameList.Add(line.Substring(i + 1, line.Length - i - 2)); // we chop off the ends to avoid the quotes
+                    }
+                }
+            }
+            return gameList.ToArray();
+        }
     }
 }
