@@ -141,6 +141,8 @@ namespace VG_Launcher
         public string CleanName(string str)
         {
             str = str.Replace(" ", "_");
+            str = str.Replace(":", "");
+            str = str.Replace(",", "");
             return str;
         }
 

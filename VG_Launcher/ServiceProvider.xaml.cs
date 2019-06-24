@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
+
 namespace VG_Launcher
 {
     /// <summary>
@@ -44,7 +45,7 @@ namespace VG_Launcher
 
             //Adding games returned from the Registry Scapers to Library
             //This will be surrounded with logic that adds lists depending on services the user selects
-            List<Game> added = CreateGamesList(GetSteamGameList());
+            List<Game> added = CreateSteamGamesList(getSteamNameId());
 
             //Add the games that the scraper found to the library's gamelist
             foreach (Game g in added)
@@ -62,27 +63,30 @@ namespace VG_Launcher
 
 
 
-        public List<Game> CreateGamesList(string[] gameNames)
+        public List<Game> CreateSteamGamesList(Dictionary<string,string> pairs)
         {
             List<Game> games = new List<Game>();
 
             //for each of the games the scraper found, create a new game object
             //We will also add the exe path here when we get that figured out
-
-            foreach (string name in gameNames)
+            foreach(KeyValuePair<string,string> game in pairs)
             {
                 Game g = new Game();
-                g.name = name;
-                //g.path = path;
+                g.name = game.Key;
+                g.path = "steam://rungameid/" + game.Value;
                 g.parentLock = "0";
                 bool containsGame = false;
+
+
                 foreach(Game gm in library.gameList)
                 {
-                    if (gm.name == name)
+                    if (gm.name == game.Key)
                         containsGame = true;
                 }
                 if (!containsGame)
                     games.Add(g);
+
+                
             }
             return games;
         }
@@ -164,6 +168,78 @@ namespace VG_Launcher
                 }
             }
             return gameList.ToArray();
+        }
+
+        private string[] GetSteamAppIDList()
+        {
+            string steamAppPath = GetSteamDirectory();
+            List<string> gameList = new List<string>();
+            foreach (string manifest in Directory.EnumerateFiles(steamAppPath, "*.acf"))
+            {
+                foreach (string line in File.ReadLines(manifest))
+                {
+                    if (line.Contains("appid"))
+                    {
+                        int quoteCount = 0;
+                        int i;
+                        for (i = 0; i < line.Length; ++i)
+                        {
+                            if (line[i] == '\"')
+                                quoteCount++;
+                            if (quoteCount > 2)
+                                break;
+                        }
+                        if (i < line.Length)
+                            gameList.Add(line.Substring(i + 1, line.Length - i - 2)); // we chop off the ends to avoid the quotes
+                    }
+                }
+            }
+            return gameList.ToArray();
+        }
+
+        private Dictionary<string,string> getSteamNameId()
+        {
+            Dictionary<string, string> pairs = new Dictionary<string, string>();
+            string steamAppPath = GetSteamDirectory();
+            foreach (string manifest in Directory.EnumerateFiles(steamAppPath, "*.acf"))
+            {
+                string name = "";
+                string id = "";
+                foreach (string line in File.ReadLines(manifest))
+                {
+                    if (line.Contains("appid"))
+                    {
+                        int quoteCount = 0;
+                        int i;
+                        for (i = 0; i < line.Length; ++i)
+                        {
+                            if (line[i] == '\"')
+                                quoteCount++;
+                            if (quoteCount > 2)
+                                break;
+                        }
+                        if (i < line.Length)
+                            id = line.Substring(i + 1, line.Length - i - 2); // we chop off the ends to avoid the quotes
+                    }
+                    if (line.Contains("name"))
+                    {
+                        int quoteCount = 0;
+                        int i = 0;
+                        for (i = 0; i < line.Length; ++i)
+                        {
+                            if (line[i] == '\"')
+                                quoteCount++;
+                            if (quoteCount > 2)
+                                break;
+                        }
+                        if (i < line.Length)
+                            name = line.Substring(i + 1, line.Length - i - 2);// we chop off the ends to avoid the quotes
+                    }
+                }
+                if (!pairs.ContainsKey(name))
+                    pairs.Add(name, id);
+            }
+            return pairs;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
