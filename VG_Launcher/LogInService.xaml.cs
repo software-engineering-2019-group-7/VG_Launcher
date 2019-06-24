@@ -27,9 +27,9 @@ namespace VG_Launcher
 
         private void ParentButton_Click(object sender, RoutedEventArgs e)
         {
-            if (codeBox.Text.Equals("CODE"))
+            if (passwordBox.Password == "")
                 ;
-            else if (codeBox.Text.Equals(lockCode))
+            else if (passwordBox.Password.Equals(lockCode))
             {
                 Properties.Settings.Default.ParentalLockEngaged = false;
                 this.Close();

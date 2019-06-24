@@ -86,5 +86,21 @@
     "hours": null,
     "parentLock": "0",
     "settings": null
+  },
+  {
+    "name": "Steamworks Common Redistributables",
+    "path": null,
+    "image": null,
+    "hours": null,
+    "parentLock": "0",
+    "settings": null
+  },
+  {
+    "name": "LIMBO",
+    "path": null,
+    "image": "../../Resources/limbo.png",
+    "hours": null,
+    "parentLock": "0",
+    "settings": null
   }
 ]
