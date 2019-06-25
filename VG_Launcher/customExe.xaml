@@ -14,7 +14,7 @@
         <CheckBox x:Name="lockBox" Content="Parental Lock" HorizontalAlignment="Left" Margin="10,261,0,0" VerticalAlignment="Top" Background="White" Foreground="White" FontSize="14"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Add a custom program to your      list of games" VerticalAlignment="Top" Foreground="White" Height="66" Width="140" FontSize="14"/>
         <Button x:Name="close" Content="X" HorizontalAlignment="Left" Margin="141,10,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFA0A0A0" Click="Close_Click"/>
-        <Button x:Name="addButton" Content="Save" HorizontalAlignment="Left" Margin="55,301,0,0" VerticalAlignment="Top" Width="75" Click="AddButton_Click"/>
+        <Button x:Name="addButton" Content="Create" HorizontalAlignment="Left" Margin="55,301,0,0" VerticalAlignment="Top" Width="75" Click="AddButton_Click"/>
         <Button x:Name="pathButton" Content="Choose path" HorizontalAlignment="Left" Margin="44,171,0,0" VerticalAlignment="Top" Width="75" Click="PathButton_Click"/>
         <Button x:Name="imageButton" Content="Choose path" HorizontalAlignment="Left" Margin="44,230,0,0" VerticalAlignment="Top" Width="75" Click="ImageButton_Click"/>
 
