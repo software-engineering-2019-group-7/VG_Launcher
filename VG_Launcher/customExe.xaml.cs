@@ -20,6 +20,7 @@ namespace VG_Launcher
     public partial class customExe : Window
     {
         Library Curlibrary;
+        Game CurGame;
         public customExe()
         {
             InitializeComponent();
@@ -28,8 +29,17 @@ namespace VG_Launcher
         {
             InitializeComponent();
             Curlibrary = lib;
+            CurGame = new Game();
         }
-
+        public customExe(Game game)
+        {
+            InitializeComponent();
+            CurGame = game;
+            nameBox.Text = game.name;
+            pathButton.Content = game.path;
+            imageButton.Content = game.image;
+            textBlock.Text = "Change details for: \"" + game.name + "\""; 
+        }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -40,18 +50,16 @@ namespace VG_Launcher
             if(!(nameBox.Text == "" || pathButton.Content.Equals("Choose path") || imageButton.Content.Equals("Choose path")))
             {
                 Game g = new Game();
-                g.name = nameBox.Text;
-                g.path = pathButton.Content.ToString();
-                g.image = imageButton.Content.ToString();
+                CurGame.name = nameBox.Text;
+                CurGame.path = pathButton.Content.ToString();
+                CurGame.image = imageButton.Content.ToString();
                 if (lockBox.IsChecked == true)
-                    g.parentLock = "1";
+                    CurGame.parentLock = "1";
                 else
-                    g.parentLock = "0";
+                    CurGame.parentLock = "0";
 
-                Curlibrary.addGame(g);
                 ((MainWindow)Application.Current.MainWindow).CreateButtons(Properties.Settings.Default.ParentalLockEngaged);
                 this.Close();
-                Curlibrary.SaveJson(Curlibrary);
             }
         }
 

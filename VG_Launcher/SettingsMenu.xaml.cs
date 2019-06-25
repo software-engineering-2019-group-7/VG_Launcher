@@ -19,9 +19,12 @@ namespace VG_Launcher
     /// </summary>
     public partial class SettingsMenu : Window
     {
-        public SettingsMenu()
+        Game setGame;
+        public SettingsMenu(Game game)
         {
+            setGame = game;
             InitializeComponent();
+            launchText.Text = setGame.settings;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -32,6 +35,23 @@ namespace VG_Launcher
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button; //lets us edit the button that sent the function call 
+            Game game = (Game)btn.Tag;
+            
+            String settings = launchText.Text;
+            game.settings = settings;
+        }
+
+        private void ChangeDetails_Click(object sender, RoutedEventArgs e)
+        {
+            customExe cus = new customExe(setGame);
+            this.Hide();
+            cus.ShowDialog();
+            this.Show();            
         }
     }
 }
