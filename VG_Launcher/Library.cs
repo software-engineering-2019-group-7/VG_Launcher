@@ -28,6 +28,11 @@ namespace VG_Launcher
         public string hours;
         public string parentLock;
         public string settings;
+
+        public void setSettings(string newSet)
+        {
+            settings = newSet;
+        }
     }
     public class Library
     {
@@ -68,14 +73,11 @@ namespace VG_Launcher
         } 
         public void addGame(Game g)
         {
-            gameList.Add(g);
-            
+            /*manually add a game, take in as many parameters as given, leave the rest blank. Path & title
+             * will be necessary at minimum, maybe include a default picture for if the user doesn't specify?*/
 
-
-
-            /*manually add a game, take in as many parameters as given, leave the rest blank. Append new game to file
-                probably will call from a pop-up, path & title will be necessary at minimum*/
             //Add the new game object to list, re-serialize the list of games into new json file
+            gameList.Add(g);
         }
         public void InitLib()
         {
@@ -110,6 +112,16 @@ namespace VG_Launcher
             }
         }
 
+        public void updateSettings(Game game, string newSet)
+        {
+            foreach (Game g in gameList)
+            {
+                if (game == g)
+                {
+                    g.setSettings(newSet);
+                }
+            }
+        }
     }
 
 }
