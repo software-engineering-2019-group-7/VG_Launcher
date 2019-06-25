@@ -38,6 +38,7 @@ namespace VG_Launcher
 
         private void ServiceLoader_Click(object sender, RoutedEventArgs e)
         {
+
             ServiceProvider sp = new ServiceProvider(Curlibrary);
             this.Close();
             sp.ShowDialog();
@@ -57,6 +58,7 @@ namespace VG_Launcher
 
         private void LockButton_Click(object sender, RoutedEventArgs e)
         {
+            ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
             ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
             LogInService li = new LogInService();
             ((MainWindow)Application.Current.MainWindow).logIn();

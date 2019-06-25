@@ -9,8 +9,8 @@
     <Grid>
         <Button x:Name="parentButton" Content="PARENT" HorizontalAlignment="Left" Margin="191,30,0,0" VerticalAlignment="Top" Width="414" Height="105" FontSize="36" Click="ParentButton_Click"/>
         <Button x:Name="childButton" Content="CHILD" HorizontalAlignment="Left" Margin="191,284,0,0" Width="414" FontSize="36" Height="105" VerticalAlignment="Top" Click="ChildButton_Click"/>
-        <TextBox x:Name="codeBox" Height="23" Margin="388,143,284,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Label x:Name="label" Content="Unlock Code:" HorizontalAlignment="Left" Margin="311,140,0,0" VerticalAlignment="Top" Foreground="WhiteSmoke"/>
+        <Label x:Name="label" Content="Unlock Code:" HorizontalAlignment="Left" Margin="311,147,0,0" VerticalAlignment="Top" Foreground="WhiteSmoke"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="396,140,0,0" VerticalAlignment="Top" Height="37" Width="96" FontSize="20"/>
 
     </Grid>
 </Window>
