@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Windows;
@@ -8,9 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Color = System.Windows.Media.Color;
-using ColorConverter = System.Windows.Media.ColorConverter;
-using Point = System.Windows.Point;
 
 namespace VG_Launcher
 {
@@ -103,18 +99,20 @@ namespace VG_Launcher
                             wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
 
                         }
+                        if (File.Exists("../../Resources/" + CleanName(game.name).ToLower() + ".png"))
+                        {
+                            ImageBrush myBrush = new ImageBrush();
+                            myBrush.ImageSource = new BitmapImage(new Uri("../../Resources/" + CleanName(game.name).ToLower() + ".png", UriKind.Relative));
+                            btn.Background = myBrush;
+                        }
                         else if (File.Exists(game.image))
                         {
                             ImageBrush myBrush = new ImageBrush();
-                            myBrush.ImageSource = new BitmapImage(new Uri(game.image, UriKind.Relative));
+                            myBrush.ImageSource = new BitmapImage(new Uri(game.image));
                             btn.Background = myBrush;
                         }
                         else
-                        {
-                            //Image wasn't found locally or in GridDB.. ask user to select a new image
-                            //Right now this case is never reached.. it will probably have to be a catch to the Grid search
                             Console.WriteLine(game.name);
-                        }
                         //Static values. All buttons should have the same values for these.
                         btn.Width = 360;
                         btn.Height = 160;
@@ -165,7 +163,6 @@ namespace VG_Launcher
             Game game = (Game)btn.Tag;
             gs.Tag = game;
             gs.playButton.Tag = game;
-            gs.settingsButton.Tag = game;
 
 
 
@@ -180,30 +177,28 @@ namespace VG_Launcher
             bitmapImage.EndInit();
             gs.image.Source = bitmapImage;
 
-            var graphics = Graphics.FromHwnd(IntPtr.Zero);
-            var scaleWidth = (int)(graphics.DpiX / 96);
-            var scaleHeight = (int)(graphics.DpiY / 96);
+
             //location of gamescreen
             Point point = btn.PointToScreen(new Point(0, 0));
             if ((point.X + gs.Width) > (mainWindow.Left + mainWindow.Width))
             {
-                gs.Left = ((point.X - (gs.Width - btn.Width))/(scaleWidth));
-                gs.Top = ((point.Y + btn.Height) / (scaleHeight))+2;
+                gs.Left = point.X - (gs.Width - btn.Width);
+                gs.Top = point.Y + btn.Height + 2;
             }
             else if (point.X - 90 < mainWindow.Left)
             {
-                gs.Left = (point.X / (scaleWidth));
-                gs.Top = ((point.Y + btn.Height) / (scaleHeight))+2;
+                gs.Left = point.X;
+                gs.Top = point.Y + btn.Height + 2;
             }
             else
             {
-                gs.Left = ((point.X - 90) / (scaleWidth));
-                gs.Top = ((point.Y + btn.Height) / (scaleHeight))+2;
+                gs.Left = point.X - 90;
+                gs.Top = point.Y + btn.Height + 2;
             }
             //this will keep the gamescreens from going off the bottom of the window
             if ((point.Y + gs.Height + btn.Height ) > (mainWindow.Top + mainWindow.Height))
             {
-                gs.Top = ((point.Y - gs.Height) / (scaleHeight))-2;
+                gs.Top = point.Y - gs.Height - 2;
             }
             gs.Show();
             clickReciever.Visibility = Visibility.Visible;

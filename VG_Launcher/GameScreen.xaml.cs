@@ -26,12 +26,8 @@ namespace VG_Launcher
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button; //lets us edit the button that sent the function call 
-            Game game = (Game)btn.Tag;
-
-            SettingsMenu set = new SettingsMenu(game);
-            set.Tag = game;
-            set.saveButton.Tag = game;
+            Button btn = sender as Button; //lets us edit the button that sent the function call
+            SettingsMenu set = new SettingsMenu();
             Point point = btn.PointToScreen(new Point(0, 0));
             set.Left = point.X;
             set.Top = point.Y;
