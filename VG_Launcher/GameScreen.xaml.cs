@@ -57,5 +57,18 @@ namespace VG_Launcher
             }
             Trace.WriteLine("Launched");//launch the exe
         }
+
+        private void launchSteam (String appID, String launchOptions)
+        {
+            //use steam appID to run steam launch
+            String steamLaunchURL = "steam://rungameid/";
+            String commandCode = steamLaunchURL + appID;
+            //Run URL
+        }
+
+        private void launchBethesda(String appID, String launchOptions)
+        {
+
+        }
     }
 }

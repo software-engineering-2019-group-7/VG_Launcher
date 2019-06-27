@@ -101,6 +101,7 @@ namespace VG_Launcher
                 else
                 {
                     //No saved Library TODO: this would probably be where we call initial startup prompt
+                    return;
                 }
             }
         }
