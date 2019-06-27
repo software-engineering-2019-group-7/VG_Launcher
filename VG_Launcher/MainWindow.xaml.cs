@@ -252,26 +252,9 @@ namespace VG_Launcher
             clickReciever.Visibility = Visibility.Hidden;
         }
 
-        private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-        }
-
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void GameScroller_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-        }
-
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-        }
-
-        private void GameWrapPanel_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
