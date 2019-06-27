@@ -90,11 +90,17 @@ namespace VG_Launcher
             {
                 string jGames = r.ReadToEnd();
                 dynamic glib = JsonConvert.DeserializeObject(jGames);
-                for (var i = 0; i < glib.Count; i++)
+                if (glib != null){ 
+                    for (var i = 0; i < glib.Count; i++)
+                    {
+                        dynamic inGame = glib[i];
+                        Game newGame = new Game((string)inGame.name, (string)inGame.path, (string)inGame.image, (string)inGame.hours, (string)inGame.parentLock, (string)inGame.settings);
+                        gameList.Add(newGame);
+                    }
+                }
+                else
                 {
-                    dynamic inGame = glib[i];
-                    Game newGame = new Game((string)inGame.name, (string)inGame.path, (string)inGame.image, (string)inGame.hours, (string)inGame.parentLock, (string)inGame.settings);
-                    gameList.Add(newGame);
+                    //No saved Library TODO: this would probably be where we call initial startup prompt
                 }
             }
         }

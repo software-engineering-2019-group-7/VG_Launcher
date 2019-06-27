@@ -113,7 +113,7 @@ namespace VG_Launcher
                         {
                             //Image wasn't found locally or in GridDB.. ask user to select a new image
                             //Right now this case is never reached.. it will probably have to be a catch to the Grid search
-                            Console.WriteLine(game.name);
+                            Console.WriteLine(game.name + "No Image found");
                         }
                         //Static values. All buttons should have the same values for these.
                         btn.Width = 360;
