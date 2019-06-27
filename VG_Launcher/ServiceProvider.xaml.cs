@@ -49,6 +49,24 @@ namespace VG_Launcher
             steamRegistryKey.Close();
             return Path.Combine(steamInstallPath, @"steamapps");
         }
+        private string GetUPlayDirectory()
+        {
+            string uplayInstallPath = "";
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey uplayRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Ubisoft\Launcher");
+            if (uplayRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                uplayRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Ubisoft\Launcher");
+            }
+            object registryEntry = uplayRegistryKey.GetValue("InstallDir");
+            if (registryEntry != null)
+                uplayInstallPath = (string)registryEntry;
+            localMachineRegistry.Close();
+            uplayRegistryKey.Close();
+            return uplayInstallPath;
+        }
         private string[] GetSteamGameDirectoryList()
         {
             // For the sake of simplicity (since it can only be done manually these days), we will assume that the user only has one Steam library folder, and that it is not external. This means no reading from libraryfolders.vdf
@@ -56,6 +74,27 @@ namespace VG_Launcher
             if (Directory.Exists(steamLibraryPath))
                 return Directory.GetDirectories(steamLibraryPath);
             return null;
+        }
+        private string[] GetUPlayGameDirectoryList()
+        {
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey uplayRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Ubisoft\Launcher\Installs");
+            if (uplayRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                uplayRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Ubisoft\Launcher\Installs");
+            }
+            List<string> directoryList = new List<string>();
+            foreach(string subKeyName in uplayRegistryKey.GetSubKeyNames())
+            {
+                RegistryKey tempKey = uplayRegistryKey.OpenSubKey(subKeyName);
+                directoryList.Add((string)tempKey.GetValue("InstallDir"));
+                tempKey.Close();
+            }
+            localMachineRegistry.Close();
+            uplayRegistryKey.Close();
+            return directoryList.ToArray();
         }
 
         private string[] GetSteamGameList()
@@ -81,6 +120,16 @@ namespace VG_Launcher
                             gameList.Add(line.Substring(i + 1, line.Length - i - 2)); // we chop off the ends to avoid the quotes
                     }
                 }
+            }
+            return gameList.ToArray();
+        }
+        private string[] GetUplayGameList()
+        {
+            List<string> gameList = new List<string>();
+            foreach (string path in GetUPlayGameDirectoryList())
+            {
+                DirectoryInfo di = new DirectoryInfo(path);
+                gameList.Add(di.Name);
             }
             return gameList.ToArray();
         }
@@ -135,6 +184,25 @@ namespace VG_Launcher
                 }
             }
             return gameList.ToArray();
+        }
+        private string[] GetUPlayAppIDList()
+        {
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey uplayRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Ubisoft\Launcher\Installs");
+            if (uplayRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                uplayRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Ubisoft\Launcher\Installs");
+            }
+            List<string> appIDList = new List<string>();
+            foreach (string subKeyName in uplayRegistryKey.GetSubKeyNames())
+            {
+                appIDList.Add(subKeyName);
+            }
+            localMachineRegistry.Close();
+            uplayRegistryKey.Close();
+            return appIDList.ToArray();
         }
     }
 }
