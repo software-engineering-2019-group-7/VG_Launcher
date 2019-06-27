@@ -26,29 +26,22 @@ namespace VG_Launcher
 
         public MainWindow()
         {
-            //#region DPI Scaling fix (TEMPORARY) (Makes other DPIs look like trash)
-            //var setDpiHwnd = typeof(HwndTarget).GetField("_setDpi", BindingFlags.Static | BindingFlags.NonPublic);
-            //setDpiHwnd?.SetValue(null, false);
-
-            //var setProcessDpiAwareness = typeof(HwndTarget).GetProperty("ProcessDpiAwareness", BindingFlags.Static | BindingFlags.NonPublic);
-            //setProcessDpiAwareness?.SetValue(null, 1, null);
-
-            //var setDpi = typeof(UIElement).GetField("_setDpi", BindingFlags.Static | BindingFlags.NonPublic);
-
-            //setDpi?.SetValue(null, false);
-
-            //var setDpiXValues = (List<double>)typeof(UIElement).GetField("DpiScaleXValues", BindingFlags.Static | BindingFlags.NonPublic)?.GetValue(null);
-
-            //setDpiXValues?.Insert(0, 1);
-
-            //var setDpiYValues = (List<double>)typeof(UIElement).GetField("DpiScaleYValues", BindingFlags.Static | BindingFlags.NonPublic)?.GetValue(null);
-
-            //setDpiYValues?.Insert(0, 1);
-            //#endregion 
-
             InitializeComponent();
             Curlibrary = new Library();
             Curlibrary.InitLib();
+            if (Curlibrary.gameList.Count < 1)
+            {
+                //Empty game Library, launch service provider
+                Console.WriteLine("NO GAMES, INIT CONDITIONS");
+                ServiceProvider sp = new ServiceProvider(Curlibrary);
+                sp.ShowDialog();
+                sp.Close();
+                //Continue with setup procedures
+            }
+            else
+            {
+                //Go to Login Screen
+            }
 
             logIn();
             locked = Properties.Settings.Default.ParentalLockEngaged;
@@ -90,18 +83,28 @@ namespace VG_Launcher
                             //Choose the first image in the list. We can obviously choose an image based on its properties.
                             //For instance, we could check::::  imageJson["data"][0]["style"] == "blurred"
                             //and if thats not true we could go down the image list
-                            string imageUrl = imageJson["data"][0]["url"];
-                            game.image = "../../Resources/" + CleanName(game.name).ToLower() + ".png";
-                            Console.WriteLine(game.name);
+                            try
+                            {
+                                string imageUrl = imageJson["data"][0]["url"];
+                                game.image = "../../Resources/" + CleanName(game.name).ToLower() + ".png";
+                                Console.WriteLine(game.name);
 
 
-                            //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
-                            //But I am storing it just in case we can figure out how to use it
+                                //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
+                                //But I am storing it just in case we can figure out how to use it
 
-                            Console.WriteLine("Pulled image " + game.name);
-                            wc.Headers.Clear();
-                            wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
-
+                                Console.WriteLine("Pulled image " + game.name);
+                                wc.Headers.Clear();
+                                wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
+                            }
+                            catch(Exception e)
+                            {
+                                game.image = "../../Resources/DefaultGameLogo.jpg";
+                            }
+                         
+                            ImageBrush myBrush = new ImageBrush();
+                            myBrush.ImageSource = new BitmapImage(new Uri(game.image, UriKind.Relative));
+                            btn.Background = myBrush;
                         }
                         else if (File.Exists(game.image))
                         {
@@ -113,8 +116,14 @@ namespace VG_Launcher
                         {
                             //Image wasn't found locally or in GridDB.. ask user to select a new image
                             //Right now this case is never reached.. it will probably have to be a catch to the Grid search
-                            Console.WriteLine(game.name);
+                            Console.WriteLine(game.name + "No Image found");
                         }
+                        if(game.image == "../../Resources/DefaultGameLogo.jpg")
+                        {
+                            //If we are using the default Logo, display the name **NOT WORKING YET**
+                            btn.Content = game.name;
+                        }
+                        //"#4CFFFFFF"
                         //Static values. All buttons should have the same values for these.
                         btn.Width = 360;
                         btn.Height = 160;
@@ -170,7 +179,7 @@ namespace VG_Launcher
 
 
             gs.Name = "gs";
-            gs.gameName.Content = btn.Content;
+            gs.gameName.Content = game.name;
 
             //Setting up the background image
             var bitmapImage = new BitmapImage();
