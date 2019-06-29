@@ -99,7 +99,7 @@ namespace VG_Launcher
                             }
                             catch(Exception e)
                             {
-                                game.image = "../../Resources/DefaultGameLogo.jpg";
+                                game.image = "../../Resources/DefaultGameImage.PNG";
                             }
                          
                             ImageBrush myBrush = new ImageBrush();
@@ -118,7 +118,7 @@ namespace VG_Launcher
                             //Right now this case is never reached.. it will probably have to be a catch to the Grid search
                             Console.WriteLine(game.name + "No Image found");
                         }
-                        if(game.image == "../../Resources/DefaultGameLogo.jpg")
+                        if(game.image == "../../Resources/DefaultGameImage.PNG")
                         {
                             //If we are using the default Logo, display the name **NOT WORKING YET**
                             btn.Content = game.name;
@@ -130,8 +130,8 @@ namespace VG_Launcher
                         btn.Margin = new Thickness(8);
                         btn.HorizontalContentAlignment = HorizontalAlignment.Center;
                         btn.VerticalContentAlignment = VerticalAlignment.Bottom;
-                        btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4CFFFFFF"));
-                        btn.FontSize = 48;
+                        btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7FFFFFFF"));
+                        btn.FontSize = 24;
                         btn.FontWeight = FontWeights.SemiBold;
                         btn.Style = Resources["noHighlightButton"] as Style;
 
@@ -270,11 +270,15 @@ namespace VG_Launcher
         {
             Button btn = sender as Button; 
             Point point = btn.PointToScreen(new Point(0, 0));
-            
+            clickReciever.Visibility = Visibility.Visible;
+            clickReciever.Opacity = 1;
+
             MenuScreen ms = new MenuScreen(Curlibrary);
+            ms.Name = "gs";
             ms.Top = point.Y + btn.Height;
             ms.Left = point.X + btn.Width;
-            ms.Show();
+            ms.ShowDialog();
+            clickReciever.Visibility = Visibility.Hidden;
         }
     }
 }

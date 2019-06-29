@@ -23,12 +23,22 @@ namespace VG_Launcher
         public MenuScreen()
         {
             InitializeComponent();
+            if (Properties.Settings.Default.ParentalLockEngaged)
+            {
+                serviceLoader.Visibility = Visibility.Hidden;
+                addGameButton.Visibility = Visibility.Hidden;
+            }
         }
 
         public MenuScreen(Library lib)
         {
             InitializeComponent();
             Curlibrary = lib;
+            if (Properties.Settings.Default.ParentalLockEngaged)
+            {
+                serviceLoader.Visibility = Visibility.Hidden;
+                addGameButton.Visibility = Visibility.Hidden;
+            }
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
@@ -42,11 +52,25 @@ namespace VG_Launcher
             ServiceProvider sp = new ServiceProvider(Curlibrary);
             this.Close();
             sp.ShowDialog();
+            foreach (Window w in App.Current.Windows)
+            {
+                if (w.Name.Equals("gs"))
+                {
+                    w.Close();
+                }
+            }
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            foreach (Window w in App.Current.Windows)
+            {
+                if (w.Name.Equals("gs"))
+                {
+                    w.Close();
+                }
+            }
         }
 
         private void AddGameButton_Click(object sender, RoutedEventArgs e)
@@ -54,10 +78,25 @@ namespace VG_Launcher
             customExe cus = new customExe(Curlibrary);
             this.Close();
             cus.ShowDialog();
+            foreach (Window w in App.Current.Windows)
+            {
+                if (w.Name.Equals("gs"))
+                {
+                    w.Close();
+                }
+            }
         }
 
         private void LockButton_Click(object sender, RoutedEventArgs e)
         {
+            foreach (Window w in App.Current.Windows)
+            {
+                if (w.Name.Equals("gs"))
+                {
+                    w.Close();
+                }
+            }
+            
             ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
             ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
             LogInService li = new LogInService();

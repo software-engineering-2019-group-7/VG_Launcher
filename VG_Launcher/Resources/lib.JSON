@@ -72,8 +72,16 @@
     "settings": ""
   },
   {
+    "name": "Steamworks Common Redistributables",
+    "path": "steam://rungameid/228980",
+    "image": "../../Resources/DefaultGameImage.PNG",
+    "hours": null,
+    "parentLock": "0",
+    "settings": null
+  },
+  {
     "name": "Risk of Rain",
-    "path": null,
+    "path": "steam://rungameid/248820",
     "image": "../../Resources/risk_of_rain.png",
     "hours": null,
     "parentLock": "0",
@@ -81,23 +89,15 @@
   },
   {
     "name": "Crashlands",
-    "path": null,
+    "path": "steam://rungameid/391730",
     "image": "../../Resources/crashlands.png",
     "hours": null,
     "parentLock": "0",
     "settings": null
   },
   {
-    "name": "Steamworks Common Redistributables",
-    "path": null,
-    "image": null,
-    "hours": null,
-    "parentLock": "0",
-    "settings": null
-  },
-  {
     "name": "LIMBO",
-    "path": null,
+    "path": "steam://rungameid/48000",
     "image": "../../Resources/limbo.png",
     "hours": null,
     "parentLock": "0",

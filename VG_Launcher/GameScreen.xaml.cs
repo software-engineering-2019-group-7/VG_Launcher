@@ -16,7 +16,10 @@ namespace VG_Launcher
         public GameScreen()
         {
             InitializeComponent();
-           
+           if (Properties.Settings.Default.ParentalLockEngaged)
+            {
+                settingsButton.Visibility = Visibility.Hidden;
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

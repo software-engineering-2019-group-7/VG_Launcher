@@ -16,6 +16,7 @@
                                     <VisualState x:Name="MouseOver"/>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
