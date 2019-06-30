@@ -110,5 +110,13 @@
     "hours": null,
     "parentLock": "0",
     "settings": null
+  },
+  {
+    "name": "Rayman Origins",
+    "path": "uplay://launch/80/0",
+    "image": "../../Resources/rayman_origins.png",
+    "hours": null,
+    "parentLock": "0",
+    "settings": null
   }
 ]
