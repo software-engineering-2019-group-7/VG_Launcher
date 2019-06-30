@@ -34,18 +34,35 @@ namespace VG_Launcher
 
         public void DoneButton_Click(object sender, RoutedEventArgs e)
         {
-            List<string> serviceList = new List<string>();
-            foreach (CheckBox c in services.Children)
+            List<Game> added = new List<Game>();
+            if (Steam.IsChecked == true)
             {
-                if (c.IsChecked == true)
-                {
-                    serviceList.Add(c.Name);
-                }
+                added.AddRange(CreateSteamGamesList(getSteamNameId()));
             }
-
-            //Adding games returned from the Registry Scapers to Library
-            //This will be surrounded with logic that adds lists depending on services the user selects
-            List<Game> added = CreateSteamGamesList(getSteamNameId());
+            if (Origin.IsChecked == true)
+            {
+                //in progress
+            }
+            if (Uplay.IsChecked == true)
+            {
+                added.AddRange(GetUplayGameList());
+            }
+            if (GOG.IsChecked == true)
+            {
+                //in progress
+            }
+            if (Bethesda.IsChecked == true)
+            {
+                //in progress
+            }
+            if (Epic.IsChecked == true)
+            {
+                //in progress
+            }
+            if (Blizzard.IsChecked == true)
+            {
+                //in progress
+            }
 
             //Add the games that the scraper found to the library's gamelist
             foreach (Game g in added)
@@ -53,16 +70,13 @@ namespace VG_Launcher
                 library.gameList.Add(g);
             }
 
-            //Call CreateButtons from here, this removes the button on the Main Window. 
-            //I am keeping the "Add" button so that we can continue to test the scrolling functionality
             ((MainWindow)Application.Current.MainWindow).CreateButtons(Properties.Settings.Default.ParentalLockEngaged);
-
 
             this.Close();
         }
 
 
-
+        #region Steam
         public List<Game> CreateSteamGamesList(Dictionary<string,string> pairs)
         {
             List<Game> games = new List<Game>();
@@ -109,95 +123,8 @@ namespace VG_Launcher
             steamRegistryKey.Close();
             return Path.Combine(steamInstallPath, @"steamapps");
         }
-        private string[] GetSteamGameDirectoryList()
-        {
-            // For the sake of simplicity (since it can only be done manually these days), we will assume that the user only has one Steam library folder, and that it is not external. This means no reading from libraryfolders.vdf
-            string steamLibraryPath = Path.Combine(GetSteamDirectory(), @"common");
-            if (Directory.Exists(steamLibraryPath))
-                return Directory.GetDirectories(steamLibraryPath);
-            return null;
-        }
-        private string[] GetSteamGameList()
-        {
-            string steamAppPath = GetSteamDirectory();
-            List<string> gameList = new List<string>();
-            foreach (string manifest in Directory.EnumerateFiles(steamAppPath, "*.acf"))
-            {
-                foreach (string line in File.ReadLines(manifest))
-                {
-                    if (line.Contains("name"))
-                    {
-                        int quoteCount = 0;
-                        int i = 0;
-                        for (i = 0; i < line.Length; ++i)
-                        {
-                            if (line[i] == '\"')
-                                quoteCount++;
-                            if (quoteCount > 2)
-                                break;
-                        }
-                        if (i < line.Length)
-                            gameList.Add(line.Substring(i + 1, line.Length - i - 2)); // we chop off the ends to avoid the quotes
-                    }
-                }
-            }
-            return gameList.ToArray();
-        }
-        private string[] GetSteamInstallDirectoryList()
-        {
-            string steamAppPath = GetSteamDirectory();
-            List<string> gameList = new List<string>();
-            foreach (string manifest in Directory.EnumerateFiles(steamAppPath, "*.acf"))
-            {
-                foreach (string line in File.ReadLines(manifest))
-                {
-                    if (line.Contains("installdir"))
-                    {
-                        int quoteCount = 0;
-                        int i;
-                        for (i = 0; i < line.Length; ++i)
-                        {
-                            if (line[i] == '\"')
-                                quoteCount++;
-                            if (quoteCount > 2)
-                                break;
-                        }
-                        if (i < line.Length)
-                            gameList.Add(line.Substring(i + 1, line.Length - i - 2)); // we chop off the ends to avoid the quotes
-                    }
-                }
-            }
-            return gameList.ToArray();
-        }
 
-        private string[] GetSteamAppIDList()
-        {
-            string steamAppPath = GetSteamDirectory();
-            List<string> gameList = new List<string>();
-            foreach (string manifest in Directory.EnumerateFiles(steamAppPath, "*.acf"))
-            {
-                foreach (string line in File.ReadLines(manifest))
-                {
-                    if (line.Contains("appid"))
-                    {
-                        int quoteCount = 0;
-                        int i;
-                        for (i = 0; i < line.Length; ++i)
-                        {
-                            if (line[i] == '\"')
-                                quoteCount++;
-                            if (quoteCount > 2)
-                                break;
-                        }
-                        if (i < line.Length)
-                            gameList.Add(line.Substring(i + 1, line.Length - i - 2)); // we chop off the ends to avoid the quotes
-                    }
-                }
-            }
-            return gameList.ToArray();
-        }
-
-        private Dictionary<string,string> getSteamNameId()
+        private Dictionary<string, string> getSteamNameId()
         {
             Dictionary<string, string> pairs = new Dictionary<string, string>();
             string steamAppPath = GetSteamDirectory();
@@ -241,9 +168,55 @@ namespace VG_Launcher
             }
             return pairs;
         }
+        #endregion
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+
+        private List<Game> GetUplayGameList()
         {
+            List<Game> gameList = new List<Game>();
+            Dictionary<string, string> pairs = GetUPlayAppIDNameList();
+            Console.WriteLine(pairs.Count);
+            foreach (KeyValuePair<string,string> p in pairs)
+            {
+                Game g = new Game();
+                g.name = p.Key;
+                g.path = "uplay://launch/"+p.Value+"/0";
+                g.parentLock = "0";
+                gameList.Add(g);
+            }
+            foreach(Game g in gameList)
+            {
+                Console.WriteLine("@@@@" + g.name + " " + g.path);
+            }
+            return gameList;
+        }
+
+        private Dictionary<string, string> GetUPlayAppIDNameList()
+        {
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey uplayRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Ubisoft\Launcher\Installs");
+            if (uplayRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                uplayRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Ubisoft\Launcher\Installs");
+            }
+            Dictionary<string, string> pairs = new Dictionary<string, string>();
+            List<string> appIDList = new List<string>();
+            foreach (string subKeyName in uplayRegistryKey.GetSubKeyNames())
+            {
+                string gameName;
+                string gameId;
+                gameId = subKeyName;
+                RegistryKey tempKey = uplayRegistryKey.OpenSubKey(subKeyName);
+                DirectoryInfo di = new DirectoryInfo((string)tempKey.GetValue("InstallDir"));
+                gameName = di.Name;
+                pairs.Add(gameName, gameId);
+                tempKey.Close();
+            }
+            localMachineRegistry.Close();
+            uplayRegistryKey.Close();
+            return pairs;
         }
     }
 }

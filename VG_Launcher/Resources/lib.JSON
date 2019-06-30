@@ -102,5 +102,13 @@
     "hours": null,
     "parentLock": "0",
     "settings": null
+  },
+  {
+    "name": "UNO Demo",
+    "path": "uplay://launch/3361/0",
+    "image": "../../Resources/DefaultGameImage.PNG",
+    "hours": null,
+    "parentLock": "0",
+    "settings": null
   }
 ]

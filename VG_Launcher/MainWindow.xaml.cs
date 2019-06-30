@@ -71,7 +71,7 @@ namespace VG_Launcher
 
                             wc.Headers.Add("Authorization", "Bearer 47af29a9fb8d5d08ba57a06f2bc15261");
 
-                            var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name);
+                            var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name.ToLower());
 
                             //Choose the first game in the list. The first one most closely matches the name
                             dynamic idJson = JsonConvert.DeserializeObject(json);
