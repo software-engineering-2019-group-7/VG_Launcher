@@ -29,10 +29,19 @@ namespace VG_Launcher
         private void DoneBtn_Click(object sender, RoutedEventArgs e)
         {
             //Get Info From Text Box(es) and save
-            Properties.Settings.Default.ParentName = ParentName.Text;
-            Properties.Settings.Default.ChildName = ChildName.Text;
-            App.Current.MainWindow.Show();
-            this.Close();
+            if (ChildCheck.IsChecked == true)
+            {
+                Properties.Settings.Default.ParentName = ParentName.Text;
+                Properties.Settings.Default.ChildName = ChildName.Text;
+                ParentLockSelect parentLockSelect = new ParentLockSelect(library);
+                parentLockSelect.Show();
+                this.Close();
+            }
+            else
+            {
+                App.Current.MainWindow.Show();
+                this.Close();
+            }
         }
 
         private void ChildCheck_Checked(object sender, RoutedEventArgs e)
