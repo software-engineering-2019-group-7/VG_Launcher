@@ -23,6 +23,8 @@ namespace VG_Launcher
         public LogInService()
         {
             InitializeComponent();
+            parentButton.Content = Properties.Settings.Default.ParentName;
+            childButton.Content = Properties.Settings.Default.ChildName;
         }
 
         private void ParentButton_Click(object sender, RoutedEventArgs e)

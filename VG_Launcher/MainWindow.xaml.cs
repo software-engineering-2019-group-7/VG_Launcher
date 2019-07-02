@@ -31,24 +31,27 @@ namespace VG_Launcher
             Curlibrary.InitLib();
             if (Curlibrary.gameList.Count < 1)
             {
+                AccountSetup accountSetup = new AccountSetup(Curlibrary);
+                accountSetup.Show();
+                //accountSetup.Close();
+                
                 //Empty game Library, launch service provider
                 Console.WriteLine("NO GAMES, INIT CONDITIONS");
-                ServiceProvider sp = new ServiceProvider(Curlibrary);
-                sp.ShowDialog();
-                sp.Close();
+                
                 //Continue with setup procedures
             }
             else
             {
                 //Go to Login Screen
+                logIn();
+                locked = Properties.Settings.Default.ParentalLockEngaged;
+                if (locked)
+                    CreateButtons(true);
+                else
+                    CreateButtons(false);
             }
 
-            logIn();
-            locked = Properties.Settings.Default.ParentalLockEngaged;
-            if (locked)
-                CreateButtons(true);
-            else
-                CreateButtons(false);
+            
         }
 
         public void CreateButtons(bool locked)
@@ -233,6 +236,7 @@ namespace VG_Launcher
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Properties.Settings.Default.Save();
             Curlibrary.SaveJson(Curlibrary);
             System.Windows.Application.Current.Shutdown();
         }
