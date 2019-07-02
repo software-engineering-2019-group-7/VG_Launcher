@@ -32,12 +32,11 @@ namespace VG_Launcher
             if (Curlibrary.gameList.Count < 1)
             {
                 AccountSetup accountSetup = new AccountSetup(Curlibrary);
-                accountSetup.Show();
-                //accountSetup.Close();
-                
-                //Empty game Library, launch service provider
+                //Empty game Library, launch account setup
                 Console.WriteLine("NO GAMES, INIT CONDITIONS");
-                
+
+                App.Current.MainWindow.Hide();
+                accountSetup.Show();
                 //Continue with setup procedures
             }
             else
@@ -49,9 +48,7 @@ namespace VG_Launcher
                     CreateButtons(true);
                 else
                     CreateButtons(false);
-            }
-
-            
+            }            
         }
 
         public void CreateButtons(bool locked)

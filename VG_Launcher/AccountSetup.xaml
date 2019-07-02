@@ -5,19 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
         mc:Ignorable="d"
-        Title="AccountSetup" Height="473.333" Width="375.5" WindowStyle="None" Topmost="True" MouseDown="Window_MouseDown" WindowStartupLocation="CenterScreen">
+        Title="AccountSetup" SizeToContent = "Height" Height = "Auto" MaxHeight="473.333" Width="375.5" WindowStyle="None" Topmost="True" MouseDown="Window_MouseDown" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Background="#FF242B3C">
-        <Label x:Name="Intro" Content="Welcome To VG_Launcher!" HorizontalAlignment="Center" Margin="10,10,10,0" VerticalAlignment="Top" Height="39" Width="344" Foreground="White" FontWeight="Bold" FontSize="20" />
-        <Label x:Name="Intro2" Content="Please setup your account:" HorizontalAlignment="Center" Margin="10,49,10,0" VerticalAlignment="Top" Foreground="White" FontSize="15" Height="31" Width="344"/>
-        <TextBox x:Name="ParentName" HorizontalAlignment="Left" Height="22" Margin="110,353,0,0" TextWrapping="Wrap" Text="Parent" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="ParentLabel" Content="Main Account Name:" HorizontalAlignment="Left" Margin="110,322,0,0" VerticalAlignment="Top" Foreground="White" Width="122"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=" Auto" />
+        </Grid.RowDefinitions>
+        <Label x:Name="Intro" Content="Welcome To VG_Launcher!" HorizontalAlignment="Center" Margin="13,10,13.5,0" VerticalAlignment="Top" Height="39" Width="344" Foreground="White" FontWeight="Bold" FontSize="20" />
+        <Label x:Name="Intro2" Content="Please setup your account:" HorizontalAlignment="Center" Margin="13,49,13.5,0" VerticalAlignment="Top" Foreground="White" FontSize="15" Height="31" Width="344"/>
+        <TextBox x:Name="ParentName" HorizontalAlignment="Left" Height="22" Margin="110,353,0,0" TextWrapping="Wrap" Text="Parent" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
+        <Label x:Name="ParentLabel" Content="Main Account Name:" HorizontalAlignment="Left" Margin="110,322,0,0" VerticalAlignment="Top" Foreground="White" Width="122" Visibility="Collapsed"/>
         <CheckBox x:Name="ChildCheck" Content="Enable Child Account" HorizontalAlignment="Left" Margin="108,302,0,0" VerticalAlignment="Top" Foreground="White" Checked="ChildCheck_Checked" Unchecked="ChildCheck_Unchecked"/>
-        <TextBox x:Name="ChildName" HorizontalAlignment="Left" Height="22" Margin="108,411,0,0" TextWrapping="Wrap" Text="Child" VerticalAlignment="Top" Width="120" Visibility="Visible"/>
-        <Label x:Name="ChildLabel" Content="Child Account Name:" HorizontalAlignment="Left" Margin="110,380,0,0" VerticalAlignment="Top" Foreground="White" Width="121" Visibility="Visible"/>
+        <TextBox x:Name="ChildName" HorizontalAlignment="Left" Height="22" Margin="108,411,0,0" TextWrapping="Wrap" Text="Child" VerticalAlignment="Top" Width="120"  Visibility="Collapsed"/>
+        <Label x:Name="ChildLabel" Content="Child Account Name:" HorizontalAlignment="Left" Margin="110,380,0,0" VerticalAlignment="Top" Foreground="White" Width="121"  Visibility="Collapsed"/>
         <TextBlock x:Name="ChildPromptBlock" Margin="10,249,0,0" TextWrapping="Wrap" Text="Do you have Children who play on your computer? Setup a Child Account to use Parental Lock!" VerticalAlignment="Top" Foreground="White" FontSize="15" Height="48" Width="344" HorizontalAlignment="Left" TextAlignment="Center"/>
-        <Button x:Name="DoneBtn" Content="Continue" HorizontalAlignment="Left" Margin="133,438,0,0" VerticalAlignment="Top" Width="75" Click="DoneBtn_Click"/>
+        <Button x:Name="DoneBtn" Content="Continue" HorizontalAlignment="Left" Margin="133,330,0,0" VerticalAlignment="Top" Width="75" Click="DoneBtn_Click"/>
         <Button x:Name="serviceProviderBtn" Content="Automatically Find Games" HorizontalAlignment="Left" Margin="100,130,0,0" VerticalAlignment="Top" Width="159" Click="ServiceProviderBtn_Click"/>
-        <Button x:Name="manualAddBtn" Content="Manually Add Games" HorizontalAlignment="Left" Margin="101,215,0,0" VerticalAlignment="Top" Width="158" Click="ManualAddBtn_Click"/>
+        <Button x:Name="manualAddBtn" Content="Manually Add Games" HorizontalAlignment="Left" Margin="101,215,0,0" VerticalAlignment="Top" Width="158"/>
         <TextBlock x:Name="serviceProviderBlock" Margin="13,85,0,0" TextWrapping="Wrap" Text="Open the game search screen and let the Launcher find your games:" VerticalAlignment="Top" Foreground="White" FontSize="13" Height="38" Width="344" HorizontalAlignment="Left" TextAlignment="Center"/>
         <TextBlock x:Name="manualAddBlock" Margin="10,162,0,0" TextWrapping="Wrap" Text="Manually add any games not from the supported providers or that were missed by the game search:" VerticalAlignment="Top" Foreground="White" FontSize="13" Height="38" Width="344" HorizontalAlignment="Left" TextAlignment="Center"/>
     </Grid>

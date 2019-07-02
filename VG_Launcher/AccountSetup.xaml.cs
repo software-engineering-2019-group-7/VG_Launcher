@@ -31,20 +31,29 @@ namespace VG_Launcher
             //Get Info From Text Box(es) and save
             Properties.Settings.Default.ParentName = ParentName.Text;
             Properties.Settings.Default.ChildName = ChildName.Text;
+            App.Current.MainWindow.Show();
             this.Close();
         }
 
         private void ChildCheck_Checked(object sender, RoutedEventArgs e)
         {
+            this.Height = 473;
+            DoneBtn.Margin = new Thickness(133,438,0,0);
             ChildLabel.Visibility = Visibility.Visible;
             ChildName.Visibility = Visibility.Visible;
+            ParentLabel.Visibility = Visibility.Visible;
+            ParentName.Visibility = Visibility.Visible;
             Properties.Settings.Default.ChildEnabled = true;
         }
 
         private void ChildCheck_Unchecked(object sender, RoutedEventArgs e)
         {
+            this.Height = 360;
+            DoneBtn.Margin = new Thickness(133, 330, 0, 0);
             ChildLabel.Visibility = Visibility.Collapsed;
             ChildName.Visibility = Visibility.Collapsed;
+            ParentLabel.Visibility = Visibility.Collapsed;
+            ParentName.Visibility = Visibility.Collapsed;
             Properties.Settings.Default.ChildEnabled = false;
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
