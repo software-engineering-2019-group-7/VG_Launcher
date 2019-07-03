@@ -86,7 +86,7 @@ namespace VG_Launcher
             }
             if (Blizzard.IsChecked == true)
             {
-                GetBlizzardGameList();
+                added.AddRange(GetBlizzardGameList());
             }
 
             //Add the games that the scraper found to the library's gamelist
@@ -291,6 +291,7 @@ namespace VG_Launcher
                     var game = new Game();
                     game.name = (string)tempKey.GetValue("gameName");
                     game.path = GetGOGDirectory() + "/command=runGame /gameId=" + subKeyName + " /path=" + (string)tempKey.GetValue("path"); //maybe?
+                    game.parentLock = "0";
                     gogGamesList.Add(game);
                     tempKey.Close();
                 }
@@ -338,6 +339,7 @@ namespace VG_Launcher
                     RegistryKey tempKey = originRegistryKey.OpenSubKey(subKeyName);
                     game.name = (string)tempKey.GetValue("DisplayName");
                     game.path = "origin://launchgame/OFB-EAST:" + subKeyName;
+                    game.parentLock = "0";
                     originGamesList.Add(game);
                     tempKey.Close();
                 }
@@ -387,7 +389,7 @@ namespace VG_Launcher
                                 break;
                         }
                         if (i < line.Length)
-                            appname = line.Substring(i + 1, line.Length - i - 2); // we chop off the ends to avoid the quotes
+                            appname = line.Substring(i + 1, line.Length - i - 3); // we chop off the ends to avoid the quotes
                     }
                     if (line.Contains("DisplayName"))
                     {
@@ -401,11 +403,14 @@ namespace VG_Launcher
                                 break;
                         }
                         if (i < line.Length)
-                            displayname = line.Substring(i + 1, line.Length - i - 2); // we chop off the ends to avoid the quotes
+                        {
+                            displayname = line.Substring(i + 1, line.Length - i - 3); // we chop off the ends to avoid the quotes
+                        }
                     }
                 }
                 game.name = displayname;
-                game.path = "com.epicgames.launcher://apps/" + appname + "?action=launch";
+                game.path = "com.epicgames.launcher://apps/" + appname + "?action=launch&silent=true";
+                game.parentLock = "0";
                 epicGamesList.Add(game);
             }
             return epicGamesList;
@@ -448,10 +453,11 @@ namespace VG_Launcher
                     if (subKeyName.Equals(name))
                     {
                         game.name = name;
-                        game.path = GetBlizzardDirectory() + "--exec = \"launch " + blizzardIDName[name] + "\""; //maybe?
+                        game.path = GetBlizzardDirectory() + "--exec=\"launch " + blizzardIDName[subKeyName] + "\""; //maybe?
+                        game.parentLock = "0";
+                        gameList.Add(game);
                     }
                 }
-                gameList.Add(game);
             }
             currentUserRegistryKey.Close();
             blizzardRegistryKey.Close();
