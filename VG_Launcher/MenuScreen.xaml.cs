@@ -23,13 +23,6 @@ namespace VG_Launcher
         public MenuScreen()
         {
             InitializeComponent();
-            if (Properties.Settings.Default.ParentalLockEngaged)
-            {
-                serviceLoader.Visibility = Visibility.Collapsed;
-                addGameButton.Visibility = Visibility.Collapsed;
-                lockButton.Margin = new Thickness(93,65,0,0);
-                this.Height = 185;
-            }
         }
 
         public MenuScreen(Library lib)

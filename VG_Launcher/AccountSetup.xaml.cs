@@ -42,6 +42,7 @@ namespace VG_Launcher
             else
             {
                 Properties.Settings.Default.ChildEnabled = false;
+                Properties.Settings.Default.ParentalLockEngaged = false;
                 App.Current.MainWindow.Show();
                 this.Close();
             }

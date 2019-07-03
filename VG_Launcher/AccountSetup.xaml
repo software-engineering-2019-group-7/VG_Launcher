@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:VG_Launcher"
         mc:Ignorable="d"
         Title="AccountSetup" SizeToContent = "Height" Height = "Auto" MaxHeight="530" Width="375.5" WindowStyle="None" Topmost="True" MouseDown="Window_MouseDown" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid Background="#FF242B3C">
+    <Grid Background="#FF2B2B2B">
         <Grid.RowDefinitions>
             <RowDefinition Height=" Auto" />
         </Grid.RowDefinitions>
