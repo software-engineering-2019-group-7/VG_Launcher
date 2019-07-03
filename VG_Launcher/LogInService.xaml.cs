@@ -19,7 +19,7 @@ namespace VG_Launcher
     /// </summary>
     public partial class LogInService : Window
     {
-        private string lockCode = "1234";
+        private string lockCode = Properties.Settings.Default.ParentLockCode;
         public LogInService()
         {
             InitializeComponent();
@@ -29,12 +29,14 @@ namespace VG_Launcher
 
         private void ParentButton_Click(object sender, RoutedEventArgs e)
         {
-            if (passwordBox.Password == "")
-                ;
-            else if (passwordBox.Password.Equals(lockCode))
+            if (passwordBox.Password.Equals(lockCode))
             {
                 Properties.Settings.Default.ParentalLockEngaged = false;
                 this.Close();
+            }
+            else
+            {
+                InvalidCode.Visibility = Visibility.Visible;
             }
         }
 

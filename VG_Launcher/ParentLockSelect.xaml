@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
         mc:Ignorable="d"
-        Title="ParentLockSelect" SizeToContent = "Height" Height = "Auto" MaxHeight="450" Width="375" WindowStyle="None" Background="#FF232323" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True">
+        Title="ParentLockSelect" Height="360" Width="375" WindowStyle="None" Background="#FF232323" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True">
     <Grid Background="#FF242B3C">
         <Grid.RowDefinitions>
             <RowDefinition Height=" Auto" />
@@ -14,7 +14,7 @@
             <StackPanel x:Name="gameList" Background="#FF242B3C"/>
         </ScrollViewer>        
         <Label x:Name="LockLabel" Content="Select games to enable Parent Lock on:" HorizontalAlignment="Left" Margin="76,10,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="13"/>
-        <Button x:Name="DoneBtn" Content="Continue" HorizontalAlignment="Center" Margin="156,330,144,0" VerticalAlignment="Top" Width="75" Click="DoneBtn_Click"/>
+        <Button x:Name="DoneBtn" Content="Done" HorizontalAlignment="Center" Margin="156,330,144,0" VerticalAlignment="Top" Width="75" Click="DoneBtn_Click"/>
         
     </Grid>
 </Window>

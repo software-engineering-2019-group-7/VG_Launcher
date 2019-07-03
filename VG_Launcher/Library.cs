@@ -14,12 +14,24 @@ namespace VG_Launcher
     {
         public Game(string _name, string _path, string _image, string _hours, string _lock, string _settings)
         {
+            //constructor without provider, will be used when user manually adds a game
             name = _name;
             path = _path;
             image = _image;
             hours = _hours;
             parentLock = _lock;
             settings = _settings;
+        }
+        public Game(string _name, string _path, string _image, string _hours, string _lock, string _settings, string _provider)
+        {
+            //constructor with provider, designating a provider allows us to use that launcher's specific launch commands
+            name = _name;
+            path = _path;
+            image = _image;
+            hours = _hours;
+            parentLock = _lock;
+            settings = _settings;
+            provider = _provider;
         }
         public Game() { }
         public string name;
@@ -28,6 +40,7 @@ namespace VG_Launcher
         public string hours;
         public string parentLock;
         public string settings;
+        public string provider;
 
         public void setSettings(string newSet)
         {

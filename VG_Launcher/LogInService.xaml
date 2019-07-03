@@ -11,6 +11,6 @@
         <Button x:Name="childButton" Content="CHILD" HorizontalAlignment="Left" Margin="191,284,0,0" Width="414" FontSize="36" Height="105" VerticalAlignment="Top" Click="ChildButton_Click"/>
         <Label x:Name="label" Content="Unlock Code:" HorizontalAlignment="Left" Margin="311,147,0,0" VerticalAlignment="Top" Foreground="WhiteSmoke"/>
         <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="396,140,0,0" VerticalAlignment="Top" Height="37" Width="96" FontSize="20"/>
-
+        <Label x:Name="InvalidCode" Content="Invalid Unlock Code. Try Again." HorizontalAlignment="Left" Margin="319,182,0,0" VerticalAlignment="Top" Foreground="Red" Visibility="Collapsed"/>
     </Grid>
 </Window>

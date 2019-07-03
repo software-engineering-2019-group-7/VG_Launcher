@@ -33,12 +33,15 @@ namespace VG_Launcher
             {
                 Properties.Settings.Default.ParentName = ParentName.Text;
                 Properties.Settings.Default.ChildName = ChildName.Text;
+                Properties.Settings.Default.ParentLockCode = LockCode.Text;
+                Properties.Settings.Default.ChildEnabled = true;
                 ParentLockSelect parentLockSelect = new ParentLockSelect(library);
                 parentLockSelect.Show();
                 this.Close();
             }
             else
             {
+                Properties.Settings.Default.ChildEnabled = false;
                 App.Current.MainWindow.Show();
                 this.Close();
             }
@@ -47,7 +50,9 @@ namespace VG_Launcher
         private void ChildCheck_Checked(object sender, RoutedEventArgs e)
         {
             this.Height = 473;
-            DoneBtn.Margin = new Thickness(133,438,0,0);
+            DoneBtn.Margin = new Thickness(133,495,0,0);
+            LockCodeLabel.Visibility = Visibility.Visible;
+            LockCode.Visibility = Visibility.Visible;
             ChildLabel.Visibility = Visibility.Visible;
             ChildName.Visibility = Visibility.Visible;
             ParentLabel.Visibility = Visibility.Visible;
@@ -59,6 +64,8 @@ namespace VG_Launcher
         {
             this.Height = 360;
             DoneBtn.Margin = new Thickness(133, 330, 0, 0);
+            LockCodeLabel.Visibility = Visibility.Collapsed;
+            LockCode.Visibility = Visibility.Collapsed;
             ChildLabel.Visibility = Visibility.Collapsed;
             ChildName.Visibility = Visibility.Collapsed;
             ParentLabel.Visibility = Visibility.Collapsed;

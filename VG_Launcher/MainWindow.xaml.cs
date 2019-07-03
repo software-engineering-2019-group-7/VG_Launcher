@@ -31,8 +31,8 @@ namespace VG_Launcher
             Curlibrary.InitLib();
             if (Curlibrary.gameList.Count < 1)
             {
-                AccountSetup accountSetup = new AccountSetup(Curlibrary);
                 //Empty game Library, launch account setup
+                AccountSetup accountSetup = new AccountSetup(Curlibrary);
                 Console.WriteLine("NO GAMES, INIT CONDITIONS");
 
                 App.Current.MainWindow.Hide();
@@ -41,13 +41,20 @@ namespace VG_Launcher
             }
             else
             {
-                //Go to Login Screen
-                logIn();
-                locked = Properties.Settings.Default.ParentalLockEngaged;
-                if (locked)
-                    CreateButtons(true);
+                if (Properties.Settings.Default.ChildEnabled)
+                {
+                    //Go to Login Screen
+                    logIn();
+                    locked = Properties.Settings.Default.ParentalLockEngaged;
+                    if (locked)
+                        CreateButtons(true);
+                    else
+                        CreateButtons(false);
+                }
                 else
+                {
                     CreateButtons(false);
+                }
             }            
         }
 

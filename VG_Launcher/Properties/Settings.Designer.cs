@@ -71,5 +71,17 @@ namespace VG_Launcher.Properties {
                 this["ChildName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ParentLockCode {
+            get {
+                return ((string)(this["ParentLockCode"]));
+            }
+            set {
+                this["ParentLockCode"] = value;
+            }
+        }
     }
 }
