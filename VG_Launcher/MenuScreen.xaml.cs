@@ -25,8 +25,10 @@ namespace VG_Launcher
             InitializeComponent();
             if (Properties.Settings.Default.ParentalLockEngaged)
             {
-                serviceLoader.Visibility = Visibility.Hidden;
-                addGameButton.Visibility = Visibility.Hidden;
+                serviceLoader.Visibility = Visibility.Collapsed;
+                addGameButton.Visibility = Visibility.Collapsed;
+                lockButton.Margin = new Thickness(93,65,0,0);
+                this.Height = 185;
             }
         }
 
@@ -36,8 +38,17 @@ namespace VG_Launcher
             Curlibrary = lib;
             if (Properties.Settings.Default.ParentalLockEngaged)
             {
-                serviceLoader.Visibility = Visibility.Hidden;
-                addGameButton.Visibility = Visibility.Hidden;
+                serviceLoader.Visibility = Visibility.Collapsed;
+                addGameButton.Visibility = Visibility.Collapsed;
+                lockButton.Margin = new Thickness(93, 65, 0, 0);
+                this.Height = 185;
+            }
+            else if (!Properties.Settings.Default.ChildEnabled)
+            {
+                this.Height = 420;
+                ChildPromptBlock.Visibility = Visibility.Visible;
+                ChildCheck.Visibility = Visibility.Visible;
+                //Child lock isnt set up, give user the option to enable it here, default window height = 356, expand it here when adding child lock options
             }
         }
 
@@ -52,25 +63,11 @@ namespace VG_Launcher
             ServiceProvider sp = new ServiceProvider(Curlibrary);
             this.Close();
             sp.ShowDialog();
-            foreach (Window w in App.Current.Windows)
-            {
-                if (w.Name.Equals("gs"))
-                {
-                    w.Close();
-                }
-            }
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-            foreach (Window w in App.Current.Windows)
-            {
-                if (w.Name.Equals("gs"))
-                {
-                    w.Close();
-                }
-            }
         }
 
         private void AddGameButton_Click(object sender, RoutedEventArgs e)
@@ -78,25 +75,10 @@ namespace VG_Launcher
             customExe cus = new customExe(Curlibrary);
             this.Close();
             cus.ShowDialog();
-            foreach (Window w in App.Current.Windows)
-            {
-                if (w.Name.Equals("gs"))
-                {
-                    w.Close();
-                }
-            }
         }
 
         private void LockButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Window w in App.Current.Windows)
-            {
-                if (w.Name.Equals("gs"))
-                {
-                    w.Close();
-                }
-            }
-            
             ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
             ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
             LogInService li = new LogInService();
@@ -107,6 +89,49 @@ namespace VG_Launcher
             else
                 ((MainWindow)Application.Current.MainWindow).CreateButtons(false);
             this.Close();
+        }
+
+        private void ChildCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            this.Height = 630;
+            ParentLabel.Visibility = Visibility.Visible;
+            ParentName.Visibility = Visibility.Visible;
+            ChildLabel.Visibility = Visibility.Visible;
+            ChildName.Visibility = Visibility.Visible;
+            LockCodeLabel.Visibility = Visibility.Visible;
+            LockCode.Visibility = Visibility.Visible;
+            DoneBtn.Visibility = Visibility.Visible;
+        }
+        private void ChildCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.Height = 420;
+            ParentLabel.Visibility = Visibility.Collapsed;
+            ParentName.Visibility = Visibility.Collapsed;
+            ChildLabel.Visibility = Visibility.Collapsed;
+            ChildName.Visibility = Visibility.Collapsed;
+            LockCodeLabel.Visibility = Visibility.Collapsed;
+            LockCode.Visibility = Visibility.Collapsed;
+            DoneBtn.Visibility = Visibility.Collapsed;
+        }
+        private void DoneBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (ChildCheck.IsChecked == true)
+            {
+                Properties.Settings.Default.ParentName = ParentName.Text;
+                Properties.Settings.Default.ChildName = ChildName.Text;
+                Properties.Settings.Default.ParentLockCode = LockCode.Text;
+                Properties.Settings.Default.ChildEnabled = true;
+                ParentLockSelect parentLockSelect = new ParentLockSelect(Curlibrary);
+                parentLockSelect.Show();
+                App.Current.MainWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                Properties.Settings.Default.ChildEnabled = false;
+                App.Current.MainWindow.Show();
+                this.Close();
+            }
         }
     }
 }

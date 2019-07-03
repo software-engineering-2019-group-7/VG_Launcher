@@ -30,6 +30,7 @@ namespace VG_Launcher
             InitializeComponent();
             Curlibrary = lib;
             CurGame = new Game();
+            Curlibrary.gameList.Add(CurGame);
         }
         public customExe(Game game)
         {
@@ -42,6 +43,8 @@ namespace VG_Launcher
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
+            //Remove the newly created game to prevent filling the JSON with empty entries
+            Curlibrary.gameList.Remove(CurGame);
             this.Close();
         }
 
