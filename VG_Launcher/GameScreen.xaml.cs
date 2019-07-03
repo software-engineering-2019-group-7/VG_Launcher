@@ -38,6 +38,7 @@ namespace VG_Launcher
             Point point = btn.PointToScreen(new Point(0, 0));
             set.Left = point.X;
             set.Top = point.Y;
+            this.Close();
             set.Show();
             //open the settings menu
         }

@@ -76,10 +76,10 @@ namespace VG_Launcher
             {
                 if (titleName != null)
                 {
-                    if (CleanNameForTimeTracking(titleName).Contains(CleanNameForTimeTracking(g.name)))
+                    if (CleanName(titleName).Contains(CleanName(g.name)))
                     {
                         g.time++;
-                        Console.WriteLine(CleanNameForTimeTracking(g.name));
+                        Console.WriteLine(CleanName(g.name));
                     }
                 }
             }
@@ -95,7 +95,7 @@ namespace VG_Launcher
                     try
                     {
                         Button btn = new Button();
-                        btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with an identitier ie: game.id
+                        btn.Name = CleanName(game.name); //replace this with an identitier ie: game.id
                         btn.Tag = game;
                         if (!File.Exists(game.image))
                         {
@@ -187,20 +187,15 @@ namespace VG_Launcher
 
         public string CleanName(string str)
         {
-
-                str = str.Replace(" ", "_");
-                str = str.Replace(":", "");
-                str = str.Replace(",", "");
-            return str;
-        }
-
-        public string CleanNameForTimeTracking(string str)
-        {
+            str = str.ToLower();
             str = str.Replace(" ", "");
             str = str.Replace(":", "");
             str = str.Replace(",", "");
+            str = str.Replace("'", "");
+            //keep adding as things break
             return str;
         }
+
         public void logIn()
         {
             LogInService li = new LogInService();
@@ -326,6 +321,18 @@ namespace VG_Launcher
             clickReciever.Visibility = Visibility.Hidden;
         }
 
+        public void HideGame(string name)
+        {
+            Button remove = new Button();
+            foreach(Button b in gameWrapPanel.Children)
+            {
+                if (CleanName(b.Name) == CleanName(name))
+                {
+                    remove = b;
+                }
+            }
+            gameWrapPanel.Children.Remove(remove);
+        }
 
         [DllImport("user32.dll")]
         static extern IntPtr GetForegroundWindow();
