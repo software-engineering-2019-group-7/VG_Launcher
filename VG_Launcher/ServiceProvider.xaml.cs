@@ -34,15 +34,16 @@ namespace VG_Launcher
         public Dictionary<string, string> bethesdaIDName = new Dictionary<string, string>
         {
             //Game name, ID
-            { "World of Warcraft", "WoW" },
-            { "Destiny 2", "DST2" },
-            { "Call of Duty: Black Ops 4", "VIPR" },
-            { "Diablo 3", "D3" },
-            { "Starcraft Remastered", "S1" },
-            { "Starcraft 2", "S2" },
-            { "Hearthstone", "WTCG" },
-            { "Heroes of the Storm", "Hero" },
-            { "Overwatch", "Pro" }
+            //These are totally crowdsourced, so YMMV. I asked the bethesda discord to help me with the name/id pairs
+            { "Fallout 76", "20" },
+            { "Fallout Shelter", "8" },
+            { "Rage", "45" },
+            { "Quake Champions", "11" },
+            { "Quake Champions PTS", "12" },
+            { "Fallout", "21" },
+            { "Fallout 2", "22" },
+            { "The Elder Scrolls: Legends", "5" },
+            { "", "" }
         };
 
         public ServiceProvider()
@@ -78,7 +79,7 @@ namespace VG_Launcher
             }
             if (Bethesda.IsChecked == true)
             {
-                //in progress
+                added.AddRange(GetBethesdaGameList());
             }
             if (Epic.IsChecked == true)
             {
@@ -209,7 +210,7 @@ namespace VG_Launcher
         {
             List<Game> gameList = new List<Game>();
             Dictionary<string, string> pairs = GetUPlayAppIDNameList();
-            Console.WriteLine(pairs.Count);
+            //Console.WriteLine(pairs.Count);
             foreach (KeyValuePair<string,string> p in pairs)
             {
                 Game g = new Game();
@@ -217,10 +218,6 @@ namespace VG_Launcher
                 g.path = "uplay://launch/"+p.Value+"/0";
                 g.parentLock = "0";
                 gameList.Add(g);
-            }
-            foreach(Game g in gameList)
-            {
-                Console.WriteLine("@@@@" + g.name + " " + g.path);
             }
             return gameList;
         }
@@ -254,6 +251,7 @@ namespace VG_Launcher
         }
         #endregion
 
+        #region GOG
         private string GetGOGDirectory()
         {
             string gogInstallPath = "";
@@ -290,7 +288,8 @@ namespace VG_Launcher
                     RegistryKey tempKey = gogRegistryKey.OpenSubKey(subKeyName);
                     var game = new Game();
                     game.name = (string)tempKey.GetValue("gameName");
-                    game.path = GetGOGDirectory() + "/command=runGame /gameId=" + subKeyName + " /path=" + (string)tempKey.GetValue("path"); //maybe?
+                    game.path = GetGOGDirectory() + "\\GalaxyClient.exe";
+                    game.settings = "/command=runGame /gameId=" + subKeyName + " /path=" + (string)tempKey.GetValue("path"); //maybe?
                     game.parentLock = "0";
                     gogGamesList.Add(game);
                     tempKey.Close();
@@ -301,7 +300,9 @@ namespace VG_Launcher
             gogRegistryKey.Close();
             return gogGamesList;
         }
+        #endregion
 
+        #region Origin
         private string GetOriginDirectory()
         {
             string originInstallPath = "";
@@ -338,7 +339,7 @@ namespace VG_Launcher
                     var game = new Game();
                     RegistryKey tempKey = originRegistryKey.OpenSubKey(subKeyName);
                     game.name = (string)tempKey.GetValue("DisplayName");
-                    game.path = "origin://launchgame/OFB-EAST:" + subKeyName;
+                    game.path = "origin://launchgame/OFB-EAST:" + subKeyName; //THIS IS PULLING THE WRONG APP ID'S. WE CANT USE THIS subKeyName
                     game.parentLock = "0";
                     originGamesList.Add(game);
                     tempKey.Close();
@@ -349,7 +350,9 @@ namespace VG_Launcher
             originRegistryKey.Close();
             return originGamesList;
         }
+        #endregion 
 
+        #region Epic
         private string GetEpicDirectory()
         {
             string epicInstallPath = "";
@@ -377,7 +380,9 @@ namespace VG_Launcher
                 string appname = "", displayname = "";
                 foreach (string line in File.ReadLines(manifest))
                 {
-                    if (line.Contains("AppName"))
+                    //Console.WriteLine(line);
+
+                    if (line.Contains("AppName") && !line.Contains("Full") && !line.Contains("Main"))
                     {
                         int quoteCount = 0;
                         int i = 0;
@@ -408,14 +413,20 @@ namespace VG_Launcher
                         }
                     }
                 }
-                game.name = displayname;
                 game.path = "com.epicgames.launcher://apps/" + appname + "?action=launch&silent=true";
+                game.name = displayname;
+
+                //Console.WriteLine("appname: " + appname);
+                //Console.WriteLine("display: " + displayname);
+
                 game.parentLock = "0";
                 epicGamesList.Add(game);
             }
             return epicGamesList;
         }
+        #endregion
 
+        #region Blizzard
         private string GetBlizzardDirectory()
         {
             string blizzardInstallPath = "";
@@ -447,13 +458,16 @@ namespace VG_Launcher
             List<Game> gameList = new List<Game>();
             foreach (string subKeyName in blizzardRegistryKey.GetSubKeyNames())
             {
+                //Console.WriteLine(subKeyName);
+                //Console.WriteLine(GetBlizzardDirectory());
                 var game = new Game();
                 foreach (var name in blizzardIDName.Keys)
                 {
                     if (subKeyName.Equals(name))
                     {
                         game.name = name;
-                        game.path = GetBlizzardDirectory() + "--exec=\"launch " + blizzardIDName[subKeyName] + "\""; //maybe?
+                        game.path = GetBlizzardDirectory();
+                        game.settings= "--exec=\"launch " + blizzardIDName[subKeyName] + "\""; //maybe?
                         game.parentLock = "0";
                         gameList.Add(game);
                     }
@@ -463,7 +477,9 @@ namespace VG_Launcher
             blizzardRegistryKey.Close();
             return gameList;
         }
+        #endregion
 
+        #region Bethesda
         private string GetBethesdaDirectory()
         {
             string bethesdaInstallPath = "";
@@ -482,15 +498,46 @@ namespace VG_Launcher
             bethesdaRegistryKey.Close();
             return bethesdaInstallPath;
         }
-        private string[] GetBethesdaGameList()
+        private List<Game> GetBethesdaGameList()
         {
-            List<string> gameList = new List<string>();
+            List<Game> gameList = new List<Game>();
             foreach (string path in Directory.GetDirectories(Path.Combine(GetBethesdaDirectory(), @"games")))
             {
+                Console.WriteLine(path);
+                var game = new Game();
                 DirectoryInfo di = new DirectoryInfo(path);
-                gameList.Add(di.Name);
+                string gameName = di.Name;
+
+                //bethesda convieniently returns the names of the games with no spaces, which screws up the image gathering. Adding spaces between words here
+                int spaceIndex = 0;
+                char[] dirtyName = gameName.ToCharArray();
+                for(int i = 1; i < dirtyName.Length;i++)
+                {
+                    if (Char.IsUpper(dirtyName[i]) || Char.IsDigit(dirtyName[i]))
+                    {
+                        spaceIndex = i;
+                        if (Char.IsDigit(dirtyName[i + 1]))
+                        {
+                            break;
+                        }
+                    }
+                }
+                if(spaceIndex != 0)
+                    gameName = gameName.Insert(spaceIndex, " ");
+                Console.WriteLine(gameName);
+                foreach (var name in bethesdaIDName.Keys)
+                {
+                    if (gameName.Equals(name))
+                    {
+                        game.name = gameName;
+                        game.path = "bethesdanet://run/" + bethesdaIDName[gameName];
+                        game.parentLock = "0";
+                        gameList.Add(game);
+                    }
+                }
             }
-            return gameList.ToArray();
+            return gameList;
         }
+        #endregion
     }
 }

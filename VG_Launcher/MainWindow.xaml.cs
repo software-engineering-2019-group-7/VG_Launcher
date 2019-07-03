@@ -3,11 +3,16 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Color = System.Windows.Media.Color;
 using ColorConverter = System.Windows.Media.ColorConverter;
 using Point = System.Windows.Point;
@@ -55,7 +60,29 @@ namespace VG_Launcher
                 {
                     CreateButtons(false);
                 }
-            }            
+            }
+            //  DispatcherTimer setup
+            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+        }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine(GetActiveWindowTitle());
+            string titleName = GetActiveWindowTitle();
+            foreach(Game g in Curlibrary.gameList)
+            {
+                if (titleName != null)
+                {
+                    if (CleanName(titleName).Contains(CleanName(g.name)))
+                    {
+                        g.time++;
+                        Console.WriteLine(CleanName(g.name));
+                    }
+                }
+            }
         }
 
         public void CreateButtons(bool locked)
@@ -67,13 +94,12 @@ namespace VG_Launcher
                 {
                     try
                     {
-
                         Button btn = new Button();
-                        btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with an identitier ie: game.id
+                        btn.Name = CleanName(game.name); //replace this with an identitier ie: game.id
                         btn.Tag = game;
                         if (!File.Exists(game.image))
                         {
-                            Console.WriteLine(game.name);
+                            //Console.WriteLine(game.name);
                             WebClient wc = new WebClient();
 
                             wc.Headers.Add("Authorization", "Bearer 47af29a9fb8d5d08ba57a06f2bc15261");
@@ -94,18 +120,19 @@ namespace VG_Launcher
                             {
                                 string imageUrl = imageJson["data"][0]["url"];
                                 game.image = "../../Resources/" + CleanName(game.name).ToLower() + ".png";
-                                Console.WriteLine(game.name);
+                                //Console.WriteLine(game.name);
 
 
                                 //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
                                 //But I am storing it just in case we can figure out how to use it
-
+                                //Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
                                 Console.WriteLine("Pulled image " + game.name);
                                 wc.Headers.Clear();
                                 wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
                             }
                             catch(Exception e)
                             {
+                                Console.WriteLine(e);
                                 game.image = "../../Resources/DefaultGameImage.PNG";
                             }
                          
@@ -127,7 +154,7 @@ namespace VG_Launcher
                         }
                         if(game.image == "../../Resources/DefaultGameImage.PNG")
                         {
-                            //If we are using the default Logo, display the name **NOT WORKING YET**
+                            //If we are using the default Logo, display the name
                             btn.Content = game.name;
                         }
                         //"#4CFFFFFF"
@@ -160,9 +187,12 @@ namespace VG_Launcher
 
         public string CleanName(string str)
         {
-            str = str.Replace(" ", "_");
+            str = str.ToLower();
+            str = str.Replace(" ", "");
             str = str.Replace(":", "");
             str = str.Replace(",", "");
+            str = str.Replace("'", "");
+            //keep adding as things break
             return str;
         }
 
@@ -182,6 +212,8 @@ namespace VG_Launcher
             gs.Tag = game;
             gs.playButton.Tag = game;
             gs.settingsButton.Tag = game;
+            TimeSpan t = TimeSpan.FromSeconds(game.time);
+            gs.hoursLabel.Content = t.ToString(@"hh\:mm\:ss");
 
 
 
@@ -287,6 +319,38 @@ namespace VG_Launcher
             ms.Left = point.X + btn.Width;
             ms.ShowDialog();
             clickReciever.Visibility = Visibility.Hidden;
+        }
+
+        public void HideGame(string name)
+        {
+            Button remove = new Button();
+            foreach(Button b in gameWrapPanel.Children)
+            {
+                if (CleanName(b.Name) == CleanName(name))
+                {
+                    remove = b;
+                }
+            }
+            gameWrapPanel.Children.Remove(remove);
+        }
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+        private string GetActiveWindowTitle()
+        {
+            const int nChars = 256;
+            StringBuilder Buff = new StringBuilder(nChars);
+            IntPtr handle = GetForegroundWindow();
+
+            if (GetWindowText(handle, Buff, nChars) > 0)
+            {
+                return Buff.ToString();
+            }
+            return null;
         }
     }
 }
