@@ -10,7 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height=" Auto" />
         </Grid.RowDefinitions>
-        <ScrollViewer x:Name="gameScroller" Margin="0,58,0,36" VerticalScrollBarVisibility="Auto" MouseDown="GameScroller_MouseDown">
+        <ScrollViewer x:Name="gameScroller" Margin="50,58,50,36" VerticalScrollBarVisibility="Auto" MouseDown="GameScroller_MouseDown">
             <StackPanel x:Name="gameList" Background="#FF242B3C"/>
         </ScrollViewer>        
         <Label x:Name="LockLabel" Content="Select games to enable Parent Lock on:" HorizontalAlignment="Left" Margin="76,10,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="13"/>
