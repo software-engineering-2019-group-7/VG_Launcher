@@ -52,6 +52,7 @@ namespace VG_Launcher
                     Game game = (Game)btn.Tag;
                     myProcess.StartInfo.UseShellExecute = true;
                     myProcess.StartInfo.FileName = game.path;
+                    myProcess.StartInfo.Arguments = game.settings;
                     myProcess.Start();
                 }
             }catch(Exception exe)

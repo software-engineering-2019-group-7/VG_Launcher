@@ -67,13 +67,12 @@ namespace VG_Launcher
                 {
                     try
                     {
-
                         Button btn = new Button();
                         btn.Name = "button" + gameWrapPanel.Children.Count; //replace this with an identitier ie: game.id
                         btn.Tag = game;
                         if (!File.Exists(game.image))
                         {
-                            Console.WriteLine(game.name);
+                            //Console.WriteLine(game.name);
                             WebClient wc = new WebClient();
 
                             wc.Headers.Add("Authorization", "Bearer 47af29a9fb8d5d08ba57a06f2bc15261");
@@ -94,18 +93,19 @@ namespace VG_Launcher
                             {
                                 string imageUrl = imageJson["data"][0]["url"];
                                 game.image = "../../Resources/" + CleanName(game.name).ToLower() + ".png";
-                                Console.WriteLine(game.name);
+                                //Console.WriteLine(game.name);
 
 
                                 //As of right now, we do nothing with this downloaded file. I havent been able to get the "ImageSource" further down to actually see the downloaded file
                                 //But I am storing it just in case we can figure out how to use it
-
+                                //Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
                                 Console.WriteLine("Pulled image " + game.name);
                                 wc.Headers.Clear();
                                 wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
                             }
                             catch(Exception e)
                             {
+                                Console.WriteLine(e);
                                 game.image = "../../Resources/DefaultGameImage.PNG";
                             }
                          
@@ -127,7 +127,7 @@ namespace VG_Launcher
                         }
                         if(game.image == "../../Resources/DefaultGameImage.PNG")
                         {
-                            //If we are using the default Logo, display the name **NOT WORKING YET**
+                            //If we are using the default Logo, display the name
                             btn.Content = game.name;
                         }
                         //"#4CFFFFFF"
