@@ -18,7 +18,32 @@ namespace VG_Launcher
     public partial class ServiceProvider : Window
     {
         public Library library = new Library();
-
+        public Dictionary<string, string> blizzardIDName = new Dictionary<string, string>
+        {
+            //Game name, ID
+            { "World of Warcraft", "WoW" },
+            { "Destiny 2", "DST2" },
+            { "Call of Duty: Black Ops 4", "VIPR" },
+            { "Diablo 3", "D3" },
+            { "Starcraft Remastered", "S1" },
+            { "Starcraft 2", "S2" },
+            { "Hearthstone", "WTCG" },
+            { "Heroes of the Storm", "Hero" },
+            { "Overwatch", "Pro" }
+        };
+        public Dictionary<string, string> bethesdaIDName = new Dictionary<string, string>
+        {
+            //Game name, ID
+            { "World of Warcraft", "WoW" },
+            { "Destiny 2", "DST2" },
+            { "Call of Duty: Black Ops 4", "VIPR" },
+            { "Diablo 3", "D3" },
+            { "Starcraft Remastered", "S1" },
+            { "Starcraft 2", "S2" },
+            { "Hearthstone", "WTCG" },
+            { "Heroes of the Storm", "Hero" },
+            { "Overwatch", "Pro" }
+        };
         public ServiceProvider()
         {
             InitializeComponent();
@@ -179,7 +204,7 @@ namespace VG_Launcher
         }
         #endregion
 
-
+        #region uPlay
         private List<Game> GetUplayGameList()
         {
             List<Game> gameList = new List<Game>();
@@ -226,6 +251,222 @@ namespace VG_Launcher
             localMachineRegistry.Close();
             uplayRegistryKey.Close();
             return pairs;
+        }
+        #endregion
+
+        private string GetGOGDirectory()
+        {
+            string gogInstallPath = "";
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey gogRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\GOG.com\GalaxyClient\paths");
+            if (gogRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                gogRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\GOG.com\GalaxyClient\paths");
+            }
+            object registryEntry = gogRegistryKey.GetValue("client");
+            if (registryEntry != null)
+                gogInstallPath = (string)registryEntry;
+            localMachineRegistry.Close();
+            gogRegistryKey.Close();
+            return gogInstallPath;
+        }
+        private List<Tuple<String, String>> GetGOGGameList()
+        {
+            var gogGamesList = new List<Tuple<String, String>>();
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey gogRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\GOG.com\Games");
+            if (gogRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                gogRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\GOG.com\Games");
+            }
+            if (gogRegistryKey != null)
+            {
+                foreach (string subKeyName in gogRegistryKey.GetSubKeyNames())
+                {
+                    RegistryKey tempKey = gogRegistryKey.OpenSubKey(subKeyName);
+                    gogGamesList.Add(Tuple.Create(subKeyName, (string)tempKey.GetValue("gameName")));
+                    tempKey.Close();
+                }
+
+            }
+            localMachineRegistry.Close();
+            gogRegistryKey.Close();
+            return gogGamesList;
+        }
+
+        private string GetOriginDirectory()
+        {
+            string originInstallPath = "";
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey originRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Origin");
+            if (originRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                originRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Origin");
+            }
+            object registryEntry = originRegistryKey.GetValue("ClientPath");
+            if (registryEntry != null)
+                originInstallPath = (string)registryEntry;
+            localMachineRegistry.Close();
+            originRegistryKey.Close();
+            return originInstallPath;
+        }
+        private List<Tuple<String, String>> GetOriginGameList()
+        {
+            var originGamesList = new List<Tuple<String, String>>();
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey originRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Origin Games");
+            if (originRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                originRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Origin Games");
+            }
+            if (originRegistryKey != null)
+            {
+                foreach (string subKeyName in originRegistryKey.GetSubKeyNames())
+                {
+                    RegistryKey tempKey = originRegistryKey.OpenSubKey(subKeyName);
+                    originGamesList.Add(Tuple.Create(subKeyName, (string)tempKey.GetValue("DisplayName")));
+                    tempKey.Close();
+                }
+
+            }
+            localMachineRegistry.Close();
+            originRegistryKey.Close();
+            return originGamesList;
+        }
+
+        private string GetEpicDirectory()
+        {
+            string epicInstallPath = "";
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey epicRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Epic Games\EpicGamesLauncher");
+            if (epicRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                epicRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Epic Games\EpicGamesLauncher");
+            }
+            object registryEntry = epicRegistryKey.GetValue("AppDataPath");
+            if (registryEntry != null)
+                epicInstallPath = (string)registryEntry;
+            localMachineRegistry.Close();
+            epicRegistryKey.Close();
+            return epicInstallPath;
+        }
+        private List<Tuple<String, String>> GetEpicGameList()
+        {
+            var epicGamesList = new List<Tuple<String, String>>();
+            foreach (string manifest in Directory.EnumerateFiles(Path.Combine(GetEpicDirectory(), @"Manifests"), "*.item"))
+            {
+                string appname = "", displayname = "";
+                foreach (string line in File.ReadLines(manifest))
+                {
+                    if (line.Contains("AppName"))
+                    {
+                        int quoteCount = 0;
+                        int i = 0;
+                        for (i = 0; i < line.Length; ++i)
+                        {
+                            if (line[i] == '\"')
+                                quoteCount++;
+                            if (quoteCount > 2)
+                                break;
+                        }
+                        if (i < line.Length)
+                            appname = line.Substring(i + 1, line.Length - i - 2); // we chop off the ends to avoid the quotes
+                    }
+                    if (line.Contains("DisplayName"))
+                    {
+                        int quoteCount = 0;
+                        int i = 0;
+                        for (i = 0; i < line.Length; ++i)
+                        {
+                            if (line[i] == '\"')
+                                quoteCount++;
+                            if (quoteCount > 2)
+                                break;
+                        }
+                        if (i < line.Length)
+                            displayname = line.Substring(i + 1, line.Length - i - 2); // we chop off the ends to avoid the quotes
+                    }
+                }
+                epicGamesList.Add(Tuple.Create(appname, displayname));
+            }
+            return epicGamesList;
+        }
+
+        private string GetBlizzardDirectory()
+        {
+            string blizzardInstallPath = "";
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey blizzardRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Blizzard Entertainment\Battle.net\Capabilities");
+            if (blizzardRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                blizzardRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Blizzard Entertainment\Battle.net\Capabilities");
+            }
+            object registryEntry = blizzardRegistryKey.GetValue("ApplicationIcon");
+            if (registryEntry != null)
+                blizzardInstallPath = ((string)registryEntry).Substring(0, ((string)registryEntry).Length - 2);
+            localMachineRegistry.Close();
+            blizzardRegistryKey.Close();
+            return blizzardInstallPath;
+        }
+        private string[] GetBlizzardGameList()
+        {
+            RegistryKey currentUserRegistryKey = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32);
+            RegistryKey blizzardRegistryKey = currentUserRegistryKey.OpenSubKey(@"Software\Blizzard Entertainment");
+            if (blizzardRegistryKey == null)
+            {
+                currentUserRegistryKey.Close();
+                currentUserRegistryKey = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
+                blizzardRegistryKey = currentUserRegistryKey.OpenSubKey(@"Software\Blizzard Entertainment");
+            }
+            List<string> gameList = new List<string>();
+            foreach (string subKeyName in blizzardRegistryKey.GetSubKeyNames())
+            {
+                gameList.Add(subKeyName);
+            }
+            currentUserRegistryKey.Close();
+            blizzardRegistryKey.Close();
+            return gameList.ToArray();
+        }
+
+        private string GetBethesdaDirectory()
+        {
+            string bethesdaInstallPath = "";
+            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            RegistryKey bethesdaRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Bethesda Softworks\Bethesda.net");
+            if (bethesdaRegistryKey == null)
+            {
+                localMachineRegistry.Close();
+                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                bethesdaRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Bethesda Softworks\Bethesda.net");
+            }
+            object registryEntry = bethesdaRegistryKey.GetValue("installLocation");
+            if (registryEntry != null)
+                bethesdaInstallPath = (string)registryEntry;
+            localMachineRegistry.Close();
+            bethesdaRegistryKey.Close();
+            return bethesdaInstallPath;
+        }
+        private string[] GetBethesdaGameList()
+        {
+            List<string> gameList = new List<string>();
+            foreach (string path in Directory.GetDirectories(Path.Combine(GetBethesdaDirectory(), @"games")))
+            {
+                DirectoryInfo di = new DirectoryInfo(path);
+                gameList.Add(di.Name);
+            }
+            return gameList.ToArray();
         }
     }
 }
