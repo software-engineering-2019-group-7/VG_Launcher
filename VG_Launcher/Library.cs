@@ -12,23 +12,23 @@ namespace VG_Launcher
 {
     public class Game
     {
-        public Game(string _name, string _path, string _image, string _hours, string _lock, string _settings)
+        public Game(string _name, string _path, string _image, int _time, string _lock, string _settings)
         {
             //constructor without provider, will be used when user manually adds a game
             name = _name;
             path = _path;
             image = _image;
-            hours = _hours;
+            time = _time;
             parentLock = _lock;
             settings = _settings;
         }
-        public Game(string _name, string _path, string _image, string _hours, string _lock, string _settings, string _provider)
+        public Game(string _name, string _path, string _image, int _time, string _lock, string _settings, string _provider)
         {
             //constructor with provider, designating a provider allows us to use that launcher's specific launch commands
             name = _name;
             path = _path;
             image = _image;
-            hours = _hours;
+            time = _time;
             parentLock = _lock;
             settings = _settings;
             provider = _provider;
@@ -37,7 +37,7 @@ namespace VG_Launcher
         public string name;
         public string path;
         public string image;
-        public string hours;
+        public int time;
         public string parentLock;
         public string settings;
         public string provider;
@@ -107,7 +107,7 @@ namespace VG_Launcher
                     for (var i = 0; i < glib.Count; i++)
                     {
                         dynamic inGame = glib[i];
-                        Game newGame = new Game((string)inGame.name, (string)inGame.path, (string)inGame.image, (string)inGame.hours, (string)inGame.parentLock, (string)inGame.settings);
+                        Game newGame = new Game((string)inGame.name, (string)inGame.path, (string)inGame.image, (int)inGame.time, (string)inGame.parentLock, (string)inGame.settings);
                         gameList.Add(newGame);
                     }
                 }

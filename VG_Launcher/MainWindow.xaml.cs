@@ -3,11 +3,16 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Color = System.Windows.Media.Color;
 using ColorConverter = System.Windows.Media.ColorConverter;
 using Point = System.Windows.Point;
@@ -55,7 +60,29 @@ namespace VG_Launcher
                 {
                     CreateButtons(false);
                 }
-            }            
+            }
+            //  DispatcherTimer setup
+            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+        }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine(GetActiveWindowTitle());
+            string titleName = GetActiveWindowTitle();
+            foreach(Game g in Curlibrary.gameList)
+            {
+                if (titleName != null)
+                {
+                    if (CleanNameForTimeTracking(titleName).Contains(CleanNameForTimeTracking(g.name)))
+                    {
+                        g.time++;
+                        Console.WriteLine(CleanNameForTimeTracking(g.name));
+                    }
+                }
+            }
         }
 
         public void CreateButtons(bool locked)
@@ -160,12 +187,20 @@ namespace VG_Launcher
 
         public string CleanName(string str)
         {
-            str = str.Replace(" ", "_");
+
+                str = str.Replace(" ", "_");
+                str = str.Replace(":", "");
+                str = str.Replace(",", "");
+            return str;
+        }
+
+        public string CleanNameForTimeTracking(string str)
+        {
+            str = str.Replace(" ", "");
             str = str.Replace(":", "");
             str = str.Replace(",", "");
             return str;
         }
-
         public void logIn()
         {
             LogInService li = new LogInService();
@@ -182,6 +217,8 @@ namespace VG_Launcher
             gs.Tag = game;
             gs.playButton.Tag = game;
             gs.settingsButton.Tag = game;
+            TimeSpan t = TimeSpan.FromSeconds(game.time);
+            gs.hoursLabel.Content = t.ToString(@"hh\:mm\:ss");
 
 
 
@@ -287,6 +324,26 @@ namespace VG_Launcher
             ms.Left = point.X + btn.Width;
             ms.ShowDialog();
             clickReciever.Visibility = Visibility.Hidden;
+        }
+
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+        private string GetActiveWindowTitle()
+        {
+            const int nChars = 256;
+            StringBuilder Buff = new StringBuilder(nChars);
+            IntPtr handle = GetForegroundWindow();
+
+            if (GetWindowText(handle, Buff, nChars) > 0)
+            {
+                return Buff.ToString();
+            }
+            return null;
         }
     }
 }
