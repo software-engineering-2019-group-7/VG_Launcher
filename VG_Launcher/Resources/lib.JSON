@@ -1,36 +1,81 @@
 [
   {
+    "name": "Terraria",
+    "path": "steam://rungameid/105600",
+    "image": "../../Resources/terraria.png",
+    "time": 0,
+    "parentLock": "0",
+    "settings": null,
+    "provider": null
+  },
+  {
+    "name": "PAYDAY 2",
+    "path": "steam://rungameid/267381",
+    "image": "../../Resources/payday2.png",
+    "time": 0,
+    "parentLock": "1",
+    "settings": null,
+    "provider": null
+  },
+  {
     "name": "Steamworks Common Redistributables",
     "path": "steam://rungameid/228980",
     "image": "../../Resources/DefaultGameImage.PNG",
-    "hours": null,
+    "time": 0,
     "parentLock": "0",
     "settings": null,
     "provider": null
   },
   {
-    "name": "Risk of Rain",
-    "path": "steam://rungameid/248820",
-    "image": "../../Resources/risk_of_rain.png",
-    "hours": null,
+    "name": "Fortified",
+    "path": "steam://rungameid/334210",
+    "image": "../../Resources/fortified.png",
+    "time": 0,
     "parentLock": "0",
     "settings": null,
     "provider": null
   },
   {
-    "name": "Crashlands",
-    "path": "steam://rungameid/391730",
-    "image": "../../Resources/crashlands.png",
-    "hours": null,
+    "name": "Chronicon",
+    "path": "steam://rungameid/375480",
+    "image": "../../Resources/chronicon.png",
+    "time": 0,
     "parentLock": "0",
     "settings": null,
     "provider": null
   },
   {
-    "name": "LIMBO",
-    "path": "steam://rungameid/48000",
-    "image": "../../Resources/limbo.png",
-    "hours": null,
+    "name": "Divinity: Original Sin 2",
+    "path": "steam://rungameid/880640",
+    "image": "../../Resources/divinityoriginalsin2.png",
+    "time": 0,
+    "parentLock": "0",
+    "settings": null,
+    "provider": null
+  },
+  {
+    "name": "Borderlands 2",
+    "path": "steam://rungameid/245970",
+    "image": "../../Resources/borderlands2.png",
+    "time": 11,
+    "parentLock": "0",
+    "settings": null,
+    "provider": null
+  },
+  {
+    "name": "Titanfall® 2",
+    "path": "origin://launchgame/OFB-EAST:1039093",
+    "image": null,
+    "time": 0,
+    "parentLock": "0",
+    "settings": null,
+    "provider": null
+  },
+  {
+    "name": "Apex Legends™",
+    "path": "origin://launchgame/OFB-EAST:194908",
+    "image": null,
+    "time": 0,
     "parentLock": "0",
     "settings": null,
     "provider": null
@@ -38,8 +83,8 @@
   {
     "name": "Plants vs. Zombies™ Game of the Year Edition",
     "path": "origin://launchgame/OFB-EAST:71592",
-    "image": "../../Resources/plants_vs._zombies™_game_of_the_year_edition.png",
-    "hours": null,
+    "image": null,
+    "time": 0,
     "parentLock": "0",
     "settings": null,
     "provider": null
@@ -48,34 +93,52 @@
     "name": "UNO Demo",
     "path": "uplay://launch/3361/0",
     "image": "../../Resources/DefaultGameImage.PNG",
-    "hours": null,
+    "time": 0,
     "parentLock": "0",
     "settings": null,
     "provider": null
   },
   {
-    "name": "Rayman Origins",
-    "path": "uplay://launch/80/0",
-    "image": "../../Resources/rayman_origins.png",
-    "hours": null,
+    "name": "Assassin's Creed Unity",
+    "path": "uplay://launch/720/0",
+    "image": "../../Resources/assassinscreedunity.png",
+    "time": 0,
     "parentLock": "0",
     "settings": null,
     "provider": null
   },
   {
     "name": "Treasure Adventure Game",
-    "path": "C:\\Program Files (x86)\\GOG Galaxy/command=runGame /gameId=1207659013 /path=C:\\Program Files (x86)\\GOG Galaxy\\Games\\Treasure Adventure Game",
+    "path": "C:\\Program Files (x86)\\GOG Galaxy\\GalaxyClient.exe",
     "image": "../../Resources/DefaultGameImage.PNG",
-    "hours": null,
+    "time": 0,
+    "parentLock": "0",
+    "settings": "/command=runGame /gameId=1207659013 /path=C:\\Program Files (x86)\\GOG Galaxy\\Games\\Treasure Adventure Game",
+    "provider": null
+  },
+  {
+    "name": "Fallout 76",
+    "path": "bethesdanet://run/20",
+    "image": "../../Resources/fallout76.png",
+    "time": 0,
     "parentLock": "0",
     "settings": null,
     "provider": null
   },
   {
-    "name": "Transistor",
-    "path": "com.epicgames.launcher://apps/Dill?action=launch&silent=true",
-    "image": "../../Resources/transistor.png",
-    "hours": null,
+    "name": "Fallout Shelter",
+    "path": "bethesdanet://run/8",
+    "image": "../../Resources/falloutshelter.png",
+    "time": 14,
+    "parentLock": "0",
+    "settings": null,
+    "provider": null
+  },
+  {
+    "name": "Last Day of June",
+    "path": "com.epicgames.launcher://apps/Pumpkin?action=launch&silent=true",
+    "image": "../../Resources/lastdayofjune.png",
+    "time": 0,
     "parentLock": "0",
     "settings": null,
     "provider": null
@@ -83,17 +146,26 @@
   {
     "name": "World of Goo",
     "path": "com.epicgames.launcher://apps/Anemone?action=launch&silent=true",
-    "image": "../../Resources/world_of_goo.png",
-    "hours": null,
+    "image": "../../Resources/worldofgoo.png",
+    "time": 0,
     "parentLock": "0",
     "settings": null,
     "provider": null
   },
   {
     "name": "Hearthstone",
-    "path": "\"C:\\Program Files (x86)\\Battle.net\\Battle.net.exe\"--exec = \"launchWTCG\"",
+    "path": "\"C:\\Program Files (x86)\\Battle.net\\Battle.net.exe\"",
     "image": "../../Resources/hearthstone.png",
-    "hours": null,
+    "time": 0,
+    "parentLock": "0",
+    "settings": "--exec=\"launch WTCG\"",
+    "provider": null
+  },
+  {
+    "name": "Path of Exile",
+    "path": "C:\\Program Files (x86)\\Grinding Gear Games\\Path of Exile\\PathOfExile_x64.exe",
+    "image": "C:\\Users\\thalrukt\\Documents\\GitHub\\VG_Launcher\\VG_Launcher\\Resources\\path_of_exile.png",
+    "time": 51,
     "parentLock": "0",
     "settings": null,
     "provider": null

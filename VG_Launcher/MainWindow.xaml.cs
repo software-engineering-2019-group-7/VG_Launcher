@@ -76,10 +76,13 @@ namespace VG_Launcher
             {
                 if (titleName != null)
                 {
-                    if (CleanName(titleName).Contains(CleanName(g.name)))
+                    if (titleName != null && g.name != null)
                     {
-                        g.time++;
-                        Console.WriteLine(CleanName(g.name));
+                        if (CleanName(titleName).Contains(CleanName(g.name)))
+                        {
+                            g.time++;
+                            Console.WriteLine(CleanName(g.name));
+                        }
                     }
                 }
             }
@@ -95,6 +98,7 @@ namespace VG_Launcher
                     try
                     {
                         Button btn = new Button();
+                        Console.WriteLine(game.name);
                         btn.Name = CleanName(game.name); //replace this with an identitier ie: game.id
                         btn.Tag = game;
                         if (!File.Exists(game.image))
@@ -327,9 +331,13 @@ namespace VG_Launcher
             Button remove = new Button();
             foreach(Button b in gameWrapPanel.Children)
             {
-                if (CleanName(b.Name) == CleanName(name))
+                Console.WriteLine("Hide Called Clean");
+                if (b.Name != null && name != null)
                 {
-                    remove = b;
+                    if (CleanName(b.Name) == CleanName(name))
+                    {
+                        remove = b;
+                    }
                 }
             }
             gameWrapPanel.Children.Remove(remove);

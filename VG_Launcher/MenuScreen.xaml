@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
-        mc:Ignorable="d" Height="356" Width="391" Background="#FF2B2B2B" WindowStyle="None">
+        mc:Ignorable="d" Height="356" Width="391" Background="#FF2B2B2B" WindowStyle="None" Title="Menu">
     <Grid MouseDown="Grid_MouseDown">
         <Grid.RowDefinitions>
             <RowDefinition Height=" Auto" />
