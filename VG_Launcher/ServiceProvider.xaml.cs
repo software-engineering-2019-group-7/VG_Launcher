@@ -65,31 +65,93 @@ namespace VG_Launcher
             List<Game> added = new List<Game>();
             if (Steam.IsChecked == true)
             {
-                added.AddRange(CreateSteamGamesList(getSteamNameId()));
+                try
+                {
+                    added.AddRange(CreateSteamGamesList(getSteamNameId()));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    Console.WriteLine("Something went wrong with adding Steam games.");
+                }
             }
             if (Origin.IsChecked == true)
             {
-                added.AddRange(GetOriginGameList());
+                try
+                {
+                    added.AddRange(GetOriginGameList());
             }
+                catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine("Something went wrong with adding Origin games.");
+            }
+
+        }
             if (Uplay.IsChecked == true)
             {
-                added.AddRange(GetUplayGameList());
+                try
+                {
+                    added.AddRange(GetUplayGameList());
+                            }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    Console.WriteLine("Something went wrong with adding Uplay games.");
+                }
+
             }
             if (GOG.IsChecked == true)
             {
-                added.AddRange(GetGOGGameList());
+                try
+                {
+                    added.AddRange(GetGOGGameList());
+                    }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    Console.WriteLine("Something went wrong with adding GOG games.");
+                }
+
             }
             if (Bethesda.IsChecked == true)
             {
-                added.AddRange(GetBethesdaGameList());
+                try
+                {
+                    added.AddRange(GetBethesdaGameList());
+                    }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    Console.WriteLine("Something went wrong with adding Bethesda games.");
+                }
+
             }
             if (Epic.IsChecked == true)
             {
-                added.AddRange(GetEpicGameList());
+                try
+                {
+                    added.AddRange(GetEpicGameList());
+                    }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    Console.WriteLine("Something went wrong with adding Epic games.");
+                }
+
             }
             if (Blizzard.IsChecked == true)
             {
-                added.AddRange(GetBlizzardGameList());
+                try
+                {
+                    added.AddRange(GetBlizzardGameList());
+                    }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    Console.WriteLine("Something went wrong with adding Blizzard games.");
+                }
+
             }
 
             //Add the games that the scraper found to the library's gamelist
