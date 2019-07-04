@@ -226,26 +226,16 @@ namespace VG_Launcher
         private List<Tuple<String, String>> GetOriginGameList()
         {
             var originGamesList = new List<Tuple<String, String>>();
-            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
-            RegistryKey originRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Origin Games");
-            if (originRegistryKey == null)
+            foreach(string directory in Directory.EnumerateDirectories(@"C:\ProgramData\Origin\LocalContent"))
             {
-                localMachineRegistry.Close();
-                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
-                originRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Origin Games");
-            }
-            if (originRegistryKey != null)
-            { 
-                foreach (string subKeyName in originRegistryKey.GetSubKeyNames())
+                string path = Path.Combine(@"C:\ProgramData\Origin\LocalContent", directory);
+                foreach(string file in Directory.EnumerateFiles(path,"*.mfst"))
                 {
-                    RegistryKey tempKey = originRegistryKey.OpenSubKey(subKeyName);
-                    originGamesList.Add(Tuple.Create(subKeyName,(string)tempKey.GetValue("DisplayName")));
-                    tempKey.Close();
+                    FileInfo fi = new FileInfo(file);
+                    DirectoryInfo di = new DirectoryInfo(directory);
+                    originGamesList.Add(Tuple.Create(di.Name, Path.GetFileNameWithoutExtension(file)));
                 }
-
             }
-            localMachineRegistry.Close();
-            originRegistryKey.Close();
             return originGamesList;
         }
         private List<Tuple<String, String>> GetGOGGameList()
