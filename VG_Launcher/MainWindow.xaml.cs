@@ -99,7 +99,7 @@ namespace VG_Launcher
                         btn.Tag = game;
                         if (!File.Exists(game.image))
                         {
-                            //Console.WriteLine(game.name);
+                            Console.WriteLine(game.name);
                             WebClient wc = new WebClient();
 
                             wc.Headers.Add("Authorization", "Bearer 47af29a9fb8d5d08ba57a06f2bc15261");
@@ -142,6 +142,7 @@ namespace VG_Launcher
                         }
                         else if (File.Exists(game.image))
                         {
+                            Console.WriteLine("Found File for game " + game.name);
                             ImageBrush myBrush = new ImageBrush();
                             myBrush.ImageSource = new BitmapImage(new Uri(game.image, UriKind.Relative));
                             btn.Background = myBrush;
