@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -324,33 +326,53 @@ namespace VG_Launcher
         private List<Game> GetOriginGameList()
         {
             var originGamesList = new List<Game>();
-            RegistryKey localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
-            RegistryKey originRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Origin Games");
-            if (originRegistryKey == null)
-            {
-                localMachineRegistry.Close();
-                localMachineRegistry = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32) : RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
-                originRegistryKey = localMachineRegistry.OpenSubKey(@"SOFTWARE\Origin Games");
-            }
-            if (originRegistryKey != null)
-            {
-                foreach (string subKeyName in originRegistryKey.GetSubKeyNames())
-                {
-                    var game = new Game();
-                    RegistryKey tempKey = originRegistryKey.OpenSubKey(subKeyName);
-                    game.name = (string)tempKey.GetValue("DisplayName");
-                    game.path = "origin://launchgame/OFB-EAST:" + subKeyName; //THIS IS PULLING THE WRONG APP ID'S. WE CANT USE THIS subKeyName
-                    game.parentLock = "0";
-                    originGamesList.Add(game);
-                    tempKey.Close();
-                }
 
+            foreach (string directory in Directory.EnumerateDirectories(@"C:\ProgramData\Origin\LocalContent"))
+            {
+                string path = Path.Combine(@"C:\ProgramData\Origin\LocalContent", directory);
+                foreach (string file in Directory.EnumerateFiles(path, "*.mfst"))
+                {
+                    if (file.Contains("OFB") || file.Contains("OFR"))
+                    {
+                        FileInfo fi = new FileInfo(file);
+                        DirectoryInfo di = new DirectoryInfo(directory);
+                        string name = di.Name;
+                        string id = Path.GetFileNameWithoutExtension(file);
+
+                        name = Regex.Replace(name, "[0-9]", " $0").Trim();
+
+                        if (id.Contains("OFB"))
+                        {
+                            char[] dirtyName = id.ToCharArray();
+                            int spaceIndex = 0;
+                            for (int i = 1; i < dirtyName.Length; i++)
+                            {
+                                if (Char.IsDigit(dirtyName[i]))
+                                {
+                                    spaceIndex = i;
+                                    if (Char.IsDigit(dirtyName[i + 1]))
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            if (spaceIndex != 0)
+                                id = id.Insert(spaceIndex, ":");
+                        }
+
+                        var game = new Game();
+                        game.name = name;
+                        game.path = "origin://launchgame/" + id;
+                        game.parentLock = "0";
+                        if (!originGamesList.Any(i=>i.name == name))
+                            originGamesList.Add(game);
+                    }
+                }
             }
-            localMachineRegistry.Close();
-            originRegistryKey.Close();
+
             return originGamesList;
         }
-        #endregion 
+        #endregion
 
         #region Epic
         private string GetEpicDirectory()
@@ -508,10 +530,10 @@ namespace VG_Launcher
                 DirectoryInfo di = new DirectoryInfo(path);
                 string gameName = di.Name;
 
-                //bethesda convieniently returns the names of the games with no spaces, which screws up the image gathering. Adding spaces between words here
+                ////bethesda convieniently returns the names of the games with no spaces, which screws up the image gathering. Adding spaces between words here
                 int spaceIndex = 0;
                 char[] dirtyName = gameName.ToCharArray();
-                for(int i = 1; i < dirtyName.Length;i++)
+                for (int i = 1; i < dirtyName.Length; i++)
                 {
                     if (Char.IsUpper(dirtyName[i]) || Char.IsDigit(dirtyName[i]))
                     {
@@ -522,8 +544,9 @@ namespace VG_Launcher
                         }
                     }
                 }
-                if(spaceIndex != 0)
+                if (spaceIndex != 0)
                     gameName = gameName.Insert(spaceIndex, " ");
+
                 Console.WriteLine(gameName);
                 foreach (var name in bethesdaIDName.Keys)
                 {
