@@ -197,6 +197,7 @@ namespace VG_Launcher
             str = str.Replace(":", "");
             str = str.Replace(",", "");
             str = str.Replace("'", "");
+            str = str.Replace(".", "");
             //keep adding as things break
             return str;
         }
