@@ -39,6 +39,10 @@ namespace VG_Launcher
             { "Fallout Shelter", "8" },
             { "Rage", "45" },
             { "Quake Champions", "11" },
+            { "Quake Champions PTS", "12" },
+            { "Fallout", "21" },
+            { "Fallout 2", "22" },
+            { "The Elder Scrolls: Legends", "5" },
             { "", "" }
         };
 
@@ -499,6 +503,7 @@ namespace VG_Launcher
             List<Game> gameList = new List<Game>();
             foreach (string path in Directory.GetDirectories(Path.Combine(GetBethesdaDirectory(), @"games")))
             {
+                Console.WriteLine(path);
                 var game = new Game();
                 DirectoryInfo di = new DirectoryInfo(path);
                 string gameName = di.Name;
@@ -517,8 +522,9 @@ namespace VG_Launcher
                         }
                     }
                 }
-                gameName = gameName.Insert(spaceIndex, " ");
-
+                if(spaceIndex != 0)
+                    gameName = gameName.Insert(spaceIndex, " ");
+                Console.WriteLine(gameName);
                 foreach (var name in bethesdaIDName.Keys)
                 {
                     if (gameName.Equals(name))
