@@ -38,7 +38,8 @@ namespace VG_Launcher
             }
             else if (!Properties.Settings.Default.ChildEnabled)
             {
-                this.Height = 420;
+                this.Height = 325;
+                lockButton.Visibility = Visibility.Collapsed;
                 ChildPromptBlock.Visibility = Visibility.Visible;
                 ChildCheck.Visibility = Visibility.Visible;
                 //Child lock isnt set up, give user the option to enable it here, default window height = 356, expand it here when adding child lock options
@@ -86,7 +87,7 @@ namespace VG_Launcher
 
         private void ChildCheck_Checked(object sender, RoutedEventArgs e)
         {
-            this.Height = 630;
+            this.Height = 528;
             ParentLabel.Visibility = Visibility.Visible;
             ParentName.Visibility = Visibility.Visible;
             ChildLabel.Visibility = Visibility.Visible;
@@ -97,7 +98,7 @@ namespace VG_Launcher
         }
         private void ChildCheck_Unchecked(object sender, RoutedEventArgs e)
         {
-            this.Height = 420;
+            this.Height = 325;
             ParentLabel.Visibility = Visibility.Collapsed;
             ParentName.Visibility = Visibility.Collapsed;
             ChildLabel.Visibility = Visibility.Collapsed;
