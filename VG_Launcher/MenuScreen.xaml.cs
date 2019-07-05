@@ -76,6 +76,7 @@ namespace VG_Launcher
             ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
             ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
             LogInService li = new LogInService();
+            this.Hide();
             ((MainWindow)Application.Current.MainWindow).logIn();
             bool locked = Properties.Settings.Default.ParentalLockEngaged;
             if (locked)
