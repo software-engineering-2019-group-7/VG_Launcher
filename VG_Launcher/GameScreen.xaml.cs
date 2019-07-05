@@ -16,7 +16,10 @@ namespace VG_Launcher
         public GameScreen()
         {
             InitializeComponent();
-           
+           if (Properties.Settings.Default.ParentalLockEngaged)
+            {
+                settingsButton.Visibility = Visibility.Hidden;
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -35,6 +38,7 @@ namespace VG_Launcher
             Point point = btn.PointToScreen(new Point(0, 0));
             set.Left = point.X;
             set.Top = point.Y;
+            this.Close();
             set.Show();
             //open the settings menu
         }
@@ -49,6 +53,7 @@ namespace VG_Launcher
                     Game game = (Game)btn.Tag;
                     myProcess.StartInfo.UseShellExecute = true;
                     myProcess.StartInfo.FileName = game.path;
+                    myProcess.StartInfo.Arguments = game.settings;
                     myProcess.Start();
                 }
             }catch(Exception exe)

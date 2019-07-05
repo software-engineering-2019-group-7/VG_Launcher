@@ -1,10 +1,10 @@
-﻿<Window x:Class="VG_Launcher.ServiceProvider"
+﻿<Window x:Name="ServiceSelect" x:Class="VG_Launcher.ServiceProvider"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
-        mc:Ignorable="d" Height="450" Width="322.308" Background="#FF2B2B2B" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Closing="Window_Closing">
+        mc:Ignorable="d" Height="450" Width="322.308" Background="#FF0E2246" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Title="ServiceSelect">
 
     <Window.Resources>
         <Style x:Key="noHighlightButton" TargetType="Button">

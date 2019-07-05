@@ -49,9 +49,24 @@ namespace VG_Launcher
         private void ChangeDetails_Click(object sender, RoutedEventArgs e)
         {
             customExe cus = new customExe(setGame);
+            cus.close.Visibility = Visibility.Hidden;
             this.Hide();
             cus.ShowDialog();
             this.Show();            
+        }
+
+        private void UninstallButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            System.Diagnostics.Process.Start("appwiz.cpl");
+        }
+
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            Button btn = sender as Button; //lets us edit the button that sent the function call 
+            Game g = (Game) btn.Tag;
+            ((MainWindow)Application.Current.MainWindow).HideGame(setGame.name);
         }
     }
 }

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" Height="800" Width="1570" WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing" LocationChanged="MainWindow_LocationChanged" SizeChanged="MainWindow_SizeChanged" WindowStyle="ToolWindow" MouseDown="MainWindow_MouseDown">
+        mc:Ignorable="d" Height="800" Width="1570" WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing" LocationChanged="MainWindow_LocationChanged" SizeChanged="MainWindow_SizeChanged" WindowStyle="ToolWindow" Title="VGL">
     <Window.Resources>
         <Style x:Key="noHighlightButton" TargetType="Button">
             <Setter Property="Template">
@@ -16,15 +16,16 @@
                                     <VisualState x:Name="MouseOver"/>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Background="#FF242B3C" MouseDown="Grid_MouseDown">
-        <ScrollViewer x:Name="gameScroller" Margin="0,58,0,0" VerticalScrollBarVisibility="Auto" MouseDown="GameScroller_MouseDown" >
-            <WrapPanel x:Name="gameWrapPanel" Width="{Binding Path=ActualWidth}" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" MinWidth="100" MinHeight="100" MouseDown="GameWrapPanel_MouseDown" >
+    <Grid Background="#FF242B3C">
+        <ScrollViewer x:Name="gameScroller" Margin="0,58,0,0" VerticalScrollBarVisibility="Auto" >
+            <WrapPanel x:Name="gameWrapPanel" Width="{Binding Path=ActualWidth}" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" MinWidth="100" MinHeight="100" >
                 <WrapPanel.Effect>
                     <DropShadowEffect ShadowDepth="9" BlurRadius="9"/>
                 </WrapPanel.Effect>
