@@ -5,5 +5,17 @@
     <Setting Name="ParentalLockEngaged" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="ChildEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ParentName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Parent</Value>
+    </Setting>
+    <Setting Name="ChildName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Child</Value>
+    </Setting>
+    <Setting Name="ParentLockCode" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

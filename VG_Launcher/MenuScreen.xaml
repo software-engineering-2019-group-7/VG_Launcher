@@ -4,11 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VG_Launcher"
-        mc:Ignorable="d" Height="355.917" Width="390.828" Background="#FF2B2B2B" WindowStyle="None">
+        mc:Ignorable="d" Height="356" Width="391" Background="#FF2B2B2B" WindowStyle="None" Title="Menu">
     <Grid MouseDown="Grid_MouseDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=" Auto" />
+        </Grid.RowDefinitions>
         <Button x:Name="close" Content="X" HorizontalAlignment="Left" Margin="343,10,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFA0A0A0" Click="Close_Click"/>
         <Button x:Name="serviceLoader" Content="Add Services" HorizontalAlignment="Left" Margin="93,65,0,0" VerticalAlignment="Top" Width="205" Click="ServiceLoader_Click" Height="63"/>
         <Button x:Name="addGameButton" Content="Add Custom Game" HorizontalAlignment="Left" Margin="93,154,0,0" VerticalAlignment="Top" Width="205" Height="63" Click="AddGameButton_Click"/>
         <Button x:Name="lockButton" Content="Log Out" HorizontalAlignment="Left" Margin="93,242,0,0" VerticalAlignment="Top" Width="205" Height="63" Click="LockButton_Click"/>
+        <TextBlock x:Name="ChildPromptBlock" Margin="10,319,0,-47" TextWrapping="Wrap" Text="Do you have Children who play on your computer? Setup a Child Account to use Parental Lock!" VerticalAlignment="Top" Foreground="White" FontSize="15" Height="48" Width="363" HorizontalAlignment="Left" TextAlignment="Center" Visibility="Collapsed"/>
+        <CheckBox x:Name="ChildCheck" Content="Enable Child Account" HorizontalAlignment="Left" Margin="128,377,0,-74" VerticalAlignment="Top" Foreground="White" Checked="ChildCheck_Checked" Unchecked="ChildCheck_Unchecked" Visibility="Collapsed"/>
+        <Label x:Name="ParentLabel" Content="Main Account Name:" HorizontalAlignment="Left" Margin="136,397,0,0" VerticalAlignment="Top" Foreground="White" Width="122" Visibility="Collapsed"/>
+        <TextBox x:Name="ParentName" HorizontalAlignment="Left" Height="22" Margin="138,423,0,0" TextWrapping="Wrap" Text="Parent" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
+        <Label x:Name="ChildLabel" Content="Child Account Name:" HorizontalAlignment="Left" Margin="140,450,0,0" VerticalAlignment="Top" Foreground="White" Width="121"  Visibility="Collapsed"/>
+        <TextBox x:Name="ChildName" HorizontalAlignment="Left" Height="22" Margin="140,476,0,-1" TextWrapping="Wrap" Text="Child" VerticalAlignment="Top" Width="120"  Visibility="Collapsed"/>
+        <Label x:Name="LockCodeLabel" Content="Parental Lock Code:" HorizontalAlignment="Left" Margin="138,503,0,-33" VerticalAlignment="Top" Foreground="White" Width="122" Visibility="Collapsed"/>
+        <TextBox x:Name="LockCode" HorizontalAlignment="Left" Height="22" Margin="140,534,0,-61" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
+        <Button x:Name="DoneBtn" Content="Save" HorizontalAlignment="Left" Margin="162,574,0,-95" VerticalAlignment="Top" Width="75" Click="DoneBtn_Click" Visibility="Collapsed"/>
     </Grid>
 </Window>

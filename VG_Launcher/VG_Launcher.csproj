@@ -73,12 +73,18 @@
     <Compile Include="MenuScreen.xaml.cs">
       <DependentUpon>MenuScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ParentLockSelect.xaml.cs">
+      <DependentUpon>ParentLockSelect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ServiceProvider.xaml.cs">
       <DependentUpon>ServiceProvider.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsMenu.xaml.cs">
       <DependentUpon>SettingsMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AccountSetup.xaml.cs">
+      <DependentUpon>AccountSetup.xaml</DependentUpon>
     </Compile>
     <Page Include="customExe.xaml">
       <SubType>Designer</SubType>
@@ -108,11 +114,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ParentLockSelect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ServiceProvider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingsMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AccountSetup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,6 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\DefaultGameImage.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
