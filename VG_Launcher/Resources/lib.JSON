@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Terraria",
+    "path": "steam://rungameid/105600",
+    "image": "../../Resources/terraria.png",
+    "time": 0,
+    "parentLock": "0",
+    "settings": null,
+    "provider": "Steam"
+  },
+  {
+    "name": "Liftoff",
+    "path": "steam://rungameid/410340",
+    "image": "../../Resources/liftoff.png",
+    "time": 0,
+    "parentLock": "0",
+    "settings": null,
+    "provider": "Steam"
+  },
+  {
+    "name": "Universe Sandbox Legacy",
+    "path": "steam://rungameid/72200",
+    "image": "../../Resources/DefaultGameImage.PNG",
+    "time": 0,
+    "parentLock": "0",
+    "settings": null,
+    "provider": "Steam"
+  }
+]
