@@ -55,7 +55,15 @@ namespace VG_Launcher
             Game game = (Game)btn.Tag;
             
             String settings = launchText.Text;
-            game.settings = settings;
+
+            if (game.provider != "Steam")
+            {
+                game.settings = settings;
+            }
+            else
+            {
+                game.path = game.path + "//" + settings + "/"; //steam game url launch options format
+            }
         }
 
         private void ChangeDetails_Click(object sender, RoutedEventArgs e)
