@@ -21,6 +21,7 @@ namespace VG_Launcher
             time = _time;
             parentLock = _lock;
             settings = _settings;
+            provider = null;
         }
         public Game(string _name, string _path, string _image, int _time, string _lock, string _settings, string _provider)
         {
@@ -107,7 +108,7 @@ namespace VG_Launcher
                     for (var i = 0; i < glib.Count; i++)
                     {
                         dynamic inGame = glib[i];
-                        Game newGame = new Game((string)inGame.name, (string)inGame.path, (string)inGame.image, (int)inGame.time, (string)inGame.parentLock, (string)inGame.settings);
+                        Game newGame = new Game((string)inGame.name, (string)inGame.path, (string)inGame.image, (int)inGame.time, (string)inGame.parentLock, (string)inGame.settings, (string)inGame.provider);
                         gameList.Add(newGame);
                     }
                 }

@@ -23,13 +23,6 @@ namespace VG_Launcher
         public MenuScreen()
         {
             InitializeComponent();
-            if (Properties.Settings.Default.ParentalLockEngaged)
-            {
-                serviceLoader.Visibility = Visibility.Collapsed;
-                addGameButton.Visibility = Visibility.Collapsed;
-                lockButton.Margin = new Thickness(93,65,0,0);
-                this.Height = 185;
-            }
         }
 
         public MenuScreen(Library lib)
@@ -45,7 +38,8 @@ namespace VG_Launcher
             }
             else if (!Properties.Settings.Default.ChildEnabled)
             {
-                this.Height = 420;
+                this.Height = 325;
+                lockButton.Visibility = Visibility.Collapsed;
                 ChildPromptBlock.Visibility = Visibility.Visible;
                 ChildCheck.Visibility = Visibility.Visible;
                 //Child lock isnt set up, give user the option to enable it here, default window height = 356, expand it here when adding child lock options
@@ -82,6 +76,7 @@ namespace VG_Launcher
             ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
             ((MainWindow)Application.Current.MainWindow).gameWrapPanel.Children.Clear();
             LogInService li = new LogInService();
+            this.Hide();
             ((MainWindow)Application.Current.MainWindow).logIn();
             bool locked = Properties.Settings.Default.ParentalLockEngaged;
             if (locked)
@@ -93,7 +88,7 @@ namespace VG_Launcher
 
         private void ChildCheck_Checked(object sender, RoutedEventArgs e)
         {
-            this.Height = 630;
+            this.Height = 528;
             ParentLabel.Visibility = Visibility.Visible;
             ParentName.Visibility = Visibility.Visible;
             ChildLabel.Visibility = Visibility.Visible;
@@ -104,7 +99,7 @@ namespace VG_Launcher
         }
         private void ChildCheck_Unchecked(object sender, RoutedEventArgs e)
         {
-            this.Height = 420;
+            this.Height = 325;
             ParentLabel.Visibility = Visibility.Collapsed;
             ParentName.Visibility = Visibility.Collapsed;
             ChildLabel.Visibility = Visibility.Collapsed;
