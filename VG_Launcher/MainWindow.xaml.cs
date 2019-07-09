@@ -170,7 +170,8 @@ namespace VG_Launcher
                         //Theres no way we can create a method for each new button, at least not that I know of. 
                         btn.Click += Button_Click;
 
-                        gameWrapPanel.Children.Add(btn);
+                        if (game.name != "Steamworks Common Redistributables")
+                            gameWrapPanel.Children.Add(btn);
 
                     }
                     catch (Exception e)

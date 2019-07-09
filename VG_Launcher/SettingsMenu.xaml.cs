@@ -36,7 +36,9 @@ namespace VG_Launcher
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            ((MainWindow)Application.Current.MainWindow).clickReciever.Visibility = Visibility.Hidden;
             this.Close();
+
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
