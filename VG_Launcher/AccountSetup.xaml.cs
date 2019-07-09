@@ -122,6 +122,36 @@ namespace VG_Launcher
             this.Hide();
             sp.ShowDialog();
             this.Show();
+            if (library.gameList.Count > 0)
+            {
+                //no games were added to the library, let user know
+                warningDisplay = false;
+                EmptyLibraryWarning.Visibility = Visibility.Collapsed;
+                if (ChildCheck.IsChecked == true)
+                {
+                    this.Height = 530;
+                    DoneBtn.Margin = new Thickness(133, 495, 0, 0);
+                    LockCodeLabel.Visibility = Visibility.Visible;
+                    LockCode.Visibility = Visibility.Visible;
+                    ChildLabel.Visibility = Visibility.Visible;
+                    ChildName.Visibility = Visibility.Visible;
+                    ParentLabel.Visibility = Visibility.Visible;
+                    ParentName.Visibility = Visibility.Visible;
+                    Properties.Settings.Default.ChildEnabled = true;
+                }
+                else
+                {
+                    this.Height = 360;
+                    DoneBtn.Margin = new Thickness(133, 330, 0, 0);
+                    LockCodeLabel.Visibility = Visibility.Collapsed;
+                    LockCode.Visibility = Visibility.Collapsed;
+                    ChildLabel.Visibility = Visibility.Collapsed;
+                    ChildName.Visibility = Visibility.Collapsed;
+                    ParentLabel.Visibility = Visibility.Collapsed;
+                    ParentName.Visibility = Visibility.Collapsed;
+                    Properties.Settings.Default.ChildEnabled = false;
+                }
+            }
         }
 
         private void ManualAddBtn_Click(object sender, RoutedEventArgs e)
@@ -130,6 +160,36 @@ namespace VG_Launcher
             this.Hide();
             cus.ShowDialog();
             this.Show();
+            if (library.gameList.Count > 0)
+            {
+                //no games were added to the library, let user know
+                warningDisplay = false;
+                EmptyLibraryWarning.Visibility = Visibility.Collapsed;
+                if (ChildCheck.IsChecked == true)
+                {
+                    this.Height = 530;
+                    DoneBtn.Margin = new Thickness(133, 495, 0, 0);
+                    LockCodeLabel.Visibility = Visibility.Visible;
+                    LockCode.Visibility = Visibility.Visible;
+                    ChildLabel.Visibility = Visibility.Visible;
+                    ChildName.Visibility = Visibility.Visible;
+                    ParentLabel.Visibility = Visibility.Visible;
+                    ParentName.Visibility = Visibility.Visible;
+                    Properties.Settings.Default.ChildEnabled = true;
+                }
+                else
+                {
+                    this.Height = 360;
+                    DoneBtn.Margin = new Thickness(133, 330, 0, 0);
+                    LockCodeLabel.Visibility = Visibility.Collapsed;
+                    LockCode.Visibility = Visibility.Collapsed;
+                    ChildLabel.Visibility = Visibility.Collapsed;
+                    ChildName.Visibility = Visibility.Collapsed;
+                    ParentLabel.Visibility = Visibility.Collapsed;
+                    ParentName.Visibility = Visibility.Collapsed;
+                    Properties.Settings.Default.ChildEnabled = false;
+                }
+            }
         }
 
         private void IntroScreen_LocationChanged(object sender, EventArgs e)
