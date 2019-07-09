@@ -25,18 +25,12 @@ namespace VG_Launcher
             setGame = game;
             InitializeComponent();
             launchText.Text = setGame.settings;
-            if (game.provider != "Steam")
+            if (game.provider != "Steam" && game.provider != null)
             {
                 warningLabel2.Visibility = Visibility.Visible;
                 launchText.Visibility = Visibility.Collapsed;
                 saveButton.Visibility = Visibility.Collapsed;
                 warningLabel.Content = "Launch options are not yet available for this provider.";
-            }
-            if (game.provider == null)
-            {
-                launchText.Visibility = Visibility.Collapsed;
-                saveButton.Visibility = Visibility.Collapsed;
-                warningLabel.Content = "Launch options are not supported for games added without a service provider...";
             }
         }
 
