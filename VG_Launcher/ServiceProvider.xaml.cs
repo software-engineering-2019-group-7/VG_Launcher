@@ -188,6 +188,7 @@ namespace VG_Launcher
                 g.name = game.Key;
                 g.path = "steam://rungameid/" + game.Value;
                 g.parentLock = "0";
+                g.provider = "Steam";
                 bool containsGame = false;
 
 
@@ -281,6 +282,7 @@ namespace VG_Launcher
                 g.name = p.Key;
                 g.path = "uplay://launch/"+p.Value+"/0";
                 g.parentLock = "0";
+                g.provider = "uPlay";
                 gameList.Add(g);
             }
             return gameList;
@@ -355,6 +357,7 @@ namespace VG_Launcher
                     game.path = GetGOGDirectory() + "\\GalaxyClient.exe";
                     game.settings = "/command=runGame /gameId=" + subKeyName + " /path=" + (string)tempKey.GetValue("path"); //maybe?
                     game.parentLock = "0";
+                    game.provider = "GOG";
                     gogGamesList.Add(game);
                     tempKey.Close();
                 }
@@ -426,6 +429,7 @@ namespace VG_Launcher
                         game.name = name;
                         game.path = "origin://launchgame/" + id;
                         game.parentLock = "0";
+                        game.provider = "Origin";
                         if (!originGamesList.Any(i=>i.name == name))
                             originGamesList.Add(game);
                     }
@@ -504,6 +508,7 @@ namespace VG_Launcher
                 //Console.WriteLine("display: " + displayname);
 
                 game.parentLock = "0";
+                game.provider = "Epic";
                 epicGamesList.Add(game);
             }
             return epicGamesList;
@@ -553,6 +558,7 @@ namespace VG_Launcher
                         game.path = GetBlizzardDirectory();
                         game.settings= "--exec=\"launch " + blizzardIDName[subKeyName] + "\""; //maybe?
                         game.parentLock = "0";
+                        game.provider = "Blizzard";
                         gameList.Add(game);
                     }
                 }
@@ -617,6 +623,7 @@ namespace VG_Launcher
                         game.name = gameName;
                         game.path = "bethesdanet://run/" + bethesdaIDName[gameName];
                         game.parentLock = "0";
+                        game.provider = "Bethesda";
                         gameList.Add(game);
                     }
                 }
