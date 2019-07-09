@@ -101,29 +101,30 @@ namespace VG_Launcher
                         btn.Tag = game;
                         if (!File.Exists(game.image))
                         {
-                            WebClient wc = new WebClient();
-
-                            wc.Headers.Add("Authorization", "Bearer 47af29a9fb8d5d08ba57a06f2bc15261");
-
-                            var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name.ToLower());
-
-                            //Choose the first game in the list. The first one most closely matches the name
-                            dynamic idJson = JsonConvert.DeserializeObject(json);
-                            dynamic firstGameInArray = idJson["data"][0];
-                            string gameId = firstGameInArray.id;
-                            json = wc.DownloadString("https://www.steamgriddb.com/api/v2/grids/game/" + gameId);
-                            dynamic imageJson = JsonConvert.DeserializeObject(json);
-
-                            //Choose the first image in the list. We can obviously choose an image based on its properties.
-                            //For instance, we could check::::  imageJson["data"][0]["style"] == "blurred"
-                            //and if thats not true we could go down the image list
                             try
                             {
-                                string imageUrl = imageJson["data"][0]["url"];
-                                game.image = "../../Resources/" + CleanName(game.name).ToLower() + ".png";
-                                Console.WriteLine("Pulled image " + game.name);
-                                wc.Headers.Clear();
-                                wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
+                                WebClient wc = new WebClient();
+
+                                wc.Headers.Add("Authorization", "Bearer 47af29a9fb8d5d08ba57a06f2bc15261");
+
+                                var json = wc.DownloadString("https://www.steamgriddb.com/api/v2/search/autocomplete/" + game.name.ToLower());
+
+                                //Choose the first game in the list. The first one most closely matches the name
+                                dynamic idJson = JsonConvert.DeserializeObject(json);
+                                dynamic firstGameInArray = idJson["data"][0];
+                                string gameId = firstGameInArray.id;
+                                json = wc.DownloadString("https://www.steamgriddb.com/api/v2/grids/game/" + gameId);
+                                dynamic imageJson = JsonConvert.DeserializeObject(json);
+
+                                //Choose the first image in the list. We can obviously choose an image based on its properties.
+                                //For instance, we could check::::  imageJson["data"][0]["style"] == "blurred"
+                                //and if thats not true we could go down the image list
+                           
+                                    string imageUrl = imageJson["data"][0]["url"];
+                                    game.image = "../../Resources/" + CleanName(game.name).ToLower() + ".png";
+                                    Console.WriteLine("Pulled image " + game.name);
+                                    wc.Headers.Clear();
+                                    wc.DownloadFile(imageUrl, "../../Resources/" + CleanName(game.name).ToLower() + ".png");
                             }
                             catch(Exception e)
                             {
